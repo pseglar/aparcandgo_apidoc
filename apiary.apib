@@ -5,7 +5,7 @@ HOST: http://aparcandgo.apiary.io/
 
 APARCA AND GO RESTFUL API DOCUMENTATION
 
-## USER - Authentication [/user/token{provider,email,password,keeplogged}]
+## USER - Authentication [/user/token{?provider,email,password,keeplogged}]
 
 Login equivalent
 
@@ -23,10 +23,10 @@ Log in equivalent.
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Parameters
-    + provider (optional) -  local(default), google, facebook
-    + email (optional) - user identification
-    + password (optional) - base64 encoded password
-    + keeplogged (optional) - boolean. false by default.
+    + provider (optional,local) -  local(default), google, facebook 
+    + email (optional,pseglar@gmail.com) - user identification
+    + password (optional,3489576897) - base64 encoded password
+    + keeplogged (optional,true) - boolean. false by default.
 
 + Response 200 (application/json)
 
@@ -77,7 +77,10 @@ Retrieves and store user information.
             "default_invoice_profile": null,
             "email_validated": true,
             "phone_validated": true,
-            "points_available": 76.45,
+            "points":
+                {
+                "currentpoints":0.95,
+                },
             "profiles":
                 [
                 {
@@ -272,16 +275,74 @@ Two examples:
             }
         }
 
-## USER PASSWORD - PENDING [/user/password]
-## USER REMEMBER PASSWORD  - PENDING
-## USER RESEND SMS  - PENDING
-## USER POINTS - PENDING
-## USER INVOICES - PENDING
-## USER TICKET - PENDING
-## USER SENDINVOICE - PENDING
-## USER SENDTICKET - PENDING
+## USER - PASSWORD MANAGEMENT [/user/password{?email}]
 
-       
+### SET NEW PASSWORD [POST]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    
+    + Body
+
+            {
+            "current":"base64",
+            "new":"base64",
+            }
+
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok",
+        }
+
+### REQUEST FORGOTTEN PASSWORD  [GET]
+
+
++ Parameters
+    
+    + email (optional,pseglar@gmail.com) - user email
+    
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
+
+## USER POINTS  [/user/points]
+### REQUEST USER POINTS [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok",
+        "points":
+            {
+            "currentpoints":0.95,
+            },
+        }
+## USER RESEND SMS  [/user/smsvalidation]
+### REQUEST SMS VALIDATION [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok",
+        }
+        
 ## USER - Profiles [/user/profiles]
 
 Retrieves the list of existing profiles for the requesting user.
@@ -298,7 +359,6 @@ Retrieves the list of existing profiles for the requesting user.
 + monthly_invoice: tells to group invoices. 
 + send_reservation_copy: corporate account option.
 + send_invoice_copy: corporate account option.
-
 
 ### PROFILES GET [GET]
 
@@ -843,7 +903,7 @@ proposal:
         "status":"not found", 
         }
 
-## USER - INVOICES  [/user/invoices]
+## USER - INVOICES - PENDING [/user/invoices]
 
 + RESOLUCIÓN problema del tick "monthly" cuando ya existen reservas.
 propuesta:
@@ -1989,7 +2049,19 @@ En frontend se pinta como el perfil personal.
         "status":"not found", 
         }
 ### DELETE RESERVATION [DELETE]
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "reservation":"reservation object. see /reservations",
+        }
         
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }    
 
 
 ## RESERVATION -  PAY [/reservations/pay]
@@ -2234,6 +2306,51 @@ valid
         { 
         "status":"invalid code", 
         }
+
+## RESERVATION - GET TICKET - [/reservation/ticket/{reservation_id}{?format}]
+request ticket in html, pdf or by email.
+
+### REQUEST TICKET [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + reservation_id (required,number,`3443`) - Reservation Id
+    + format (optional,string,`html`) - html(default) | pdf | email
+
++ Response 200 (text/html)
+
+        <div style="background:#eee;"><table cellpadding="0" cellspacing="0" align="center" style="border:1px solid #ccc;margin:5px auto;"><tbody><tr><td class="mono" style="font-family:Consolas, Courier New, monospace;font-size:14px;padding:40px 10px 20px 10px;background:#fff;line-height:16px;"><div style="text-align:left;font-size:27px;font-weight:normal;line-height:30px;"><b>aparca&amp;go</b> <span style="font-size:20px">Express</span></div><div style="text-align:left;font-size:10px;font-weight:normal;">Aparca &amp; Go S.L.           express@aparcandgo.com</div><div style="text-align:left;font-size:10px;font-weight:normal;">CIF B64932858              TEL 93 122 05 48</div><div style="text-align:left;font-size:10px;font-weight:normal;">Autovía C-31, salida 190 - 08830 Sant Boi de Llobregat</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:right;font-size:14px;font-weight:normal;">Entrada nº &nbsp;&nbsp;<b>683119</b></div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:left;font-size:14px;font-weight:normal;">Entrada.. Barcelona T1&nbsp;&nbsp;&nbsp;<b>16/01/2017 &nbsp;18:30</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">Salida... Barcelona T1&nbsp;&nbsp;&nbsp;<b>19/01/2017 &nbsp;10:00</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:14px;font-weight:normal;">Plaza....... 729</div><div style="text-align:left;font-size:14px;font-weight:normal;">Matrícula... 45677</div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:center;font-size:14px;font-weight:bold;">GRÀCIES PER LA SEVA CONFIANÇA</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:center;"><img src="/tpv/css/barcode.png" alt="2000000000683119"></div><div style="text-align:center;font-size:14px;font-weight:normal;">2000000000683119</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:10px;font-weight:normal;">Preus segons tarifes vigents amb IVA inclòs.</div><div style="text-align:left;font-size:10px;font-weight:normal;">L'aparcament d'un vehicle no constitueix un contracte de</div><div style="text-align:left;font-size:10px;font-weight:normal;">dipòsit. L'empresa no respon dels objectes dipositats a</div><div style="text-align:left;font-size:10px;font-weight:normal;">l'interior del vehicle. L'usuari és responsable dels</div><div style="text-align:left;font-size:10px;font-weight:normal;">danys que ocasioni a altres vehicles.</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div></td></tr></tbody></table></div>
+
++ Response 200 (application/pdf)
+        
+
+
+
+
+## RESERVATION - LIST INVOICES - PENDING [/reservation/invoices]
+invoices array.
+
+## RESERVATION - GET INVOICE [/reservation/invoice/{invoice_id}{?format}]
+request invoice in html, pdf or by email.
+### REQUEST TICKET [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + invoice_id (required,number,`3443`) - Reservation Id
+    + format (optional,string,`html`) - html(default) | pdf | email
+
++ Response 200 (text/html)
+
+        <div style="background:#eee;"><table cellpadding="0" cellspacing="0" align="center" style="border:1px solid #ccc;margin:5px auto;"><tbody><tr><td class="mono" style="font-family:Consolas, Courier New, monospace;font-size:14px;padding:40px 10px 20px 10px;background:#fff;line-height:16px;"><div style="text-align:left;font-size:27px;font-weight:normal;line-height:30px;"><b>aparca&amp;go</b> <span style="font-size:20px">Express</span></div><div style="text-align:left;font-size:10px;font-weight:normal;">Aparca &amp; Go S.L.           express@aparcandgo.com</div><div style="text-align:left;font-size:10px;font-weight:normal;">CIF B64932858              TEL 93 122 05 48</div><div style="text-align:left;font-size:10px;font-weight:normal;">Autovía C-31, salida 190 - 08830 Sant Boi de Llobregat</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:right;font-size:14px;font-weight:normal;">Entrada nº &nbsp;&nbsp;<b>683119</b></div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:left;font-size:14px;font-weight:normal;">Entrada.. Barcelona T1&nbsp;&nbsp;&nbsp;<b>16/01/2017 &nbsp;18:30</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">Salida... Barcelona T1&nbsp;&nbsp;&nbsp;<b>19/01/2017 &nbsp;10:00</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:14px;font-weight:normal;">Plaza....... 729</div><div style="text-align:left;font-size:14px;font-weight:normal;">Matrícula... 45677</div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:center;font-size:14px;font-weight:bold;">GRÀCIES PER LA SEVA CONFIANÇA</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:center;"><img src="/tpv/css/barcode.png" alt="2000000000683119"></div><div style="text-align:center;font-size:14px;font-weight:normal;">2000000000683119</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:10px;font-weight:normal;">Preus segons tarifes vigents amb IVA inclòs.</div><div style="text-align:left;font-size:10px;font-weight:normal;">L'aparcament d'un vehicle no constitueix un contracte de</div><div style="text-align:left;font-size:10px;font-weight:normal;">dipòsit. L'empresa no respon dels objectes dipositats a</div><div style="text-align:left;font-size:10px;font-weight:normal;">l'interior del vehicle. L'usuari és responsable dels</div><div style="text-align:left;font-size:10px;font-weight:normal;">danys que ocasioni a altres vehicles.</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div></td></tr></tbody></table></div>
+
++ Response 200 (application/pdf)
+
         
 ## BUSINESS - CREATE/UPDATE/VIEW [/business]
 
@@ -2410,5 +2527,5 @@ only update new information.
         
         }
 
-## BUSINESS - PENDING - RESERVATIONS
-## BUSINESS - PENDING - INVOICES
+## BUSINESS RESERVATIONS - PENDING   [/business/reservations]
+## BUSINESS INVOICES - PENDING
