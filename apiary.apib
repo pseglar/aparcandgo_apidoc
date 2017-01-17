@@ -1,0 +1,2414 @@
+FORMAT: 1A
+HOST: http://aparcandgo.apiary.io/
+
+# APARCA&GO
+
+APARCA AND GO RESTFUL API DOCUMENTATION
+
+## USER - Authentication [/user/token{provider,email,password,keeplogged}]
+
+Login equivalent
+
+### TOKEN GET [GET]
+Log in equivalent.
+
++ New session token request. Used also to renew the existing token.
++ email and password required if provider is different than social.
++ If keeplogged true: token expirement set to long term (X month)
++ If request has a valid token. current token is deleted (used for token renewal)
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Parameters
+    + provider (optional) -  local(default), google, facebook
+    + email (optional) - user identification
+    + password (optional) - base64 encoded password
+    + keeplogged (optional) - boolean. false by default.
+
++ Response 200 (application/json)
+
+        { 
+        "access_token":"03807cb390319329bdf6c777d4dfae9c0d3b3c35", 
+        "expires_in":20171201,
+        }
+### TOKEN DELETE  [DELETE]
+
+Log out equivalent. deletes valid token from system
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
+        
+## USER - VIEW/CREATE/UPDATE USER [/user]
+
+### GET [GET]
+
+Retrieves and store user information.
++ default_invoice_profile: should be updated on first purchase if null. 
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "user":
+            {
+            "user_id":45346,
+            "email":"pseglar@gmail.com",
+            "name":"Pau",
+            "lastname":"Seglar Segura",
+            "phone": "607787857",
+            "zip":08354,
+            "lang":"ca_ES",
+            "accept_promos": true,
+            "default_invoice_profile": null,
+            "email_validated": true,
+            "phone_validated": true,
+            "points_available": 76.45,
+            "profiles":
+                [
+                {
+                "profile_id":45346,
+                "type":"corporate",
+                "company_id":34536,
+                "rights": "administrator",
+                "cost_center": 76645,
+                "invoice_name":"Acmesa",
+                "invoice_nif":"j66245523",
+                "invoice_email":"invoices@acmesa.com",
+                "invoice_address":"c/ alegria 23",
+                "invoice_city":"Barcelona",
+                "invoice_state":"Barcelona",
+                "invoice_zip": "08355",
+                },
+                {
+                "profile_id":45347,
+                "type":"professional",
+                "monthly_invoice": false,
+                "invoice_name":"Acmesa",
+                "invoice_nif":"j66245523",
+                "invoice_email":"invoices@acmesa.com",
+                "invoice_address":"c/ alegria 23",
+                "invoice_city":"Barcelona",
+                "invoice_state":"Barcelona",
+                "invoice_zip": "08355",
+                }
+                ],
+            "vehicles":
+                [
+                    {
+                    "vehicle_id":45346,
+                    "type":"vw golf gris",
+                    "plate":"3453GHM",
+                    },
+                    {
+                    "vehicle_id":45347,
+                    "type":"renault twingo azul",
+                    "plate":"B-5468-UC",
+                    }
+                ],
+            "paymethods":
+                [
+                    {
+                        "paymethod_id":45346,
+                        "type":"corporate_card",
+                        "company_id": 45678,
+                        "cost_center": null
+                        "alias": "Acmesa",
+                        "last_card_numbers": "4568",
+                        "expire": 1907
+                        "added": "2016-03-14 16:20:48",
+                        "checked": "2016-03-14 16:20:48",
+                    },
+                    {
+                        "paymethod_id":45346,
+                        "type":"card",
+                        "alias": "Acmesa",
+                        "lastcardnumbers": "4568",
+                        "expire": 1907
+                        "added": "2016-03-14 16:20:48",
+                        "checked": "2016-03-14 16:20:48",
+                    }
+                ]
+            }
+        }
+### UPDATE [PUT]
+
+only update new information. profiles and vehicles are updated under custom endpoint.
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Request (application/json)
+
+        {
+            "email":"pseglar@gmail.com",
+            "name":"Pau",
+            "lastname":"Seglar Segura",
+            "phone": "607787857",
+            "zip":08354
+            "accept_promos": true,
+            "default_invoice_profile": null,
+            "lang":"ca_ES",
+        }
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
+###  CREATE [POST]
+
+<blockquote>
+Two examples:
+
++ Basic user 
++ User with invoice profile
+
+</blockquote>
+
++ Request (application/json)
+    Create basic user
+    + Body
+
+            {
+            "email":"pseglar@gmail.com",
+            "name":"Pau",
+            "lastname":"Seglar Segura",
+            "phone": "607787857",
+            "zip":08354,
+            "lang":"ca_ES",
+            }
+            
+
++ Response 200 (application/json)
+    
+        { 
+        "status":"ok", 
+        "user":
+            {
+            "user_id":45346,
+            "email":"pseglar@gmail.com",
+            "name":"Pau",
+            "lastname":"Seglar Segura",
+            "phone": "607787857",
+            "accept_promos": true,
+            "default_invoice_profile": null,
+            "lang":"ca_ES",
+            
+            
+            }
+        }
+        
+
++ Request (application/json)
+    Create user with invoice profile.
+    + Body
+    
+            {
+            "email":"pseglar@gmail.com",
+            "name":"Pau",
+            "lastname":"Seglar Segura",
+            "phone": "607787857",
+            "zip":08354,
+            "lang":"ca_ES",
+            "invoice_profile":
+                {
+                    "monthly_invoice": false,
+                    "invoice_name":"Acmesa",
+                    "invoice_nif":"j66245523",
+                    "invoice_email":"invoices@acmesa.com",
+                    "invoice_address":"c/ alegria 23",
+                    "invoice_city":"Barcelona",
+                    "invoice_state":"Barcelona",
+                    "invoice_zip": "08355",
+                }
+            }
+        
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "user":
+            {
+            "user_id":45346,
+            "email":"pseglar@gmail.com",
+            "name":"Pau",
+            "lastname":"Seglar Segura",
+            "phone": "607787857",
+            "accept_promos": true,
+            "default_invoice_profile": 45347,
+            "profiles":
+                [
+                {
+                "profile_id":45347,
+                "type":"professional",
+                "monthly_invoice": false,
+                "invoice_name":"Acmesa",
+                "invoice_nif":"j66245523",
+                "invoice_email":"invoices@acmesa.com",
+                "invoice_address":"c/ alegria 23",
+                "invoice_city":"Barcelona",
+                "invoice_state":"Barcelona",
+                "invoice_zip": "08355",
+                },
+                ]
+            }
+        }
+
+## USER PASSWORD - PENDING [/user/password]
+## USER REMEMBER PASSWORD  - PENDING
+## USER RESEND SMS  - PENDING
+## USER POINTS - PENDING
+## USER INVOICES - PENDING
+## USER TICKET - PENDING
+## USER SENDINVOICE - PENDING
+## USER SENDTICKET - PENDING
+
+       
+## USER - Profiles [/user/profiles]
+
+Retrieves the list of existing profiles for the requesting user.
+
+
+
++ types:
+    + **professional**: different invoicing profiles created by a user for personal use. he can change it.
+    + **corporate**: invoice profile created by a company for this user. only corporate owners can modify.
++ rights:
+    + **user**: account can use this profile.
+    + **manager**: account can manage this profile (make reservations for other corporate users)
+    + **administrator**: administrator access. professional profiles has always full access.
++ monthly_invoice: tells to group invoices. 
++ send_reservation_copy: corporate account option.
++ send_invoice_copy: corporate account option.
+
+
+### PROFILES GET [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "profiles":
+            [
+            {
+            "profile_id":45346,
+            "type":"corporate",
+            "company_id":34536,
+            "rights": 
+                {
+                "role":"administrator",
+                "permissions":
+                    [
+                    "pending":"pending",
+                    ],
+            "cost_center": 76645,
+            "monthly_invoice": false,
+            "invoice_per_costcenter": false,
+            "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
+            "send_invoice_copy":[{"user_id":345346},{"user_id":234345}],
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            },
+            {
+            "profile_id":45347,
+            "type":"professional",
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            }
+            ]
+        }
+
+## USER - Profile Management [/user/profile/{profile_id}]
+
+GET, CREATE or UPDATE a profile
+
+### VIEW PROFILE [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
++ Parameters
+    + profile_id ... prifile id
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "profile":
+            {
+            "profile_id":45347,
+            "type":"professional",
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            }
+        }
+### DELETE PROFILE [DELETE]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
++ Parameters
+    + profile_id ... prifile id
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
+### CREATE PROFILE [POST]
+
+profile_id not needed in this case.
+**profile creation only creates personal profiles.**
+rights is always administrator for personal profiles. not needed.
+corporate profiles are created when a business account is created using other endpoint.
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
++ Request (application/json)
+
+        {
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            "default_invoice_profile":true,
+        }
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "profile":
+            {
+            "profile_id":45347,
+            "type":"professional",
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            }
+        }
+### UPDATE PROFILE [PUT]
+
+profile_id is mandatory.
+rest of parameters are optional. will only update existing parameters.
+
++ Parameters
+    + profile_id 
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
++ Request (application/json)
+
+        {
+            "profile_id":45346,
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            "default_invoice_profile":true,
+        }
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "profile":
+            {
+            "profile_id":45346,
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+        }
+        }
+
+## USER - Payment Methods [/user/paymethods]
+
+Retrieves the list of existing payment methods for the requesting user.
+
+in corporate accounts, only return valid cards for the current user (not showing other cost center cards).
+
+currently two types of payment methods: 
++ card 
++ corporate_card
+
++ expire: integer with the expiration time in format YYMM (year/month 2 digits)
+
+### LIST [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "paymethods":
+            [
+            {
+            "paymethod_id":45346,
+            "type":"corporate_card",
+            "company_id": 45678,
+            "cost_center": null
+            "alias": "Acmesa",
+            "last_card_numbers": "4568",
+            "expire": 1907
+            "added": "2016-03-14 16:20:48",
+            "checked": "2016-03-14 16:20:48",
+            },
+            {
+            "paymethod_id":45346,
+            "type":"card",
+            "alias": "Acmesa",
+            "lastcardnumbers": "4568",
+            "expire": 1907
+            "added": "2016-03-14 16:20:48",
+            "checked": "2016-03-14 16:20:48",
+            }
+            ]
+        }
+## USER - Paymethod Management [/user/paymethod/{paymethod_id}{?pci_signature}]
+
+### GET [GET]
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + paymethod_id 
+    
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "paymethod":
+            {
+            "paymethod_id":45346,
+            "type":"corporate_card",
+            "company_id": 45678,
+            "cost_center": null
+            "alias": "Acmesa",
+            "lastcardnumbers": "4568",
+            "expire": 1907
+            "added": "2016-03-14 16:20:48",
+            "checked": "2016-03-14 16:20:48",
+            }
+        }
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+### DELETE [DELETE]
+<blockquote>
+
+**Atention: only PCI SERVER CAN DELETE CARDS IN API SERVER.**
+TO DELETE A CARD USERS MUST USE **/deletecard** endpoint in the PCI SERVER.
+</blockquote>
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + paymethod_id (integer)
+    + pci_signature
+    
++ Response 200 (application/json)
+
+        { 
+        "status":"ok"
+        }
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+### CREATE [POST]
+<blockquote>
+
+**Atention: only PCI SERVER CAN CREATE CARDS IN API SERVER.**
+TO ADD A CARD USERS MUST USE **/addcard** endpoint in the PCI SERVER.
+</blockquote>
+
+<blockquote>
+PCI_SIGNATURE is a made from a secret key shared between servers
+</blockquote>
+
+
++ Request (application/json)
+
+        {
+       "paymethod_id":45346,
+        "type":"corporate_card",
+        "company_id": 45678,
+        "cost_center": null
+        "alias": "Acmesa",
+        "lastcardnumbers": "4568",
+        "expire": 1907
+        "added": "2016-03-14 16:20:48",
+        "checked": "2016-03-14 16:20:48",
+        "pci_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
+        }
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "api_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
+        }
+### UPDATE [PUT]
+
+<blockquote>
+When a card is added, card details in PCI server cannot be modified. only control parameters stored in API server can be modified.
+Users can only update alias parameters.
+</blockquote>
+
++ Request (application/json)
+
+        {
+       "paymethod_id":45346,
+        "alias": "Acmesa",
+        "cost_center": null
+        }
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "paymethods":
+            {
+            "paymethod_id":45346,
+            "type":"corporateCard",
+            "company_id": 45678,
+            "cost_center": null
+            "alias": "Acmesa",
+            "lastcardnumbers": "4568",
+            "expire": 1907
+            "added": "2016-03-14 16:20:48",
+            "checked": "2016-03-14 16:20:48",
+            }
+        }
+        
+## USER - Vehicles [/user/vehicles]
+
+Retrieves the list of existing vehicles for the requesting user.
+
+### LIST [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "vehicles":
+                [
+                    {
+                    "vehicle_id":45346,
+                    "type":"vw golf gris",
+                    "plate":"3453GHM",
+                    },
+                    {
+                    "vehicle_id":45347,
+                    "type":"renault twingo azul",
+                    "plate":"B-5468-UC",
+                    }
+                ],
+        }
+## USER - Vehicle Management [/user/vehicle/{vehicle_id}]
+
+### GET [GET]
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + vehicle_id (integer) 
+    
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "vehicle":
+            {
+            "vehicle_id":45346,
+            "type":"vw golf gris",
+            "plate":"3453GHM",
+            },
+        }
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+### DELETE [DELETE]
+
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + vehicle_id (integer)
+    
++ Response 200 (application/json)
+
+        { 
+        "status":"ok"
+        }
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+### CREATE [POST]
+
+
+
++ Request (application/json)
+
+        {
+        "type":"vw golf gris",
+        "plate":"3453GHM",
+        },
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "vehicle":
+            {
+            "vehicle_id":45346,
+            "type":"vw golf gris",
+            "plate":"3453GHM",
+            },
+        }
+### UPDATE [PUT]
+
++ Request (application/json)
+
+        {
+        "type":"vw golf gris",
+        "plate":"3453GHM",
+        },
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "vehicle":
+            {
+            "vehicle_id":45346,
+            "type":"vw golf gris",
+            "plate":"3453GHM",
+            },
+        }
+
+## USER - Reset Password [/users/password_recovery]
+### CREATE REQUEST [POST]
+
+email is mandatory.
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
++ Request (application/json)
+
+        {
+            "email":"pseglar@gmail.com"
+        }
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+
+## USER - Unsubscribe [/user/unsubscribe/{user_id}{?email,signature}]
+
+### GET [GET]
+
+To be implemented in the future. allow a user to unsubscribe after receivign email.
+authorization token have to be created. 
+proposal: 
+! TODO: improve security. 
+
++ Parameters
+    + user_id   
+    + email 
+    + signature - md5(email, server_secret)
+    
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+
+## USER - INVOICES  [/user/invoices]
+
++ RESOLUCIÓN problema del tick "monthly" cuando ya existen reservas.
+propuesta:
+cuando se genera un perfil de facturación (autonomo o corporativo), por defecto se configura en "factura mensual" o en "factura por servicio"? -> entiendo que factura por servicio.
+En cualquier caso, si tras N estancias durante un mes, se cambia esta opción, entiendo qeu se aplica a las siguientes estancias que finalizen, no a las previas.
+    + ejemplo:
+    empresa tiene configurada facturación por servicio.hace 2 servicios. cambia la conf a "facturación mensual". hace 2 servicios.
+        + Ese mes tendrá 3 facturas. las dos primeras al finalizar el servicio y la mensual a final de mes con otras 2. 
+    + ejemplo 2:
+    empresa tiene configurada factura mensual. 
+    Hace 2 servicios.
+    Cambnia la conf a facturación por servicio.
+        + La empresa recibirá 3 facturas. la mensual con las dos primeras a final de mes, y las otras 2 al momento.
+
+
+Card management.
+
+## PCI- Add card [/addcard{?user_id,authorization_token,cardnumber,expiration_month,expiration_year,cvv,type,company_id,cost_center,alias}]
+
+### GET [GET]
+PCI EXIGE MÉTODO GET.
+
+<blockquote>
+When calling PCI server, we use authentication header to send a request signature.
+<h3>HOW TO CALCULATE AUTHENTICATION HEADER:</h3>
+
+sha256(query_string, authorization_token)
+
+for example:
+```
+request:http://{{pciserver}}/addcard?user_id=234324&authorization_token=03807cb390319329bdf6c777d4dfae9c0d3b3c35&cardnumber=2342345647567&expiration_month=12&expiration_year=17&cvv=457
+```
+How to calculate:
+```
+$query_string="user_id=234324&authorization_token=03807cb390319329bdf6c777d4dfae9c0d3b3c35&cardnumber=2342345647567&expiration_month=12&expiration_year=17&cvv=457";
+
+$auth_token=03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+Authorization Header: sha256($query_string,$auth_token);
+```
+</blockquote>
+
+<blockquote>
+PCI SERVER will then:
+
++ check the card 
++ call /paymethod [post] to validate user and get a paymethod_id. 
++ store the card( PCI card will be paired with API paymethod_id ).
+
+</blockquote>
+
+<blockquote>
+COMPANY CARDS
+
+When calling with company_id, card will be stored as company card if user has admin rights
+
+</blockquote>
+
++ Parameters
+    + user_id - 296
+    + authorization_token - 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + cardnumber - 4106410038435018
+    + expiration_month - 10
+    + expiration_year - 18
+    + cvv - 246
+    + type (optional) - corporate_card
+    + company_id (optional) - 54647
+    + cost_center (optional) - 
+    + alias (optional) - 
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: 1806377b304fd52f1c5fb5289d6edb108f56b2e654f3098b3cb4a8ce40d0e266
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "paymethod":
+            {
+            "paymethod_id":45346,
+            "type":"corporateCard",
+            "company_id": 45678,
+            "cost_center": null
+            "alias": "Acmesa",
+            "lastcardnumbers": "4568",
+            "expire": 1907
+            "added": "2016-03-14 16:20:48",
+            "checked": "2016-03-14 16:20:48",
+            }
+        }
+## PCI - Delete card [/deletecard{?user_id,authorization_token,paymethod_id}]
+
+### GET [GET]
+
+<blockquote>
+Same authorization schema used in [/addcard]
+</blockquote>
+<blockquote>
+PCI SERVER will then:
+
++ call /paymethod [delete] to validate user and delete paymethod
++ delete card in DB.
+
+</blockquote>
++ Parameters
+    + user_id - 296
+    + authorization_token - 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + paymethod_id - 54687
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: 1806377b304fd52f1c5fb5289d6edb108f56b2e654f3098b3cb4a8ce40d0e266
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "paymethods":
+            {
+            "paymethod_id":45346,
+            "type":"corporateCard",
+            "company_id": 45678,
+            "cost_center": null
+            "alias": "Acmesa",
+            "lastcardnumbers": "4568",
+            "expire": 1907
+            "added": "2016-03-14 16:20:48",
+            "checked": "2016-03-14 16:20:48",
+            }
+        }
+
+
+## PRODUCT - LIST PRODUCTS [/product/list{?lang}]
+
+<blockquote>
+**TIP**
+GET /product/{id} will return information only for this product ID.
+</blockquote>
+
+<blockquote>
+Nota para desarrollo backend. 
+
+place y city de un product debe ser un dato relacional de la tabla cities y places respectivamente para evitar duplicidad de ciudades y productos.
+place y city deben disponer de nombre en los 4 idiomas.
+product description debe estar en los 4 idiomas.
+</blockquote>
+
+<blockquote>
+Nota para desarrollo frontend. 
+
+product short_description debe ser usado en la pantalla de selección de producto (tras la seleccion de ciudad y área de servicio)
+</blockquote>
+### GET [GET]
+
+<blockquote>
+AVOID INNECESSARY PRODUCT UPDATES
+
+To avoid unnecessary product updates we will implement etag caching.
+https://support.cloudflare.com/hc/en-us/articles/218505467-Does-CloudFlare-support-ETag-headers-#caching
+
+with each /products response we will set an **etag** header with a serial.
+If browser request has a **If-None-Match** header with the serial of the current valid product list (current valid etag)
+Server will respond with **304 Not-Modified**
+</blockquote>
+
+
++ Parameters
+    + lang - es
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "cities":
+            [
+                {
+                    "id":1,
+                    "name":"Barcelona",
+                    "location":
+                        {
+                            "lat":2.245456,
+                            "lng":40.548756
+                        },
+                    "places":
+                    [
+                        {
+                            "id": 12,
+                            "name": "Aeropuerto de Barcelona",
+                            "type":"airport",
+                            "location":
+                                {
+                                    "lat":2.245456,
+                                    "lng":40.548756
+                                },
+                            "products":
+                            [
+                                {
+                                    "product_id":9,
+                                    "product_name":"Express",
+                                    "provider":"Aparca&Go",
+                                    "service":"express",
+                                    "info":
+                                    {
+                                        "short_description":"Dejas el coche en nuestro aparcamiento y te llevamos en bus.",
+                                        "location":
+                                        {
+                                            "lat":2.245456,
+                                            "lng":40.548756,
+                                            "city":{"name":"Barcelona"},
+                                            "place":
+                                            {
+                                                "name":"Aeroport del Prat",
+                                                "type":"airport",
+                                            },
+                                            "service_info":
+                                            [
+                                                {
+                                                    "name":"Como llegar",
+                                                    "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                },
+                                                {
+                                                    "name":"Horario",
+                                                    "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                },
+                                                {
+                                                    "name":"¿En qué terminal opera?",
+                                                    "body":"aparca&go opera en todas las terminales",
+                                                },
+                                                {
+                                                    "name":"¿Cuanto se tarda en llegar al aeropuerto?",
+                                                    "body":"Tardamos entre 4 y 5 minutos.",
+                                                },
+                                                {
+                                                    "name":"¿Dónde nos dejá la lanzadera?",
+                                                    "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje.",
+                                                },
+                                                {
+                                                    "name":"¿Qué debemos hacer para que venga a recogernos una lanzadera?",
+                                                    "body":"En aparca&go Express no es necesario una llamada, simplemente tenéis que ir a nuestro punto de recogida donde siempre estará una furgoneta esperándoos.",
+                                                },
+                                                {
+                                                    "name":"¿Dónde nos recogen a la vuelta?",
+                                                    "body":"Te indicaremos la ubicación exacta en la app, pero clica en el enlace para ver los puntos de recogida.",
+                                                },
+                                            ],
+                                        },
+                                        "terminals":
+                                        [
+                                            {
+                                                "name":"Terminal1",
+                                                "check-in":
+                                                {
+                                                    "location":
+                                                    {
+                                                        "lat":2.245456,
+                                                        "lng":40.548756,
+                                                    },
+                                                    "instructions":
+                                                    [
+                                                        {
+                                                            "icon":"map"
+                                                            "name":null,
+                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking.",
+                                                        },
+                                                        {
+                                                            "icon":"agent"
+                                                            "name":null,
+                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario",
+                                                        }
+                                                        {
+                                                            "icon":"bus"
+                                                            "name":null,
+                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal",
+                                                        }
+                                                    ],
+                                                    "final_instructions":
+                                                    [
+                                                        {
+                                                            "icon":"bus"
+                                                            "name":null,
+                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal",
+                                                        },
+                                                        {
+                                                            "icon":null
+                                                            "name":null,
+                                                            "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames.",
+                                                        }
+        
+                                                    ],
+        
+                                                    "info":
+                                                    [
+                                                        {
+                                                            "name":"Como llegar",
+                                                            "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                        },
+                                                        {
+                                                            "name":"Horario",
+                                                            "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                        },
+                                                        {
+                                                            "name":"Dónde debo subir a la lanzadera",
+                                                            "body":"lorem ipsum",
+                                                        },
+                                                        {
+                                                            "name":"Dónde me dejará la lanzadera",
+                                                            "body":"lorem ipsum",
+                                                        },
+                                                    ]
+                                                },
+                                                "check-out":
+                                                {
+                                                    "location":
+                                                    {
+                                                        "lat":2.245456,
+                                                        "lng":40.548756,
+                                                    },
+                                                    "instructions":
+                                                    [
+                                                        {
+                                                            "icon":"bus"
+                                                            "name":null,
+                                                            "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames.",
+                                                        },
+                                                        {
+                                                            "icon":"map"
+                                                            "name":null,
+                                                            "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1.",
+                                                        }
+                                                    ],
+                                                    "final_instructions":
+                                                    [
+                                                        {
+                                                            "icon":"flag"
+                                                            "name":"Gracias por tu estancia",
+                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com",
+                                                        }
+                                                    ],
+                                                    "info":
+                                                    [
+                                                        {
+                                                            "name":"Punto de recogida",
+                                                            "body":"El punto de recogida blablabla",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                        },
+                                                        {
+                                                            "name":"Horario y frecuencia",
+                                                            "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año.",
+                                                        },
+                                                    ]
+                                                },
+                                            },
+        
+                                        ],
+                                    "extras":
+                                        [
+                                            {
+                                            "extra_id":23,
+                                            "name":"Cubierto",
+                                            "icon":"house",
+                                            "description":"Aparcar en zona cubierta",
+                                            "unitary_price":1,
+                                            "price_calculation":"daily",
+                                            },
+                                            {
+                                            "extra_id":24,
+                                            "name":"Lavado exterior",
+                                            "icon":"house",
+                                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                            "unitary_price":7.55,
+                                            "price_calculation":"final_price",
+                                            },
+                                        ],
+                                    },
+        
+                                {
+                                    "product_id":5,
+                                    "product_name":"Premium",
+                                    "provider":"Aparca&Go",
+                                    "service":"premium",
+                                    "info":
+                                    {
+                                        "short_description":"Dejas el coche en la terminal, nos llamas y te lo venimos a recoger.",
+                                        "location":
+                                        {
+                                            "lat":2.245456,
+                                            "lng":40.548756,
+                                            "city":{"name":"Barcelona"},
+                                            "place":
+                                            {
+                                                "name":"Aeroport del Prat",
+                                                "type":"airport",
+                                            },
+                                        },
+                                        "service_info":
+                                        [
+                                            {
+                                                "name":"Punto de recogida",
+                                                "body":" lorem imsum"
+                                                "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                            },
+                                            {
+                                                "name":"Horario",
+                                                "body":"Recogemos tu coche las 24 horas del dia los 365 días del año.",
+                                            },
+                                            {
+                                                "name":"¿En qué terminal opera?",
+                                                "body":"aparca&go opera en todas las terminales",
+                                            },
+                                            {
+                                                "name":"¿Cuanto tendré que esperar?",
+                                                "body":"Si nos avisas con tiempo, te estaremos esperando en el punto de recogida.",
+                                            },
+                                            {
+                                                "name":"¿Dónde me entregaréis mi coche a la vuelta?",
+                                                "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje.",
+                                            },
+                                            {
+                                                "name":"¿Qué debemos hacer para avisar de nuestra llegada?",
+                                                "body":"Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello.",
+                                            },
+                                        ],
+                                    },
+                                    "terminals":
+                                    [
+                                        {
+                                            "terminal_id":1001,
+                                            "name":"Terminal1",
+                                            "check-in":
+                                            {
+                                                "location":
+                                                {
+                                                    "lat":2.245456,
+                                                    "lng":40.548756,
+                                                },
+                                                "instructions":
+                                                [
+                                                    {
+                                                        "icon":"map",
+                                                        "name":null,
+                                                        "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking.",
+                                                    },
+                                                    {
+                                                        "icon":"agent",
+                                                        "name":null,
+                                                        "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario",
+                                                    }
+                                                    {
+                                                        "icon":"bus",
+                                                        "name":null,
+                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal",
+                                                    }
+                                                ],
+                                                "final_instructions":
+                                                [
+                                                    {
+                                                        "icon":"bus",
+                                                        "name":null,
+                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal",
+                                                    },
+                                                    {
+                                                        "icon":null,
+                                                        "name":null,
+                                                        "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames.",
+                                                    }
+        
+                                                ],
+        
+                                                "info":
+                                                [
+                                                    {
+                                                        "name":"Como llegar",
+                                                        "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                    },
+                                                    {
+                                                        "name":"Horario",
+                                                        "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                    },
+                                                    {
+                                                        "name":"Dónde debo subir a la lanzadera",
+                                                        "body":"lorem ipsum",
+                                                    },
+                                                    {
+                                                        "name":"Dónde me dejará la lanzadera",
+                                                        "body":"lorem ipsum",
+                                                    },
+                                                ]
+                                            },
+                                            "check-out":
+                                            {
+                                                "location":
+                                                {
+                                                    "lat":2.245456,
+                                                    "lng":40.548756,
+                                                },
+                                                "instructions":
+                                                [
+                                                    {
+                                                        "icon":"bus",
+                                                        "name":null,
+                                                        "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames.",
+                                                    },
+                                                    {
+                                                        "icon":"map",
+                                                        "name":null,
+                                                        "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1.",
+                                                    }
+                                                ],
+                                                "final_instructions":
+                                                [
+                                                    {
+                                                        "icon":"flag"
+                                                        "name":"Gracias por tu estancia",
+                                                        "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com",
+                                                    }
+                                                ],
+                                                "info":
+                                                [
+                                                    {
+                                                        "name":"Punto de recogida",
+                                                        "body":"El punto de recogida blablabla",
+                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                    },
+                                                    {
+                                                        "name":"Horario y frecuencia",
+                                                        "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año.",
+                                                    },
+                                                ]
+                                            },
+                                        },
+        
+                                    ],
+                                "extras":
+                                        [
+                                            {
+                                            "extra_id":23,
+                                            "name":"Cubierto",
+                                            "icon":"house",
+                                            "description":"Aparcar en zona cubierta",
+                                            "unitary_price":1,
+                                            "price_calculation":"daily",
+                                            },
+                                            {
+                                            "extra_id":24,
+                                            "name":"Lavado exterior",
+                                            "icon":"house",
+                                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                            "unitary_price":7.55,
+                                            "price_calculation":"final_price",
+                                            },
+                                        ],
+                                },
+        
+                            ]
+                        },
+                        {
+                            "id": 13,
+                            "name": "Estació de Sants",
+                            "type":"train",
+                            "location":
+                                {
+                                    "lat":2.245456,
+                                    "lng":40.548756
+                                },
+                            "products":
+                            [
+                                {
+                                    "product_id":5,
+                                    "product_name":"ServicioPendienteDeNombre",
+                                    "provider":"Aparca&Go",
+                                    "service":"parking",
+                                    "info":
+                                        {
+                                        "short_description":"Aparcamiento a 2 minutos andando de la estación.",
+                                        "location":
+                                        {
+                                            "lat":2.245456,
+                                            "lng":40.548756,
+                                            "city":{"name":"Barcelona"},
+                                            "place":
+                                            {
+                                                "name":"Estació de sants.",
+                                                "type":"train",
+                                            },
+                                            "service_info":
+                                            [
+                                                {
+                                                    "name":"Como llegar",
+                                                    "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                },
+                                                {
+                                                    "name":"Horario",
+                                                    "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                },
+                                                {
+                                                    "name":"¿Cuanto se tarda en llegar a la estación",
+                                                    "body":"Usualmente unos 2 minutos.",
+                                                },
+                                                {
+                                                    "name":"¿Dónde nos dejá la lanzadera?",
+                                                    "body":"Este parking no necesita de un servicio de lanzadera.",
+                                                },
+                                                {
+                                                    "name":"¿Dónde nos recogen a la vuelta?",
+                                                    "body":"Puedes acceder al parking caminando. está a 2 minutos de la estación.",
+                                                },
+                                            ],
+                                        },
+                                        "terminals":
+                                        [
+                                            {
+                                                "terminal_id":2001,
+                                                "name":"Estación de Sants",
+                                                "check-in":
+                                                {
+                                                    "location":
+                                                    {
+                                                        "lat":2.245456,
+                                                        "lng":40.548756,
+                                                    },
+                                                    "instructions":
+                                                    [
+                                                        {
+                                                            "icon":"map",
+                                                            "name":null,
+                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking.",
+                                                        },
+                                                        {
+                                                            "icon":"agent",
+                                                            "name":null,
+                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario",
+                                                        }
+                                                        {
+                                                            "icon":"walking",
+                                                            "name":null,
+                                                            "body":"Tras aparcar tu coche puedes acceder a la estación andando. te mostraremos un mapa en cuanto aparques para que no te pierdas.",
+                                                        }
+                                                    ],
+                                                    "final_instructions":
+                                                    [
+                                                        {
+                                                            "icon":"walking",
+                                                            "name":"Instrucciones para acceder a la estación",
+                                                            "body":"lorem ipum",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
+                                                        }
+                                                        
+        
+                                                    ],
+        
+                                                    "info":
+                                                    [
+                                                        {
+                                                            "name":"Como llegar",
+                                                            "body":"blablabla",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                        },
+                                                        {
+                                                            "name":"Horario",
+                                                            "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                        },
+                                                        {
+                                                            "name":"Como llego a la estación desde el parking?",
+                                                            "body":"lorem ipum",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
+                                                        },
+                                                    ]
+                                                },
+                                                "check-out":
+                                                {
+                                                    "location":
+                                                    {
+                                                        "lat":2.245456,
+                                                        "lng":40.548756,
+                                                    },
+                                                    "instructions":
+                                                    [
+                                                        {
+                                                            "icon":"walking"
+                                                            "name":null,
+                                                            "body":"A tu regreso, dirígete parking para recoger tu vehículo.",
+                                                        },
+                                                        {
+                                                            "icon":"map",
+                                                            "name":null,
+                                                            "body":"pulsa 'más información' para obtener indicaciones para llegar al parking.",
+                                                        }
+                                                    ],
+                                                    "final_instructions":
+                                                    [
+                                                        {
+                                                            "icon":"flag",
+                                                            "name":"Gracias por tu estancia",
+                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com",
+                                                        }
+                                                    ],
+                                                    "info":
+                                                    [
+                                                        {
+                                                            "name":"Como llegar al parking",
+                                                            "body":"Desde la estación, lorem ipum",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
+                                                        }
+                                                        
+                                                    ]
+                                                },
+                                            },
+        
+                                        ],
+                                    "extras":
+                                        [ ],
+                                    }
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    "id":2,
+                    "name":"Madrid",
+                    "places":[],
+        
+                },
+            ],
+        
+        }
+        
+## PRODUCT - CALCULATE PRICE [/product/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
+Proporciona los datos de precio de un producto.
+IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash para validar que el cliente ha visto el mismo precio.
+### GET [GET]
+
++ Parameters
+    + lang - es
+    + product_id (integer) - 15
+    + extras (optional) - 23,24
+    + start_date - 201705151130
+    + end_date - 201705171130
+    + promocode - RAC
+    
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "offer":
+            {
+            "product_id": 12,
+            "start_date": "201705151130",
+            "end_date": "201705171130",
+            "product_price":18.90,
+            "extras":
+                [
+                    {
+                    "extra_id":23,
+                    "name":"Cubierto",
+                    "icon":"house",
+                    "description":"Aparcar en zona cubierta",
+                    "unitary_price":1,
+                    "price_calculation":"daily",
+                    "price":2,
+                    },
+                    {
+                    "extra_id":24,
+                    "name":"Lavado exterior",
+                    "icon":"house",
+                    "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                    "unitary_price":7.55,
+                    "price_calculation":"final_price",
+                    "price":7.55,
+                    },
+                ],
+            "promos":
+                [
+                    {
+                    "promo_id":23,
+                    "promo_name":"RAC",
+                    "discount":0.45
+                    },
+                ],
+            "total_price":28.00,
+            "hash":"5647858689689tjhgjf",
+            },
+        }
++ Response 500 (application/json)
+
+        {
+        "status":"out-of-stock",
+        }
++ Response 400 (application/json)
+
+        {
+        "status":"product-combination",
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"product-not-found",
+        }
+
+
+## RESERVATION -  LIST RESERVATIONS [/reservation/list]
+
+<blockquote>
+Backend info: 
+
+se debe crear una tabla reservations_log con información relativa a cada reserva. debe ser diferente a la taba api_syslog que se generará para el registro de las llamadas API.
+
++ id
++ id_reservation
++ source (VARCHAR 60)
++ event (VARCHAR 200)
++ timestamp
+
+</blockquote>
+### LIST [GET]
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+            "status":"ok",
+            "reservations":
+                [
+                    {
+                        "reservation_id":23444,
+                        "client_id":23455,
+                        "profile":3445,
+                        "product":
+                            {
+                            "product_id":12,
+                            "service":"express"
+                            "product_price":18.90,
+                            "paid":false,
+                            },
+                        "reservation_date": "201704151130",    
+                        "start_date": "201705151130",
+                        "end_date": "201705171130",
+                        "trip":
+                            {
+                            "in_terminal":1001,
+                            "in_passengers":2,
+                            "out_terminal":1002,
+                            "out_passengers":2,
+                            "vehicle":{
+                                "vehicle_id":null,
+                                "type":null
+                                "plate":"4565GHM",
+                                },
+                            },
+                        
+                        "extras":
+                            [
+                                {
+                                "extra_id":23,
+                                "name":"Cubierto",
+                                "icon":"house",
+                                "description":"Aparcar en zona cubierta",
+                                "unitary_price":1,
+                                "price_calculation":"daily",
+                                "price":2,
+                                "paid":false,
+                                },
+                                {
+                                "extra_id":24,
+                                "name":"Lavado exterior",
+                                "icon":"house",
+                                "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                "unitary_price":7.55,
+                                "price_calculation":"final_price",
+                                "price":7.55,
+                                "paid":false,
+                                },
+                            ],
+                        "promos":
+                        [
+                            {
+                            "promo_id":23,
+                            "promo_name":"RAC",
+                            "discount":0.45
+                            },
+                        ],
+                        "status":
+                            {
+                            "service":"reserved",
+                            },
+                        "total_price":28.45,
+                        "paid":false,
+                        "log":
+                            [
+                                {
+                                "timestamp":"9999-12-31 23:59:59",
+                                "source":"client|agent[pseglar@aparcandgo.com]",
+                                "event":"Reserva realizada"
+                                },
+                                {
+                                "timestamp":"9999-12-31 23:59:59",
+                                "source":"client",
+                                "event":"Entrada a parking"
+                                },
+                            ],
+                    },
+                    {
+                        "reservation_id":23444,
+                        "client_id":23455,
+                        "profile":3445,
+                        "product":
+                            {
+                            "product_id":12,
+                            "service":"premium"
+                            "product_price":18.90,
+                            "paid":false,
+                            },
+                        "reservation_date": "201704151130",    
+                        "start_date": "201705151130",
+                        "end_date": "201705171130",
+                        "trip":
+                            {
+                            "in_terminal":1001,
+                            "out_terminal":1002,
+                            "vehicle":{
+                                "vehicle_id":null,
+                                "type":null
+                                "plate":"4565GHM",
+                                },
+                            "flight_number":"IB45546",
+                            },
+                        
+                        "extras":
+                            [
+                                {
+                                "extra_id":23,
+                                "name":"Cubierto",
+                                "icon":"house",
+                                "description":"Aparcar en zona cubierta",
+                                "unitary_price":1,
+                                "price_calculation":"daily",
+                                "price":2,
+                                "paid":false,
+                                },
+                                {
+                                "extra_id":24,
+                                "name":"Lavado exterior",
+                                "icon":"house",
+                                "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                "unitary_price":7.55,
+                                "price_calculation":"final_price",
+                                "price":7.55,
+                                "paid":false,
+                                },
+                            ],
+                        "promos":
+                        [
+                            {
+                            "promo_id":23,
+                            "promo_name":"RAC",
+                            "discount":0.45
+                            },
+                        ],
+                        "status":
+                            {
+                            "service":"reserved",
+                            "premium":
+                                {
+                                "check-in":"unconfirmed|requested|completed",
+                                "check-out":"unconfirmed|requested|completed",
+                                "client":
+                                    {
+                                        "waiting":0
+                                        "position":
+                                            {
+                                                "lat":0.34456645
+                                                "lng":0.34456645
+                                            },
+                                        "prediction":
+                                            {
+                                            "distance":345,
+                                            "duration":34556,
+                                            },
+                                    },
+                                "agent":
+                                    {
+                                        "agent_id":345435,
+                                        "name":"Pau Seglar",
+                                        "picture":"https://www.aparcandgo.com/images/43534645645",
+                                        "waiting":0,
+                                        "position":
+                                            {
+                                                "lat":0.34456645
+                                                "lng":0.34456645
+                                            },
+                                        "prediction":
+                                            {
+                                            "distance":345,
+                                            "duration":34556,
+                                            },
+                                    },
+                                {
+                            },
+                        "total_price":28.45,
+                        "paid":false,
+                        "log":
+                            [
+                                {
+                                "timestamp":"9999-12-31 23:59:59",
+                                "source":"client|agent[pseglar@aparcandgo.com]",
+                                "event":"Reserva realizada"
+                                },
+                                {
+                                "timestamp":"9999-12-31 23:59:59",
+                                "source":"client",
+                                "event":"Entrada a parking"
+                                },
+                            ],
+                    },
+                ]
+        }
+
+## RESERVATION -  VIEW/CREATE/UPDATE RESERVATION [/reservations/{reservation_id}]
+
+Solicita una reserva.
+
+<blockquote>
+**HASHES**
+El parámetro hash asegura que la reserva coincide con la oferta.
+Los hash se computan a partir del md5 del objeto offer. no se guardan en ninguna parte.
+</blockquote>
+
+<blockquote>
+**PROFILE_ID**
+Si el profile_id es null se considera que la reserva "no necesita factura"
+En frontend se pinta como el perfil personal.
+</blockquote>
+<blockquote>
+**PRODUCT STATUS**
++ Express
+    + reserved
+    + in
+    + out
++ Premium
+    + reserved
+    + 
+</blockquote>
+
+### CREATE RESERVATION [POST]
+
++ Request (application/json)
+
+    Reserva servicio express.
+    + Body
+        
+            {
+                "client_id":23455,
+                "profile":null,
+                "product_id": 12,
+                "start_date": "201705151130",
+                "end_date": "201705171130",
+                "promocode": "RAC",
+                "trip":
+                    {
+                    "in_terminal":1001,
+                    "in_passengers":2,
+                    "out_terminal":1002,
+                    "out_passengers":2,
+                    "vehicle":{
+                        "vehicle_id":null,
+                        "type":null
+                        "plate":"4565GHM",
+                        },
+                    "flight_number":"IB45546",
+                    },
+                "extras":
+                    [
+                        {
+                        "extra_id":23
+                        },
+                        {
+                        "extra_id":24
+                        },
+                    ],
+                "hash":"5647858689689tjhgjf",
+            },
+    
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "reservation": "mismo contenido que una de las del método GET /reservations"
+        }
+            
+
++ Response 400 (application/json)
+
+        {
+        "status":"invalid-hash",
+        }
++ Response 500 (application/json)
+
+        {
+        "status":"out-of-stock",
+        }
+### VIEW RESERVATION [GET]
+    requiere reservation_id
+    devuelve objeto reservation (ver /reservations)
+
++ Parameters
+    + reservation_id - 5465467
+
+    
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "reservation":"reservation object. see /reservations",
+        }
+        
++ Response 404 (application/json)
+
+        { 
+        "status":"not found", 
+        }
+### DELETE RESERVATION [DELETE]
+        
+
+
+## RESERVATION -  PAY [/reservations/pay]
+
+### PAY REQUEST [POST]
+<blockquote>
+Request reservation payment
+
++ If payment profile is not provided. use reservation information
++ Payment method is mandatory.
++ Payment method has to be valid to the invoice profile (corporate card cannot be used with personal profile)
+
+</blockquote>
+
+
++ Request (application/json)
+    
+    Gate access request
+    + Body
+    
+            {
+                "reservation_id": 2342355,
+                "profile_id":456767,
+                "paymethod_id":34567,
+            
+            }
+        
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+        
+        { 
+        "status":"ok", 
+        "reservation":"objeto reserva. la reserva estará pagada o dará error.".
+        }
+        
++ Response 403 (application/json)
+
+        { 
+        "status":"payment-error",
+        "error":"Tarjeta denegada"
+        }
+        
++ Response 404 (application/json)
+    
+        { 
+        "status":"reservation not found", 
+        }
+
++ Response 400 (application/json)
+
+        { 
+        "status":"invalid-paymethod", 
+        }
+
+
+## RESERVATION - PREMIUM SERVICE [/reservations/premium/{reservation_id}]
+
+<blockquote>
+
+Solicita o actualiza info sobre un servicio de entrega o recogida (depende del estado de la reserva y del origen)
+
+Los datos de predicción debe obtenerlos mediante llamadas al objeto GOOGLE API directions.
++ info https://developers.google.com/maps/documentation/javascript/directions
++ objeto directions https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsResult
+
+</blockquote>
+<blockquote>
+PREDICTION
+
+Los valores del objeto prediction pueden sacarse de la llamada a google API getDirections o de la propia posición GPS.
+más info: https://developers.google.com/maps/documentation/javascript/directions
+NOTA: la predicción no tendrá en cuenta el tráfico porque no disponemos de la licencia PREMIUM 
+</blockquote>
+
+### REQUEST SERVICE [POST]
+<blockquote>
+Solicita un servicio de entrega o recogida (depende del estado de la reserva)
+</blockquote>
+
+
++ Request (application/json)
+    solicita recogida o entrega.
+    el objeto prediction es opcional. Prediction se calculará en backend a partir de la posición.
+    para ahorra llamadas a Google API, la APP premium no utilizará prediction.
+
+    + Body
+    
+            {
+                "reservation_id": 2342355,
+                "position":
+                    {
+                        "lat":0.34456645
+                        "lng":0.34456645
+                    },
+                "prediction":
+                    {
+                    "distance":345,
+                    "duration":34556,
+                    },
+            }
+        
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+    Respueta OK.
+    
+    + Body
+
+            { 
+            "status":"ok",
+            "reservation":
+                {
+                "reservation_id":43,
+                "status":"reservation status object. see /reservations",
+                }
+            }
+
++ Response 404 (application/json)
+
+        { 
+        "status":"reservation not found", 
+        }
+### UPDATE TRACKING INFORMATION [PUT]
+ <blockquote>
+Actualiza los datos de traking de cliente.
+</blockquote>
+
++ Request (application/json)
+    solicita recogida o entrega.
+    el objeto prediction es opcional. Prediction se calculará en backend a partir de la posición.
+    para ahorra llamadas a Google API, la APP premium no utilizará prediction.
+
+    + Body
+    
+            {
+                "reservation_id": 2342355,
+                "position":
+                    {
+                        "lat":0.34456645
+                        "lng":0.34456645
+                    },
+                "prediction":
+                    {
+                    "distance":345,
+                    "duration":34556,
+                    },
+            }
+        
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+    Respueta OK.
+    
+    + Body
+
+            { 
+            "status":"ok",
+            "reservation":
+                {
+                "reservation_id":43,
+                "status":"reservation status object. see /reservations",
+                }
+            }
+### VIEW TRACKING INFORMATION [GET]
+<blockquote>
+Devuelve/actualiza únicamente el contenido del elemento resetvation.status.
+Está pensado para ahorrar trabajo en las llamadas de seguimiento del premium
+No devuelve datos si no es una reserva premium activa.
+</blockquote>
+
++ Parameters
+    + reservation_id - 5465467
+    
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+    Respueta OK.
+    
+    + Body
+
+            { 
+            "status":"ok",
+            "reservation":
+                {
+                "reservation_id":43,
+                "status":"reservation status object. see /reservations",
+                }
+            }
+
+## RESERVATION - QR SCAN [/reservations/qrscan]
+
+### ACCESS REQUEST [POST]
+Used for automatic check-in/check-out Requests using scanned QR text
+Usado para realizar check.in/check-out automáticamente 
+(el operario no debe marcar la entrada). como mucho, validar que se ha marcado la entrada y abrir la puerta.
+valid 
+
++ code debe ser válido
++ code debe corresponderse con el status de la reserva (puerta de salida solo aplica si la reserva está dentro)
++ usuario debe tener método de pago válido.
+
++ Request (application/json)
+    
+    Gate access request
+    + Body
+    
+            {
+                "reservation_id": 2342355,
+                "qrscan":"47896y58967548975896475689576897546947667659d",
+            
+            }
+        
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "reservation":"objeto reserva. la reserva estará pagada o dará error.".
+        }
+        
++ Response 404 (application/json)
+    
+        { 
+        "status":"code not found", 
+        }
+
++ Response 400 (application/json)
+
+        { 
+        "status":"invalid code", 
+        }
+        
+## BUSINESS - CREATE/UPDATE/VIEW [/business]
+
+### GET [GET]
+
+Retrieves and store user information.
++ default_invoice_profile: should be updated on first purchase if null. 
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        
+        }
+### UPDATE [PUT]
+
+only update new information. 
+
+
++ Request (application/json)
+    update business info
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+
+            {
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":08354,
+            "city": "la sacaremos en backend desde el CP"
+            }
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
+###  CREATE [POST]
+
++ Request (application/json)
+    Create a business.
+    it will add an administrator business profile to the current user.
+    
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+
+            {
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":08354,
+            "city": "la sacaremos en backend desde el CP no incluir en FE.",
+            }
+            
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "company":
+            {
+            "company_id":258,
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":08354,
+            "city": "la sacaremos en backend desde el CP no incluir en FE.",
+            "monthly_invoice": false,
+            "invoice_per_costcenter": false,
+            "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
+            "send_invoice_copy":[{"user_id":345346},{"user_id":234345}],
+            },
+        
+        }
+        
+## BUSINESS - PENDING - PROMOS [/business/discount/{company_id}]
+
+### GET current promos
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
+    + Parameters
+        + company_id - 258
+
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok",
+        "discount":"TODO: define discounts and rappels",
+                
+        
+        }
+
+## BUSINESS - PENDING - COST_CENTERS CREATE/UPDATE/VIEW [/business/costcenters/{company_id}]
+
+### GET [GET]
+
+Retrieves company cost centers.
++ default_invoice_profile: should be updated on first purchase if null. 
+
++ Request
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "cost_centers":"TODO"
+        
+        }
+### UPDATE [PUT]
+
+only update new information. 
+
+
++ Request (application/json)
+    update cc info
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+
+            {
+            }
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        }
+###  CREATE [POST]
+
++ Request (application/json)
+    Create a cc.
+    it will add an administrator business profile to the current user.
+    
+    + Headers
+    
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+
+            {
+            }
+            
+
++ Response 200 (application/json)
+
+        { 
+        "status":"ok", 
+        "company":
+            {
+            "company_id":258,
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":08354,
+            "city": "la sacaremos en backend desde el CP no incluir en FE.",
+            },
+        
+        }
+
+## BUSINESS - PENDING - RESERVATIONS
+## BUSINESS - PENDING - INVOICES
