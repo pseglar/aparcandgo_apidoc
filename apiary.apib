@@ -19,51 +19,51 @@ Log in equivalent.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Parameters
-    + provider (optional,local) -  local(default), google, facebook 
+    + provider (optional,local) -  local(default), google, facebook
     + email (optional,pseglar@gmail.com) - user identification
     + password (optional,3489576897) - base64 encoded password
     + keeplogged (optional,true) - boolean. false by default.
 
 + Response 200 (application/json)
 
-        { 
-        "access_token":"03807cb390319329bdf6c777d4dfae9c0d3b3c35", 
-        "expires_in":20171201,
+        {
+        "access_token":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
+        "expires_in":"2017-05-01",
         }
 ### TOKEN DELETE  [DELETE]
 
 Log out equivalent. deletes valid token from system
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
-        
+
 ## USER - VIEW/CREATE/UPDATE USER [/user]
 
 ### GET [GET]
 
 Retrieves and store user information.
-+ default_invoice_profile: should be updated on first purchase if null. 
++ default_invoice_profile: should be updated on first purchase if null.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "user":
             {
             "user_id":45346,
@@ -133,8 +133,8 @@ Retrieves and store user information.
                         "alias": "Acmesa",
                         "last_card_numbers": "4568",
                         "expire": 1907
-                        "added": "2016-03-14 16:20:48",
-                        "checked": "2016-03-14 16:20:48",
+                        "added": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02",
                     },
                     {
                         "paymethod_id":45346,
@@ -142,8 +142,8 @@ Retrieves and store user information.
                         "alias": "Acmesa",
                         "lastcardnumbers": "4568",
                         "expire": 1907
-                        "added": "2016-03-14 16:20:48",
-                        "checked": "2016-03-14 16:20:48",
+                        "added": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02",
                     }
                 ]
             }
@@ -154,7 +154,7 @@ only update new information. profiles and vehicles are updated under custom endp
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 
@@ -173,15 +173,15 @@ only update new information. profiles and vehicles are updated under custom endp
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 ###  CREATE [POST]
 
 <blockquote>
 Two examples:
 
-+ Basic user 
++ Basic user
 + User with invoice profile
 
 </blockquote>
@@ -198,12 +198,12 @@ Two examples:
             "zip":08354,
             "lang":"ca_ES",
             }
-            
+
 
 + Response 200 (application/json)
-    
-        { 
-        "status":"ok", 
+
+        {
+        "status":"ok",
         "user":
             {
             "user_id":45346,
@@ -214,16 +214,16 @@ Two examples:
             "accept_promos": true,
             "default_invoice_profile": null,
             "lang":"ca_ES",
-            
-            
+
+
             }
         }
-        
+
 
 + Request (application/json)
     Create user with invoice profile.
     + Body
-    
+
             {
             "email":"pseglar@gmail.com",
             "name":"Pau",
@@ -243,11 +243,11 @@ Two examples:
                     "invoice_zip": "08355",
                 }
             }
-        
+
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "user":
             {
             "user_id":45346,
@@ -281,9 +281,9 @@ Two examples:
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    
+
     + Body
 
             {
@@ -294,7 +294,7 @@ Two examples:
 
 + Response 200 (application/json)
 
-        { 
+        {
         "status":"ok",
         }
 
@@ -302,14 +302,14 @@ Two examples:
 
 
 + Parameters
-    
+
     + email (optional,pseglar@gmail.com) - user email
-    
+
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 
 ## USER POINTS  [/user/points]
@@ -317,12 +317,12 @@ Two examples:
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
+        {
         "status":"ok",
         "points":
             {
@@ -334,15 +334,15 @@ Two examples:
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
+        {
         "status":"ok",
         }
-        
+
 ## USER - Profiles [/user/profiles]
 
 Retrieves the list of existing profiles for the requesting user.
@@ -356,7 +356,7 @@ Retrieves the list of existing profiles for the requesting user.
     + **user**: account can use this profile.
     + **manager**: account can manage this profile (make reservations for other corporate users)
     + **administrator**: administrator access. professional profiles has always full access.
-+ monthly_invoice: tells to group invoices. 
++ monthly_invoice: tells to group invoices.
 + send_reservation_copy: corporate account option.
 + send_invoice_copy: corporate account option.
 
@@ -364,20 +364,20 @@ Retrieves the list of existing profiles for the requesting user.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "profiles":
             [
             {
             "profile_id":45346,
             "type":"corporate",
             "company_id":34536,
-            "rights": 
+            "rights":
                 {
                 "role":"administrator",
                 "permissions":
@@ -420,16 +420,16 @@ GET, CREATE or UPDATE a profile
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-            
+
 + Parameters
     + profile_id ... prifile id
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "profile":
             {
             "profile_id":45347,
@@ -448,16 +448,16 @@ GET, CREATE or UPDATE a profile
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-            
+
 + Parameters
     + profile_id ... prifile id
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 ### CREATE PROFILE [POST]
 
@@ -468,9 +468,9 @@ corporate profiles are created when a business account is created using other en
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-            
+
 + Request (application/json)
 
         {
@@ -487,8 +487,8 @@ corporate profiles are created when a business account is created using other en
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "profile":
             {
             "profile_id":45347,
@@ -509,13 +509,13 @@ profile_id is mandatory.
 rest of parameters are optional. will only update existing parameters.
 
 + Parameters
-    + profile_id 
+    + profile_id
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-            
+
 + Request (application/json)
 
         {
@@ -533,8 +533,8 @@ rest of parameters are optional. will only update existing parameters.
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "profile":
             {
             "profile_id":45346,
@@ -555,8 +555,8 @@ Retrieves the list of existing payment methods for the requesting user.
 
 in corporate accounts, only return valid cards for the current user (not showing other cost center cards).
 
-currently two types of payment methods: 
-+ card 
+currently two types of payment methods:
++ card
 + corporate_card
 
 + expire: integer with the expiration time in format YYMM (year/month 2 digits)
@@ -565,13 +565,13 @@ currently two types of payment methods:
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "paymethods":
             [
             {
@@ -582,8 +582,8 @@ currently two types of payment methods:
             "alias": "Acmesa",
             "last_card_numbers": "4568",
             "expire": 1907
-            "added": "2016-03-14 16:20:48",
-            "checked": "2016-03-14 16:20:48",
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02",
             },
             {
             "paymethod_id":45346,
@@ -591,8 +591,8 @@ currently two types of payment methods:
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire": 1907
-            "added": "2016-03-14 16:20:48",
-            "checked": "2016-03-14 16:20:48",
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02",
             }
             ]
         }
@@ -601,15 +601,15 @@ currently two types of payment methods:
 ### GET [GET]
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 + Parameters
-    + paymethod_id 
-    
+    + paymethod_id
+
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "paymethod":
             {
             "paymethod_id":45346,
@@ -619,14 +619,14 @@ currently two types of payment methods:
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire": 1907
-            "added": "2016-03-14 16:20:48",
-            "checked": "2016-03-14 16:20:48",
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02",
             }
         }
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 ### DELETE [DELETE]
 <blockquote>
@@ -637,21 +637,21 @@ TO DELETE A CARD USERS MUST USE **/deletecard** endpoint in the PCI SERVER.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 + Parameters
     + paymethod_id (integer)
     + pci_signature
-    
+
 + Response 200 (application/json)
 
-        { 
+        {
         "status":"ok"
         }
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 ### CREATE [POST]
 <blockquote>
@@ -675,19 +675,19 @@ PCI_SIGNATURE is a made from a secret key shared between servers
         "alias": "Acmesa",
         "lastcardnumbers": "4568",
         "expire": 1907
-        "added": "2016-03-14 16:20:48",
-        "checked": "2016-03-14 16:20:48",
+        "added": "2017-05-01T22:35:17.02",
+        "checked": "2017-05-01T22:35:17.02",
         "pci_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
         }
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "api_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
         }
 ### UPDATE [PUT]
@@ -705,13 +705,13 @@ Users can only update alias parameters.
         "cost_center": null
         }
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "paymethods":
             {
             "paymethod_id":45346,
@@ -721,11 +721,11 @@ Users can only update alias parameters.
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire": 1907
-            "added": "2016-03-14 16:20:48",
-            "checked": "2016-03-14 16:20:48",
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02",
             }
         }
-        
+
 ## USER - Vehicles [/user/vehicles]
 
 Retrieves the list of existing vehicles for the requesting user.
@@ -734,13 +734,13 @@ Retrieves the list of existing vehicles for the requesting user.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "vehicles":
                 [
                     {
@@ -760,15 +760,15 @@ Retrieves the list of existing vehicles for the requesting user.
 ### GET [GET]
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 + Parameters
-    + vehicle_id (integer) 
-    
+    + vehicle_id (integer)
+
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "vehicle":
             {
             "vehicle_id":45346,
@@ -778,28 +778,28 @@ Retrieves the list of existing vehicles for the requesting user.
         }
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 ### DELETE [DELETE]
 
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 + Parameters
     + vehicle_id (integer)
-    
+
 + Response 200 (application/json)
 
-        { 
+        {
         "status":"ok"
         }
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 ### CREATE [POST]
 
@@ -812,14 +812,14 @@ Retrieves the list of existing vehicles for the requesting user.
         "plate":"3453GHM",
         },
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "vehicle":
             {
             "vehicle_id":45346,
@@ -836,13 +836,13 @@ Retrieves the list of existing vehicles for the requesting user.
         "plate":"3453GHM",
         },
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "vehicle":
             {
             "vehicle_id":45346,
@@ -858,9 +858,9 @@ email is mandatory.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-            
+
 + Request (application/json)
 
         {
@@ -869,13 +869,13 @@ email is mandatory.
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 
 ## USER - Unsubscribe [/user/unsubscribe/{user_id}{?email,signature}]
@@ -883,24 +883,24 @@ email is mandatory.
 ### GET [GET]
 
 To be implemented in the future. allow a user to unsubscribe after receivign email.
-authorization token have to be created. 
-proposal: 
-! TODO: improve security. 
+authorization token have to be created.
+proposal:
+! TODO: improve security.
 
 + Parameters
-    + user_id   
-    + email 
+    + user_id
+    + email
     + signature - md5(email, server_secret)
-    
+
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 
 ## USER - INVOICES - PENDING [/user/invoices]
@@ -911,9 +911,9 @@ cuando se genera un perfil de facturación (autonomo o corporativo), por defecto
 En cualquier caso, si tras N estancias durante un mes, se cambia esta opción, entiendo qeu se aplica a las siguientes estancias que finalizen, no a las previas.
     + ejemplo:
     empresa tiene configurada facturación por servicio.hace 2 servicios. cambia la conf a "facturación mensual". hace 2 servicios.
-        + Ese mes tendrá 3 facturas. las dos primeras al finalizar el servicio y la mensual a final de mes con otras 2. 
+        + Ese mes tendrá 3 facturas. las dos primeras al finalizar el servicio y la mensual a final de mes con otras 2.
     + ejemplo 2:
-    empresa tiene configurada factura mensual. 
+    empresa tiene configurada factura mensual.
     Hace 2 servicios.
     Cambnia la conf a facturación por servicio.
         + La empresa recibirá 3 facturas. la mensual con las dos primeras a final de mes, y las otras 2 al momento.
@@ -949,8 +949,8 @@ Authorization Header: sha256($query_string,$auth_token);
 <blockquote>
 PCI SERVER will then:
 
-+ check the card 
-+ call /paymethod [post] to validate user and get a paymethod_id. 
++ check the card
++ call /paymethod [post] to validate user and get a paymethod_id.
 + store the card( PCI card will be paired with API paymethod_id ).
 
 </blockquote>
@@ -971,19 +971,19 @@ When calling with company_id, card will be stored as company card if user has ad
     + cvv - 246
     + type (optional) - corporate_card
     + company_id (optional) - 54647
-    + cost_center (optional) - 
-    + alias (optional) - 
+    + cost_center (optional) -
+    + alias (optional) -
 
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: 1806377b304fd52f1c5fb5289d6edb108f56b2e654f3098b3cb4a8ce40d0e266
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "paymethod":
             {
             "paymethod_id":45346,
@@ -993,8 +993,8 @@ When calling with company_id, card will be stored as company card if user has ad
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire": 1907
-            "added": "2016-03-14 16:20:48",
-            "checked": "2016-03-14 16:20:48",
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02",
             }
         }
 ## PCI - Delete card [/deletecard{?user_id,authorization_token,paymethod_id}]
@@ -1019,13 +1019,13 @@ PCI SERVER will then:
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: 1806377b304fd52f1c5fb5289d6edb108f56b2e654f3098b3cb4a8ce40d0e266
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "paymethods":
             {
             "paymethod_id":45346,
@@ -1035,8 +1035,8 @@ PCI SERVER will then:
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire": 1907
-            "added": "2016-03-14 16:20:48",
-            "checked": "2016-03-14 16:20:48",
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02",
             }
         }
 
@@ -1049,7 +1049,7 @@ GET /product/{id} will return information only for this product ID.
 </blockquote>
 
 <blockquote>
-Nota para desarrollo backend. 
+Nota para desarrollo backend.
 
 place y city de un product debe ser un dato relacional de la tabla cities y places respectivamente para evitar duplicidad de ciudades y productos.
 place y city deben disponer de nombre en los 4 idiomas.
@@ -1057,7 +1057,7 @@ product description debe estar en los 4 idiomas.
 </blockquote>
 
 <blockquote>
-Nota para desarrollo frontend. 
+Nota para desarrollo frontend.
 
 product short_description debe ser usado en la pantalla de selección de producto (tras la seleccion de ciudad y área de servicio)
 </blockquote>
@@ -1196,9 +1196,9 @@ Server will respond with **304 Not-Modified**
                                                             "name":null,
                                                             "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames.",
                                                         }
-        
+
                                                     ],
-        
+
                                                     "info":
                                                     [
                                                         {
@@ -1262,7 +1262,7 @@ Server will respond with **304 Not-Modified**
                                                     ]
                                                 },
                                             },
-        
+
                                         ],
                                     "extras":
                                         [
@@ -1284,7 +1284,7 @@ Server will respond with **304 Not-Modified**
                                             },
                                         ],
                                     },
-        
+
                                 {
                                     "product_id":5,
                                     "product_name":"Premium",
@@ -1375,9 +1375,9 @@ Server will respond with **304 Not-Modified**
                                                         "name":null,
                                                         "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames.",
                                                     }
-        
+
                                                 ],
-        
+
                                                 "info":
                                                 [
                                                     {
@@ -1441,7 +1441,7 @@ Server will respond with **304 Not-Modified**
                                                 ]
                                             },
                                         },
-        
+
                                     ],
                                 "extras":
                                         [
@@ -1463,7 +1463,7 @@ Server will respond with **304 Not-Modified**
                                             },
                                         ],
                                 },
-        
+
                             ]
                         },
                         {
@@ -1558,10 +1558,10 @@ Server will respond with **304 Not-Modified**
                                                             "body":"lorem ipum",
                                                             "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         }
-                                                        
-        
+
+
                                                     ],
-        
+
                                                     "info":
                                                     [
                                                         {
@@ -1615,11 +1615,11 @@ Server will respond with **304 Not-Modified**
                                                             "body":"Desde la estación, lorem ipum",
                                                             "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         }
-                                                        
+
                                                     ]
                                                 },
                                             },
-        
+
                                         ],
                                     "extras":
                                         [ ],
@@ -1633,12 +1633,12 @@ Server will respond with **304 Not-Modified**
                     "id":2,
                     "name":"Madrid",
                     "places":[],
-        
+
                 },
             ],
-        
+
         }
-        
+
 ## PRODUCT - CALCULATE PRICE [/product/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
 Proporciona los datos de precio de un producto.
 IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash para validar que el cliente ha visto el mismo precio.
@@ -1648,17 +1648,17 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
     + lang - es
     + product_id (integer) - 15
     + extras (optional) - 23,24
-    + start_date - 201705151130
-    + end_date - 201705171130
+    + start_date (required, date, `2017-05-01T22:35:17.02`- 2017-05-01T22:35:17.02
+    + end_date - (required, date `2017-05-01T22:35:17.02`) -2017-05-01T22:35:17.02
     + promocode - RAC
-    
+
 + Request (application/json)
 
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
-    
+
 + Response 200 (application/json)
 
         {
@@ -1666,8 +1666,8 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
         "offer":
             {
             "product_id": 12,
-            "start_date": "201705151130",
-            "end_date": "201705171130",
+            "start_date": "2017-05-01T22:35:17.02",
+            "end_date": "2017-05-01T22:35:17.02",
             "product_price":18.90,
             "extras":
                 [
@@ -1722,7 +1722,7 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
 ## RESERVATION -  LIST RESERVATIONS [/reservation/list]
 
 <blockquote>
-Backend info: 
+Backend info:
 
 se debe crear una tabla reservations_log con información relativa a cada reserva. debe ser diferente a la taba api_syslog que se generará para el registro de las llamadas API.
 
@@ -1737,12 +1737,12 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
+        {
             "status":"ok",
             "reservations":
                 [
@@ -1757,9 +1757,9 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "product_price":18.90,
                             "paid":false,
                             },
-                        "reservation_date": "201704151130",    
-                        "start_date": "201705151130",
-                        "end_date": "201705171130",
+                        "reservation_date": "2017-05-01T22:35:17.02",
+                        "start_date": "2017-05-05T22:35:17.02",
+                        "end_date": "2017-05-16T22:35:17.02",
                         "trip":
                             {
                             "in_terminal":1001,
@@ -1772,7 +1772,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "plate":"4565GHM",
                                 },
                             },
-                        
+
                         "extras":
                             [
                                 {
@@ -1835,9 +1835,9 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "product_price":18.90,
                             "paid":false,
                             },
-                        "reservation_date": "201704151130",    
-                        "start_date": "201705151130",
-                        "end_date": "201705171130",
+                        "reservation_date": "2017-05-01T22:35:17.02",
+                        "start_date": "2017-05-06T22:35:17.02",
+                        "end_date": "2017-05-07T22:35:17.02",
                         "trip":
                             {
                             "in_terminal":1001,
@@ -1849,7 +1849,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 },
                             "flight_number":"IB45546",
                             },
-                        
+
                         "extras":
                             [
                                 {
@@ -1963,7 +1963,7 @@ En frontend se pinta como el perfil personal.
     + out
 + Premium
     + reserved
-    + 
+    +
 </blockquote>
 
 ### CREATE RESERVATION [POST]
@@ -1972,13 +1972,13 @@ En frontend se pinta como el perfil personal.
 
     Reserva servicio express.
     + Body
-        
+
             {
                 "client_id":23455,
                 "profile":null,
                 "product_id": 12,
-                "start_date": "201705151130",
-                "end_date": "201705171130",
+                "start_date": "2017-05-05T22:35:17.02",
+                "end_date": "2017-05-06T22:35:17.02",
                 "promocode": "RAC",
                 "trip":
                     {
@@ -2004,9 +2004,9 @@ En frontend se pinta como el perfil personal.
                     ],
                 "hash":"5647858689689tjhgjf",
             },
-    
+
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 
@@ -2016,7 +2016,7 @@ En frontend se pinta como el perfil personal.
         "status":"ok",
         "reservation": "mismo contenido que una de las del método GET /reservations"
         }
-            
+
 
 + Response 400 (application/json)
 
@@ -2035,33 +2035,33 @@ En frontend se pinta como el perfil personal.
 + Parameters
     + reservation_id - 5465467
 
-    
+
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "reservation":"reservation object. see /reservations",
         }
-        
+
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
+        {
+        "status":"not found",
         }
 ### DELETE RESERVATION [DELETE]
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "reservation":"reservation object. see /reservations",
         }
-        
+
 + Response 404 (application/json)
 
-        { 
-        "status":"not found", 
-        }    
+        {
+        "status":"not found",
+        }
 
 
 ## RESERVATION -  PAY [/reservations/pay]
@@ -2078,45 +2078,45 @@ Request reservation payment
 
 
 + Request (application/json)
-    
+
     Gate access request
     + Body
-    
+
             {
                 "reservation_id": 2342355,
                 "profile_id":456767,
                 "paymethod_id":34567,
-            
+
             }
-        
+
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
-        
-        { 
-        "status":"ok", 
+
+        {
+        "status":"ok",
         "reservation":"objeto reserva. la reserva estará pagada o dará error.".
         }
-        
+
 + Response 403 (application/json)
 
-        { 
+        {
         "status":"payment-error",
         "error":"Tarjeta denegada"
         }
-        
+
 + Response 404 (application/json)
-    
-        { 
-        "status":"reservation not found", 
+
+        {
+        "status":"reservation not found",
         }
 
 + Response 400 (application/json)
 
-        { 
-        "status":"invalid-paymethod", 
+        {
+        "status":"invalid-paymethod",
         }
 
 
@@ -2136,7 +2136,7 @@ PREDICTION
 
 Los valores del objeto prediction pueden sacarse de la llamada a google API getDirections o de la propia posición GPS.
 más info: https://developers.google.com/maps/documentation/javascript/directions
-NOTA: la predicción no tendrá en cuenta el tráfico porque no disponemos de la licencia PREMIUM 
+NOTA: la predicción no tendrá en cuenta el tráfico porque no disponemos de la licencia PREMIUM
 </blockquote>
 
 ### REQUEST SERVICE [POST]
@@ -2151,7 +2151,7 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
     para ahorra llamadas a Google API, la APP premium no utilizará prediction.
 
     + Body
-    
+
             {
                 "reservation_id": 2342355,
                 "position":
@@ -2165,17 +2165,17 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
                     "duration":34556,
                     },
             }
-        
+
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
     Respueta OK.
-    
+
     + Body
 
-            { 
+            {
             "status":"ok",
             "reservation":
                 {
@@ -2186,8 +2186,8 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
 
 + Response 404 (application/json)
 
-        { 
-        "status":"reservation not found", 
+        {
+        "status":"reservation not found",
         }
 ### UPDATE TRACKING INFORMATION [PUT]
  <blockquote>
@@ -2200,7 +2200,7 @@ Actualiza los datos de traking de cliente.
     para ahorra llamadas a Google API, la APP premium no utilizará prediction.
 
     + Body
-    
+
             {
                 "reservation_id": 2342355,
                 "position":
@@ -2214,17 +2214,17 @@ Actualiza los datos de traking de cliente.
                     "duration":34556,
                     },
             }
-        
+
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
     Respueta OK.
-    
+
     + Body
 
-            { 
+            {
             "status":"ok",
             "reservation":
                 {
@@ -2241,18 +2241,18 @@ No devuelve datos si no es una reserva premium activa.
 
 + Parameters
     + reservation_id - 5465467
-    
+
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
     Respueta OK.
-    
+
     + Body
 
-            { 
+            {
             "status":"ok",
             "reservation":
                 {
@@ -2265,46 +2265,46 @@ No devuelve datos si no es una reserva premium activa.
 
 ### ACCESS REQUEST [POST]
 Used for automatic check-in/check-out Requests using scanned QR text
-Usado para realizar check.in/check-out automáticamente 
+Usado para realizar check.in/check-out automáticamente
 (el operario no debe marcar la entrada). como mucho, validar que se ha marcado la entrada y abrir la puerta.
-valid 
+valid
 
 + code debe ser válido
 + code debe corresponderse con el status de la reserva (puerta de salida solo aplica si la reserva está dentro)
 + usuario debe tener método de pago válido.
 
 + Request (application/json)
-    
+
     Gate access request
     + Body
-    
+
             {
                 "reservation_id": 2342355,
                 "qrscan":"47896y58967548975896475689576897546947667659d",
-            
+
             }
-        
+
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "reservation":"objeto reserva. la reserva estará pagada o dará error.".
         }
-        
+
 + Response 404 (application/json)
-    
-        { 
-        "status":"code not found", 
+
+        {
+        "status":"code not found",
         }
 
 + Response 400 (application/json)
 
-        { 
-        "status":"invalid code", 
+        {
+        "status":"invalid code",
         }
 
 ## RESERVATION - GET TICKET - [/reservation/ticket/{reservation_id}{?format}]
@@ -2314,7 +2314,7 @@ request ticket in html, pdf or by email.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 + Parameters
     + reservation_id (required,number,`3443`) - Reservation Id
@@ -2325,60 +2325,83 @@ request ticket in html, pdf or by email.
         <div style="background:#eee;"><table cellpadding="0" cellspacing="0" align="center" style="border:1px solid #ccc;margin:5px auto;"><tbody><tr><td class="mono" style="font-family:Consolas, Courier New, monospace;font-size:14px;padding:40px 10px 20px 10px;background:#fff;line-height:16px;"><div style="text-align:left;font-size:27px;font-weight:normal;line-height:30px;"><b>aparca&amp;go</b> <span style="font-size:20px">Express</span></div><div style="text-align:left;font-size:10px;font-weight:normal;">Aparca &amp; Go S.L.           express@aparcandgo.com</div><div style="text-align:left;font-size:10px;font-weight:normal;">CIF B64932858              TEL 93 122 05 48</div><div style="text-align:left;font-size:10px;font-weight:normal;">Autovía C-31, salida 190 - 08830 Sant Boi de Llobregat</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:right;font-size:14px;font-weight:normal;">Entrada nº &nbsp;&nbsp;<b>683119</b></div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:left;font-size:14px;font-weight:normal;">Entrada.. Barcelona T1&nbsp;&nbsp;&nbsp;<b>16/01/2017 &nbsp;18:30</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">Salida... Barcelona T1&nbsp;&nbsp;&nbsp;<b>19/01/2017 &nbsp;10:00</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:14px;font-weight:normal;">Plaza....... 729</div><div style="text-align:left;font-size:14px;font-weight:normal;">Matrícula... 45677</div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:center;font-size:14px;font-weight:bold;">GRÀCIES PER LA SEVA CONFIANÇA</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:center;"><img src="/tpv/css/barcode.png" alt="2000000000683119"></div><div style="text-align:center;font-size:14px;font-weight:normal;">2000000000683119</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:10px;font-weight:normal;">Preus segons tarifes vigents amb IVA inclòs.</div><div style="text-align:left;font-size:10px;font-weight:normal;">L'aparcament d'un vehicle no constitueix un contracte de</div><div style="text-align:left;font-size:10px;font-weight:normal;">dipòsit. L'empresa no respon dels objectes dipositats a</div><div style="text-align:left;font-size:10px;font-weight:normal;">l'interior del vehicle. L'usuari és responsable dels</div><div style="text-align:left;font-size:10px;font-weight:normal;">danys que ocasioni a altres vehicles.</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div></td></tr></tbody></table></div>
 
 + Response 200 (application/pdf)
-        
 
 
-
-
-## RESERVATION - LIST INVOICES - PENDING [/reservation/invoices]
-invoices array.
-
-## RESERVATION - GET INVOICE [/reservation/invoice/{invoice_id}{?format}]
-request invoice in html, pdf or by email.
-### REQUEST TICKET [GET]
-
+## INVOICE - LIST INVOICES  [/invoice/list]
+### GET INVOICE LIST [GET]
 + Request
     + Headers
-    
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-+ Parameters
-    + invoice_id (required,number,`3443`) - Reservation Id
-    + format (optional,string,`html`) - html(default) | pdf | email
 
-+ Response 200 (text/html)
+        Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
-        <div style="background:#eee;"><table cellpadding="0" cellspacing="0" align="center" style="border:1px solid #ccc;margin:5px auto;"><tbody><tr><td class="mono" style="font-family:Consolas, Courier New, monospace;font-size:14px;padding:40px 10px 20px 10px;background:#fff;line-height:16px;"><div style="text-align:left;font-size:27px;font-weight:normal;line-height:30px;"><b>aparca&amp;go</b> <span style="font-size:20px">Express</span></div><div style="text-align:left;font-size:10px;font-weight:normal;">Aparca &amp; Go S.L.           express@aparcandgo.com</div><div style="text-align:left;font-size:10px;font-weight:normal;">CIF B64932858              TEL 93 122 05 48</div><div style="text-align:left;font-size:10px;font-weight:normal;">Autovía C-31, salida 190 - 08830 Sant Boi de Llobregat</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:right;font-size:14px;font-weight:normal;">Entrada nº &nbsp;&nbsp;<b>683119</b></div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:left;font-size:14px;font-weight:normal;">Entrada.. Barcelona T1&nbsp;&nbsp;&nbsp;<b>16/01/2017 &nbsp;18:30</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">Salida... Barcelona T1&nbsp;&nbsp;&nbsp;<b>19/01/2017 &nbsp;10:00</b></div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:14px;font-weight:normal;">Plaza....... 729</div><div style="text-align:left;font-size:14px;font-weight:normal;">Matrícula... 45677</div><div style="font-size:14px;font-weight:normal;"><div style="background:#000;height:1px;margin:7px 0px;"></div></div><div style="text-align:center;font-size:14px;font-weight:bold;">GRÀCIES PER LA SEVA CONFIANÇA</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:center;"><img src="/tpv/css/barcode.png" alt="2000000000683119"></div><div style="text-align:center;font-size:14px;font-weight:normal;">2000000000683119</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div><div style="text-align:left;font-size:10px;font-weight:normal;">Preus segons tarifes vigents amb IVA inclòs.</div><div style="text-align:left;font-size:10px;font-weight:normal;">L'aparcament d'un vehicle no constitueix un contracte de</div><div style="text-align:left;font-size:10px;font-weight:normal;">dipòsit. L'empresa no respon dels objectes dipositats a</div><div style="text-align:left;font-size:10px;font-weight:normal;">l'interior del vehicle. L'usuari és responsable dels</div><div style="text-align:left;font-size:10px;font-weight:normal;">danys que ocasioni a altres vehicles.</div><div style="text-align:left;font-size:14px;font-weight:normal;">&nbsp;</div></td></tr></tbody></table></div>
++ Response 200 (text/json)
+
+        {
+            "status":"ok",
+            "invoices":
+                [
+                    {
+                        "invoice_id":234534,
+                        "date": "2016-01-01T22:35:17.02",
+                        "amount": 17.58,
+                        "profile_id":45347,
+                    },
+                    {
+                        "invoice_id":234537,
+                        "date": "2016-02-01T22:35:17.02",
+                        "amount": 17.58,
+                        "profile_id":45347,
+                    }
+                ]
+        }
+
 
 + Response 200 (application/pdf)
 
-        
+## INVOICE - GET INVOICE [/invoice/{invoice_id}{?format}]
+request invoice in html, pdf or by email.
+### REQUEST INVOICE [GET]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Parameters
+    + invoice_id (required,number,`3443`) - Reservation Id
+    + format (optional,string,`pdf`) - | pdf(default) | email
+
+
++ Response 200 (application/pdf)
+
+
 ## BUSINESS - CREATE/UPDATE/VIEW [/business]
 
 ### GET [GET]
 
 Retrieves and store user information.
-+ default_invoice_profile: should be updated on first purchase if null. 
++ default_invoice_profile: should be updated on first purchase if null.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
-        
+        {
+        "status":"ok",
+
         }
 ### UPDATE [PUT]
 
-only update new information. 
+only update new information.
 
 
 + Request (application/json)
     update business info
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
     + Body
 
@@ -2392,17 +2415,17 @@ only update new information.
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 ###  CREATE [POST]
 
 + Request (application/json)
     Create a business.
     it will add an administrator business profile to the current user.
-    
+
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
     + Body
 
@@ -2413,12 +2436,12 @@ only update new information.
             "zip":08354,
             "city": "la sacaremos en backend desde el CP no incluir en FE.",
             }
-            
+
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "company":
             {
             "company_id":258,
@@ -2432,29 +2455,29 @@ only update new information.
             "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
             "send_invoice_copy":[{"user_id":345346},{"user_id":234345}],
             },
-        
+
         }
-        
+
 ## BUSINESS - PENDING - PROMOS [/business/discount/{company_id}]
 
 ### GET current promos
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-            
+
     + Parameters
         + company_id - 258
 
 
 + Response 200 (application/json)
 
-        { 
+        {
         "status":"ok",
         "discount":"TODO: define discounts and rappels",
-                
-        
+
+
         }
 
 ## BUSINESS - PENDING - COST_CENTERS CREATE/UPDATE/VIEW [/business/costcenters/{company_id}]
@@ -2462,29 +2485,29 @@ only update new information.
 ### GET [GET]
 
 Retrieves company cost centers.
-+ default_invoice_profile: should be updated on first purchase if null. 
++ default_invoice_profile: should be updated on first purchase if null.
 
 + Request
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "cost_centers":"TODO"
-        
+
         }
 ### UPDATE [PUT]
 
-only update new information. 
+only update new information.
 
 
 + Request (application/json)
     update cc info
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
     + Body
 
@@ -2493,28 +2516,28 @@ only update new information.
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         }
 ###  CREATE [POST]
 
 + Request (application/json)
     Create a cc.
     it will add an administrator business profile to the current user.
-    
+
     + Headers
-    
+
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
     + Body
 
             {
             }
-            
+
 
 + Response 200 (application/json)
 
-        { 
-        "status":"ok", 
+        {
+        "status":"ok",
         "company":
             {
             "company_id":258,
@@ -2524,7 +2547,7 @@ only update new information.
             "zip":08354,
             "city": "la sacaremos en backend desde el CP no incluir en FE.",
             },
-        
+
         }
 
 ## BUSINESS RESERVATIONS - PENDING   [/business/reservations]
