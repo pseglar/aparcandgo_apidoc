@@ -67,87 +67,87 @@ Retrieves and store user information.
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-        "user":
+            "status":"ok",
+            "user":
             {
-            "user_id":45346,
-            "email":"pseglar@gmail.com",
-            "name":"Pau",
-            "lastname":"Seglar Segura",
-            "phone": "607787857",
-            "zip":08354,
-            "lang":"ca_ES",
-            "accept_promos": true,
-            "default_invoice_profile": null,
-            "email_validated": true,
-            "phone_validated": true,
-            "points":
+                "user_id":45346,
+                "email":"pseglar@gmail.com",
+                "name":"Pau",
+                "lastname":"Seglar Segura",
+                "phone": "607787857",
+                "zip": "08301",
+                "lang":"ca_ES",
+                "accept_promos": true,
+                "default_invoice_profile": null,
+                "email_validated": true,
+                "phone_validated": true,
+                "points":
                 {
-                "currentpoints":0.95,
+                    "currentpoints":0.95
                 },
-            "profiles":
-                [
-                {
-                "profile_id":45346,
-                "type":"corporate",
-                "company_id":34536,
-                "rights": "administrator",
-                "cost_center": 76645,
-                "invoice_name":"Acmesa",
-                "invoice_nif":"j66245523",
-                "invoice_email":"invoices@acmesa.com",
-                "invoice_address":"c/ alegria 23",
-                "invoice_city":"Barcelona",
-                "invoice_state":"Barcelona",
-                "invoice_zip": "08355",
-                },
-                {
-                "profile_id":45347,
-                "type":"professional",
-                "monthly_invoice": false,
-                "invoice_name":"Acmesa",
-                "invoice_nif":"j66245523",
-                "invoice_email":"invoices@acmesa.com",
-                "invoice_address":"c/ alegria 23",
-                "invoice_city":"Barcelona",
-                "invoice_state":"Barcelona",
-                "invoice_zip": "08355",
-                }
-                ],
-            "vehicles":
+                "profiles":
                 [
                     {
-                    "vehicle_id":45346,
-                    "type":"vw golf gris",
-                    "plate":"3453GHM",
+                        "profile_id":45346,
+                        "type":"corporate",
+                        "company_id":34536,
+                        "rights": "administrator",
+                        "cost_center": 76645,
+                        "invoice_name":"Acmesa",
+                        "invoice_nif":"j66245523",
+                        "invoice_email":"invoices@acmesa.com",
+                        "invoice_address":"c/ alegria 23",
+                        "invoice_city":"Barcelona",
+                        "invoice_state":"Barcelona",
+                        "invoice_zip": "08355"
                     },
                     {
-                    "vehicle_id":45347,
-                    "type":"renault twingo azul",
-                    "plate":"B-5468-UC",
+                        "profile_id":45347,
+                        "type":"professional",
+                        "monthly_invoice": false,
+                        "invoice_name":"Acmesa",
+                        "invoice_nif":"j66245523",
+                        "invoice_email":"invoices@acmesa.com",
+                        "invoice_address":"c/ alegria 23",
+                        "invoice_city":"Barcelona",
+                        "invoice_state":"Barcelona",
+                        "invoice_zip": "08355"
                     }
                 ],
-            "paymethods":
+                "vehicles":
+                [
+                    {
+                        "vehicle_id":45346,
+                        "type":"vw golf gris",
+                        "plate":"3453GHM"
+                    },
+                    {
+                        "vehicle_id":45347,
+                        "type":"renault twingo azul",
+                        "plate":"B-5468-UC"
+                    }
+                ],
+                "paymethods":
                 [
                     {
                         "paymethod_id":45346,
                         "type":"corporate_card",
                         "company_id": 45678,
-                        "cost_center": null
+                        "cost_center": null,
                         "alias": "Acmesa",
                         "last_card_numbers": "4568",
-                        "expire": 1907
+                        "expire": 1907,
                         "added": "2017-05-01T22:35:17.02",
-                        "checked": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02"
                     },
                     {
                         "paymethod_id":45346,
                         "type":"card",
                         "alias": "Acmesa",
                         "lastcardnumbers": "4568",
-                        "expire": 1907
+                        "expire": 1907,
                         "added": "2017-05-01T22:35:17.02",
-                        "checked": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02"
                     }
                 ]
             }
@@ -299,7 +299,7 @@ Two examples:
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 
 ### REQUEST FORGOTTEN PASSWORD  [GET]
@@ -313,7 +313,7 @@ Two examples:
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 
 ## USER POINTS  [/user/points]
@@ -331,7 +331,7 @@ Two examples:
         "points":
             {
             "currentpoints":0.95,
-            },
+            }
         }
 ## USER RESEND SMS  [/user/smsvalidation]
 ### REQUEST SMS VALIDATION [GET]
@@ -374,47 +374,50 @@ Retrieves the list of existing profiles for the requesting user.
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-        "profiles":
+            "status":"ok",
+            "profiles":
             [
-            {
-            "profile_id":45346,
-            "type":"corporate",
-            "company_id":34536,
-            "rights":
                 {
-                "role":"administrator",
-                "permissions":
-                    [
-                    "pending":"pending"
-                    ],
-            "cost_center": 76645,
-            "monthly_invoice": false,
-            "invoice_per_costcenter": false,
-            "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
-            "send_invoice_copy":[{"user_id":345346},{"user_id":234345}],
-            "invoice_name":"Acmesa",
-            "invoice_nif":"j66245523",
-            "invoice_email":"invoices@acmesa.com",
-            "invoice_address":"c/ alegria 23",
-            "invoice_city":"Barcelona",
-            "invoice_state":"Barcelona",
-            "invoice_zip": "08355"
-            },
-            {
-            "profile_id":45347,
-            "type":"professional",
-            "monthly_invoice": false,
-            "invoice_name":"Acmesa",
-            "invoice_nif":"j66245523",
-            "invoice_email":"invoices@acmesa.com",
-            "invoice_address":"c/ alegria 23",
-            "invoice_city":"Barcelona",
-            "invoice_state":"Barcelona",
-            "invoice_zip": "08355"
-            }
+                    "profile_id":45346,
+                    "type":"corporate",
+                    "company_id":34536,
+                    "rights":
+                    {
+                        "role":"administrator",
+                        "permissions": {
+                            "manage_paymethods": true,
+                            "manage_users": true,
+                            "manage_reservations": true
+                        }
+                    },
+                        "cost_center": 76645,
+                        "monthly_invoice": false,
+                        "invoice_per_costcenter": false,
+                        "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
+                        "send_invoice_copy":[{"user_id":345346},{"user_id":234345}],
+                        "invoice_name":"Acmesa",
+                        "invoice_nif":"j66245523",
+                        "invoice_email":"invoices@acmesa.com",
+                        "invoice_address":"c/ alegria 23",
+                        "invoice_city":"Barcelona",
+                        "invoice_state":"Barcelona",
+                        "invoice_zip": "08355"
+                    },
+                {
+                    "profile_id":45347,
+                    "type":"professional",
+                    "monthly_invoice": false,
+                    "invoice_name":"Acmesa",
+                    "invoice_nif":"j66245523",
+                    "invoice_email":"invoices@acmesa.com",
+                    "invoice_address":"c/ alegria 23",
+                    "invoice_city":"Barcelona",
+                    "invoice_state":"Barcelona",
+                    "invoice_zip": "08355"
+                }
             ]
         }
+        
 
 ## USER - Profile Management [/user/profile/{profile_id}]
 
@@ -578,26 +581,26 @@ currently two types of payment methods:
         "status":"ok",
         "paymethods":
             [
-            {
-            "paymethod_id":45346,
-            "type":"corporate_card",
-            "company_id": 45678,
-            "cost_center": null
-            "alias": "Acmesa",
-            "last_card_numbers": "4568",
-            "expire": 1907
-            "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02"
-            },
-            {
-            "paymethod_id":45346,
-            "type":"card",
-            "alias": "Acmesa",
-            "lastcardnumbers": "4568",
-            "expire": 1907
-            "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02"
-            }
+                {
+                    "paymethod_id":45346,
+                    "type":"corporate_card",
+                    "company_id": 45678,
+                    "cost_center": null,
+                    "alias": "Acmesa",
+                    "last_card_numbers": "4568",
+                    "expire": 1907,
+                    "added": "2017-05-01T22:35:17.02",
+                    "checked": "2017-05-01T22:35:17.02"
+                },
+                {
+                    "paymethod_id":45346,
+                    "type":"card",
+                    "alias": "Acmesa",
+                    "lastcardnumbers": "4568",
+                    "expire": 1907,
+                    "added": "2017-05-01T22:35:17.02",
+                    "checked": "2017-05-01T22:35:17.02"
+                }
             ]
         }
 ## USER - Paymethod Management [/user/paymethod/{paymethod_id}{?pci_signature}]
@@ -1091,10 +1094,10 @@ Server will respond with **304 Not-Modified**
                     "id":1,
                     "name":"Barcelona",
                     "location":
-                        {
-                            "lat":2.245456,
-                            "lng":40.548756
-                        },
+                    {
+                        "lat":2.245456,
+                        "lng":40.548756
+                    },
                     "places":
                     [
                         {
@@ -1102,10 +1105,10 @@ Server will respond with **304 Not-Modified**
                             "name": "Aeropuerto de Barcelona",
                             "type":"airport",
                             "location":
-                                {
-                                    "lat":2.245456,
-                                    "lng":40.548756
-                                },
+                            {
+                                "lat":2.245456,
+                                "lng":40.548756
+                            },
                             "products":
                             [
                                 {
@@ -1173,17 +1176,17 @@ Server will respond with **304 Not-Modified**
                                                     "instructions":
                                                     [
                                                         {
-                                                            "icon":"map"
+                                                            "icon":"map",
                                                             "name":null,
                                                             "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
                                                         },
                                                         {
-                                                            "icon":"agent"
+                                                            "icon":"agent",
                                                             "name":null,
                                                             "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
-                                                        }
+                                                        },
                                                         {
-                                                            "icon":"bus"
+                                                            "icon":"bus",
                                                             "name":null,
                                                             "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
                                                         }
@@ -1191,12 +1194,12 @@ Server will respond with **304 Not-Modified**
                                                     "final_instructions":
                                                     [
                                                         {
-                                                            "icon":"bus"
+                                                            "icon":"bus",
                                                             "name":null,
                                                             "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
                                                         },
                                                         {
-                                                            "icon":null
+                                                            "icon":null,
                                                             "name":null,
                                                             "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
                                                         }
@@ -1232,12 +1235,12 @@ Server will respond with **304 Not-Modified**
                                                     "instructions":
                                                     [
                                                         {
-                                                            "icon":"bus"
+                                                            "icon":"bus",
                                                             "name":null,
                                                             "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
                                                         },
                                                         {
-                                                            "icon":"map"
+                                                            "icon":"map",
                                                             "name":null,
                                                             "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
                                                         }
@@ -1245,7 +1248,7 @@ Server will respond with **304 Not-Modified**
                                                     "final_instructions":
                                                     [
                                                         {
-                                                            "icon":"flag"
+                                                            "icon":"flag",
                                                             "name":"Gracias por tu estancia",
                                                             "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                                         }
@@ -1260,28 +1263,28 @@ Server will respond with **304 Not-Modified**
                                                         {
                                                             "name":"Horario y frecuencia",
                                                             "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año."
-                                                        },
+                                                        }
                                                     ]
                                                 }
                                             }
                                         ],
-                                    "extras":
+                                        "extras":
                                         [
                                             {
-                                            "extra_id":23,
-                                            "name":"Cubierto",
-                                            "icon":"house",
-                                            "description":"Aparcar en zona cubierta",
-                                            "unitary_price":1,
-                                            "price_calculation":"daily"
+                                                "extra_id":23,
+                                                "name":"Cubierto",
+                                                "icon":"house",
+                                                "description":"Aparcar en zona cubierta",
+                                                "unitary_price":1,
+                                                "price_calculation":"daily"
                                             },
                                             {
-                                            "extra_id":24,
-                                            "name":"Lavado exterior",
-                                            "icon":"house",
-                                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                            "unitary_price":7.55,
-                                            "price_calculation":"final_price"
+                                                "extra_id":24,
+                                                "name":"Lavado exterior",
+                                                "icon":"house",
+                                                "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                                "unitary_price":7.55,
+                                                "price_calculation":"final_price"
                                             }
                                         ]
                                     }
@@ -1309,7 +1312,7 @@ Server will respond with **304 Not-Modified**
                                         [
                                             {
                                                 "name":"Punto de recogida",
-                                                "body":" lorem imsum"
+                                                "body":" lorem imsum",
                                                 "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                             },
                                             {
@@ -1331,8 +1334,8 @@ Server will respond with **304 Not-Modified**
                                             {
                                                 "name":"¿Qué debemos hacer para avisar de nuestra llegada?",
                                                 "body":"Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello."
-                                            },
-                                        ],
+                                            }
+                                        ]
                                     },
                                     "terminals":
                                     [
@@ -1357,7 +1360,7 @@ Server will respond with **304 Not-Modified**
                                                         "icon":"agent",
                                                         "name":null,
                                                         "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
-                                                    }
+                                                    },
                                                     {
                                                         "icon":"bus",
                                                         "name":null,
@@ -1381,7 +1384,7 @@ Server will respond with **304 Not-Modified**
                                                 [
                                                     {
                                                         "name":"Como llegar",
-                                                        "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>"
+                                                        "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
                                                         "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                     },
                                                     {
@@ -1421,7 +1424,7 @@ Server will respond with **304 Not-Modified**
                                                 "final_instructions":
                                                 [
                                                     {
-                                                        "icon":"flag"
+                                                        "icon":"flag",
                                                         "name":"Gracias por tu estancia",
                                                         "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                                     }
@@ -1441,25 +1444,25 @@ Server will respond with **304 Not-Modified**
                                             }
                                         }
                                     ],
-                                "extras":
-                                        [
-                                            {
+                                    "extras":
+                                    [
+                                        {
                                             "extra_id":23,
                                             "name":"Cubierto",
                                             "icon":"house",
                                             "description":"Aparcar en zona cubierta",
                                             "unitary_price":1,
                                             "price_calculation":"daily"
-                                            },
-                                            {
+                                        },
+                                        {
                                             "extra_id":24,
                                             "name":"Lavado exterior",
                                             "icon":"house",
                                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                                             "unitary_price":7.55,
                                             "price_calculation":"final_price"
-                                            }
-                                        ]
+                                        }
+                                    ]
                                 }
                             ]
                         },
@@ -1468,10 +1471,10 @@ Server will respond with **304 Not-Modified**
                             "name": "Estació de Sants",
                             "type":"train",
                             "location":
-                                {
-                                    "lat":2.245456,
-                                    "lng":40.548756
-                                },
+                            {
+                                "lat":2.245456,
+                                "lng":40.548756
+                            },
                             "products":
                             [
                                 {
@@ -1480,7 +1483,7 @@ Server will respond with **304 Not-Modified**
                                     "provider":"Aparca&Go",
                                     "service":"parking",
                                     "info":
-                                        {
+                                    {
                                         "short_description":"Aparcamiento a 2 minutos andando de la estación.",
                                         "location":
                                         {
@@ -1490,7 +1493,7 @@ Server will respond with **304 Not-Modified**
                                             "place":
                                             {
                                                 "name":"Estació de sants.",
-                                                "type":"train",
+                                                "type":"train"
                                             },
                                             "service_info":
                                             [
@@ -1540,7 +1543,7 @@ Server will respond with **304 Not-Modified**
                                                             "icon":"agent",
                                                             "name":null,
                                                             "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
-                                                        }
+                                                        },
                                                         {
                                                             "icon":"walking",
                                                             "name":null,
@@ -1584,7 +1587,7 @@ Server will respond with **304 Not-Modified**
                                                     "instructions":
                                                     [
                                                         {
-                                                            "icon":"walking"
+                                                            "icon":"walking",
                                                             "name":null,
                                                             "body":"A tu regreso, dirígete parking para recoger tu vehículo."
                                                         },
@@ -1613,8 +1616,8 @@ Server will respond with **304 Not-Modified**
                                                 }
                                             }
                                         ],
-                                    "extras":
-                                        [],
+                                        "extras":
+                                        []
                                     }
                                 }
                             ]
@@ -1735,201 +1738,201 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
         {
             "status":"ok",
             "reservations":
-                [
+            [
+                {
+                    "reservation_id":23444,
+                    "client_id":23455,
+                    "profile":3445,
+                    "product":
                     {
-                        "reservation_id":23444,
-                        "client_id":23455,
-                        "profile":3445,
-                        "product":
-                            {
-                            "product_id":12,
-                            "service":"express"
-                            "product_price":18.90,
-                            "paid":false
-                            },
-                        "reservation_date": "2017-05-01T22:35:17.02",
-                        "start_date": "2017-05-05T22:35:17.02",
-                        "end_date": "2017-05-16T22:35:17.02",
-                        "trip":
-                            {
-                            "in_terminal":1001,
-                            "in_passengers":2,
-                            "out_terminal":1002,
-                            "out_passengers":2,
-                            "vehicle":{
-                                "vehicle_id":null,
-                                "type":null
-                                "plate":"4565GHM"
-                                }
-                            }
-                        "extras":
-                            [
-                                {
-                                "extra_id":23,
-                                "name":"Cubierto",
-                                "icon":"house",
-                                "description":"Aparcar en zona cubierta",
-                                "unitary_price":1,
-                                "price_calculation":"daily",
-                                "price":2,
-                                "paid":false
-                                },
-                                {
-                                "extra_id":24,
-                                "name":"Lavado exterior",
-                                "icon":"house",
-                                "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                "unitary_price":7.55,
-                                "price_calculation":"final_price",
-                                "price":7.55,
-                                "paid":false
-                                }
-                            ],
-                        "promos":
-                        [
-                            {
-                            "promo_id":23,
-                            "promo_name":"RAC",
-                            "discount":0.45
-                            }
-                        ],
-                        "status":
-                            {
-                            "service":"reserved"
-                            },
-                        "total_price":28.45,
-                        "paid":false,
-                        "log":
-                            [
-                                {
-                                "timestamp":"9999-12-31 23:59:59",
-                                "source":"client|agent[pseglar@aparcandgo.com]",
-                                "event":"Reserva realizada"
-                                },
-                                {
-                                "timestamp":"9999-12-31 23:59:59",
-                                "source":"client",
-                                "event":"Entrada a parking"
-                                }
-                            ]
+                        "product_id":12,
+                        "service":"express",
+                        "product_price":18.90,
+                        "paid":false
                     },
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-05T22:35:17.02",
+                    "end_date": "2017-05-16T22:35:17.02",
+                    "trip":
                     {
-                        "reservation_id":23444,
-                        "client_id":23455,
-                        "profile":3445,
-                        "product":
-                            {
-                            "product_id":12,
-                            "service":"premium"
-                            "product_price":18.90,
+                        "in_terminal":1001,
+                        "in_passengers":2,
+                        "out_terminal":1002,
+                        "out_passengers":2,
+                        "vehicle":{
+                            "vehicle_id":null,
+                            "type":null,
+                            "plate":"4565GHM"
+                        }
+                    },
+                    "extras":
+                    [
+                        {
+                            "extra_id":23,
+                            "name":"Cubierto",
+                            "icon":"house",
+                            "description":"Aparcar en zona cubierta",
+                            "unitary_price":1,
+                            "price_calculation":"daily",
+                            "price":2,
                             "paid":false
-                            },
-                        "reservation_date": "2017-05-01T22:35:17.02",
-                        "start_date": "2017-05-06T22:35:17.02",
-                        "end_date": "2017-05-07T22:35:17.02",
-                        "trip":
-                            {
-                            "in_terminal":1001,
-                            "out_terminal":1002,
-                            "vehicle":{
-                                "vehicle_id":null,
-                                "type":null
-                                "plate":"4565GHM"
-                                },
-                            "flight_number":"IB45546",
-                            },
-
-                        "extras":
-                            [
-                                {
-                                "extra_id":23,
-                                "name":"Cubierto",
-                                "icon":"house",
-                                "description":"Aparcar en zona cubierta",
-                                "unitary_price":1,
-                                "price_calculation":"daily",
-                                "price":2,
-                                "paid":false
-                                },
-                                {
-                                "extra_id":24,
-                                "name":"Lavado exterior",
-                                "icon":"house",
-                                "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                "unitary_price":7.55,
-                                "price_calculation":"final_price",
-                                "price":7.55,
-                                "paid":false
-                                }
-                            ],
-                        "promos":
-                        [
-                            {
+                        },
+                        {
+                            "extra_id":24,
+                            "name":"Lavado exterior",
+                            "icon":"house",
+                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                            "unitary_price":7.55,
+                            "price_calculation":"final_price",
+                            "price":7.55,
+                            "paid":false
+                        }
+                    ],
+                    "promos":
+                    [
+                        {
                             "promo_id":23,
                             "promo_name":"RAC",
                             "discount":0.45
-                            }
-                        ],
-                        "status":
+                        }
+                    ],
+                    "status":
+                    {
+                        "service":"reserved"
+                    },
+                    "total_price":28.45,
+                    "paid":false,
+                    "log":
+                    [
+                        {
+                            "timestamp":"9999-12-31 23:59:59",
+                            "source":"client|agent[pseglar@aparcandgo.com]",
+                            "event":"Reserva realizada"
+                        },
+                        {
+                            "timestamp":"9999-12-31 23:59:59",
+                            "source":"client",
+                            "event":"Entrada a parking"
+                        }
+                    ]
+                },
+                {
+                    "reservation_id":23444,
+                    "client_id":23455,
+                    "profile":3445,
+                    "product":
+                    {
+                        "product_id":12,
+                        "service":"premium",
+                        "product_price":18.90,
+                        "paid":false
+                    },
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-06T22:35:17.02",
+                    "end_date": "2017-05-07T22:35:17.02",
+                    "trip":
+                    {
+                        "in_terminal":1001,
+                        "out_terminal":1002,
+                        "vehicle":{
+                            "vehicle_id":null,
+                            "type":null,
+                            "plate":"4565GHM"
+                        },
+                        "flight_number":"IB45546"
+                    },
+        
+                    "extras":
+                    [
+                        {
+                            "extra_id":23,
+                            "name":"Cubierto",
+                            "icon":"house",
+                            "description":"Aparcar en zona cubierta",
+                            "unitary_price":1,
+                            "price_calculation":"daily",
+                            "price":2,
+                            "paid":false
+                        },
+                        {
+                            "extra_id":24,
+                            "name":"Lavado exterior",
+                            "icon":"house",
+                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                            "unitary_price":7.55,
+                            "price_calculation":"final_price",
+                            "price":7.55,
+                            "paid":false
+                        }
+                    ],
+                    "promos":
+                    [
+                        {
+                            "promo_id":23,
+                            "promo_name":"RAC",
+                            "discount":0.45
+                        }
+                    ],
+                    "status":
+                    {
+                        "service":"reserved",
+                        "premium":
+                        {
+                            "check-in":"unconfirmed|requested|completed",
+                            "check-out":"unconfirmed|requested|completed",
+                            "client":
                             {
-                            "service":"reserved",
-                            "premium":
+                                "waiting":0,
+                                "position":
                                 {
-                                "check-in":"unconfirmed|requested|completed",
-                                "check-out":"unconfirmed|requested|completed",
-                                "client":
-                                    {
-                                        "waiting":0,
-                                        "position":
-                                            {
-                                                "lat":0.34456645,
-                                                "lng":0.34456645
-                                            },
-                                        "prediction":
-                                            {
-                                            "distance":345,
-                                            "duration":34556
-                                            }
-                                    },
-                                "agent":
-                                    {
-                                        "agent_id":345435,
-                                        "name":"Pau Seglar",
-                                        "picture":"https://www.aparcandgo.com/images/43534645645",
-                                        "waiting":0,
-                                        "position":
-                                            {
-                                                "lat":0.34456645,
-                                                "lng":0.34456645
-                                            },
-                                        "prediction":
-                                            {
-                                            "distance":345,
-                                            "duration":34556
-                                            }
-                                    }
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
                                 }
                             },
-                        "total_price":28.45,
-                        "paid":false,
-                        "log":
-                            [
+                            "agent":
+                            {
+                                "agent_id":345435,
+                                "name":"Pau Seglar",
+                                "picture":"https://www.aparcandgo.com/images/43534645645",
+                                "waiting":0,
+                                "position":
                                 {
-                                "timestamp":"9999-12-31 23:59:59",
-                                "source":"client|agent[pseglar@aparcandgo.com]",
-                                "event":"Reserva realizada"
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
                                 },
+                                "prediction":
                                 {
-                                "timestamp":"9999-12-31 23:59:59",
-                                "source":"client",
-                                "event":"Entrada a parking"
+                                    "distance":345,
+                                    "duration":34556
                                 }
-                            ]
-                    }
-                ]
+                            }
+                        }
+                    },
+                    "total_price":28.45,
+                    "paid":false,
+                    "log":
+                    [
+                        {
+                            "timestamp":"9999-12-31 23:59:59",
+                            "source":"client|agent[pseglar@aparcandgo.com]",
+                            "event":"Reserva realizada"
+                        },
+                        {
+                            "timestamp":"9999-12-31 23:59:59",
+                            "source":"client",
+                            "event":"Entrada a parking"
+                        }
+                    ]
+                }
+            ]
         }
 
-## RESERVATION -  VIEW/CREATE/UPDATE RESERVATION [/reservations/{reservation_id}]
+## RESERVATION -  VIEW/CREATE/UPDATE RESERVATION [/reservation/{reservation_id}]
 
 Solicita una reserva.
 
@@ -2030,7 +2033,7 @@ En frontend se pinta como el perfil personal.
 
         {
         "status":"ok",
-        "reservation":"reservation object. see /reservations"
+        "reservation":"reservation object. see /reservation/list"
         }
 
 + Response 404 (application/json)
@@ -2054,7 +2057,7 @@ En frontend se pinta como el perfil personal.
         }
 
 
-## RESERVATION -  PAY [/reservations/pay]
+## RESERVATION -  PAY [/reservation/pay]
 
 ### PAY REQUEST [POST]
 <blockquote>
@@ -2110,7 +2113,7 @@ Request reservation payment
         }
 
 
-## RESERVATION - PREMIUM SERVICE [/reservations/premium/{reservation_id}]
+## RESERVATION - PREMIUM SERVICE [/reservation/premium/{reservation_id}]
 
 <blockquote>
 
@@ -2251,7 +2254,7 @@ No devuelve datos si no es una reserva premium activa.
                 }
             }
 
-## RESERVATION - QR SCAN [/reservations/qrscan]
+## RESERVATION - QR SCAN [/reservation/qrscan]
 
 ### ACCESS REQUEST [POST]
 Used for automatic check-in/check-out Requests using scanned QR text
@@ -2448,7 +2451,7 @@ only update new information.
 
 ## BUSINESS - PROMOS [/business/promos/{company_id}]
     APROVAL PENDING
-### GET current promos
+### GET current promos [GET]
 
 + Request
     + Headers
@@ -2470,7 +2473,7 @@ only update new information.
             }
         }
 
-## BUSINESS- COST CENTERS [/business/costcenters]
+## BUSINESS - COST CENTERS [/business/costcenters/{company_id}]
 ### LIST COST CENTERS [GET]
 
 Retrieves company cost centers.+
@@ -2502,7 +2505,7 @@ null paymethod means that allow all company paymethods.
 
         }
 
-## BUSINESS - COST CENTERS CREATE/UPDATE/VIEW [/business/costcenters/{company_id}]
+## BUSINESS - COST CENTERS CREATE/UPDATE/VIEW [/business/costcenters]
 ### UPDATE [PUT]
 
 only update new information.
