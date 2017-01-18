@@ -5,6 +5,10 @@ HOST: http://aparcandgo.apiary.io/
 
 APARCA AND GO RESTFUL API DOCUMENTATION
 
++ Trait CORS
+    + Response Headers
+        + Access-Control-Allow-Origin (string, `*`) ... Access-Control-Allow-Origin.
+
 ## USER - Authentication [/user/token{?provider,email,password,keeplogged}]
 
 Login equivalent
@@ -24,15 +28,15 @@ Log in equivalent.
 
 + Parameters
     + provider (optional,local) -  local(default), google, facebook
-    + email (optional,pseglar@gmail.com) - user identification
-    + password (optional,3489576897) - base64 encoded password
-    + keeplogged (optional,true) - boolean. false by default.
+    + email (optional,string, `pseglar@gmail.com`) - user identification
+    + password (optional,number, `3489576897`) - base64 encoded password
+    + keeplogged (optional, boolean, `true`) - boolean. false by default.
 
 + Response 200 (application/json)
 
         {
         "access_token":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
-        "expires_in":"2017-05-01",
+        "expires_in":"2017-05-01"
         }
 ### TOKEN DELETE  [DELETE]
 
@@ -168,7 +172,7 @@ only update new information. profiles and vehicles are updated under custom endp
             "zip":08354
             "accept_promos": true,
             "default_invoice_profile": null,
-            "lang":"ca_ES",
+            "lang":"ca_ES"
         }
 
 + Response 200 (application/json)
@@ -196,7 +200,7 @@ Two examples:
             "lastname":"Seglar Segura",
             "phone": "607787857",
             "zip":08354,
-            "lang":"ca_ES",
+            "lang":"ca_ES"
             }
 
 
@@ -213,7 +217,7 @@ Two examples:
             "phone": "607787857",
             "accept_promos": true,
             "default_invoice_profile": null,
-            "lang":"ca_ES",
+            "lang":"ca_ES"
 
 
             }
@@ -240,7 +244,7 @@ Two examples:
                     "invoice_address":"c/ alegria 23",
                     "invoice_city":"Barcelona",
                     "invoice_state":"Barcelona",
-                    "invoice_zip": "08355",
+                    "invoice_zip": "08355"
                 }
             }
 
@@ -269,8 +273,8 @@ Two examples:
                 "invoice_address":"c/ alegria 23",
                 "invoice_city":"Barcelona",
                 "invoice_state":"Barcelona",
-                "invoice_zip": "08355",
-                },
+                "invoice_zip": "08355"
+                }
                 ]
             }
         }
@@ -340,7 +344,7 @@ Two examples:
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 
 ## USER - Profiles [/user/profiles]
@@ -382,7 +386,7 @@ Retrieves the list of existing profiles for the requesting user.
                 "role":"administrator",
                 "permissions":
                     [
-                    "pending":"pending",
+                    "pending":"pending"
                     ],
             "cost_center": 76645,
             "monthly_invoice": false,
@@ -395,7 +399,7 @@ Retrieves the list of existing profiles for the requesting user.
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
+            "invoice_zip": "08355"
             },
             {
             "profile_id":45347,
@@ -407,7 +411,7 @@ Retrieves the list of existing profiles for the requesting user.
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
+            "invoice_zip": "08355"
             }
             ]
         }
@@ -441,7 +445,7 @@ GET, CREATE or UPDATE a profile
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
+            "invoice_zip": "08355"
             }
         }
 ### DELETE PROFILE [DELETE]
@@ -457,7 +461,7 @@ GET, CREATE or UPDATE a profile
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 ### CREATE PROFILE [POST]
 
@@ -482,7 +486,7 @@ corporate profiles are created when a business account is created using other en
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
             "invoice_zip": "08355",
-            "default_invoice_profile":true,
+            "default_invoice_profile":true
         }
 
 + Response 200 (application/json)
@@ -500,7 +504,7 @@ corporate profiles are created when a business account is created using other en
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
+            "invoice_zip": "08355"
             }
         }
 ### UPDATE PROFILE [PUT]
@@ -528,7 +532,7 @@ rest of parameters are optional. will only update existing parameters.
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
             "invoice_zip": "08355",
-            "default_invoice_profile":true,
+            "default_invoice_profile":true
         }
 
 + Response 200 (application/json)
@@ -545,7 +549,7 @@ rest of parameters are optional. will only update existing parameters.
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
+            "invoice_zip": "08355"
         }
         }
 
@@ -583,7 +587,7 @@ currently two types of payment methods:
             "last_card_numbers": "4568",
             "expire": 1907
             "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
             },
             {
             "paymethod_id":45346,
@@ -592,7 +596,7 @@ currently two types of payment methods:
             "lastcardnumbers": "4568",
             "expire": 1907
             "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
             }
             ]
         }
@@ -620,7 +624,7 @@ currently two types of payment methods:
             "lastcardnumbers": "4568",
             "expire": 1907
             "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
             }
         }
 + Response 404 (application/json)
@@ -651,7 +655,7 @@ TO DELETE A CARD USERS MUST USE **/deletecard** endpoint in the PCI SERVER.
 + Response 404 (application/json)
 
         {
-        "status":"not found",
+        "status":"not found"
         }
 ### CREATE [POST]
 <blockquote>
@@ -688,7 +692,7 @@ PCI_SIGNATURE is a made from a secret key shared between servers
 
         {
         "status":"ok",
-        "api_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
+        "api_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
         }
 ### UPDATE [PUT]
 
@@ -722,7 +726,7 @@ Users can only update alias parameters.
             "lastcardnumbers": "4568",
             "expire": 1907
             "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
             }
         }
 
@@ -746,14 +750,14 @@ Retrieves the list of existing vehicles for the requesting user.
                     {
                     "vehicle_id":45346,
                     "type":"vw golf gris",
-                    "plate":"3453GHM",
+                    "plate":"3453GHM"
                     },
                     {
                     "vehicle_id":45347,
                     "type":"renault twingo azul",
-                    "plate":"B-5468-UC",
+                    "plate":"B-5468-UC"
                     }
-                ],
+                ]
         }
 ## USER - Vehicle Management [/user/vehicle/{vehicle_id}]
 
@@ -773,8 +777,8 @@ Retrieves the list of existing vehicles for the requesting user.
             {
             "vehicle_id":45346,
             "type":"vw golf gris",
-            "plate":"3453GHM",
-            },
+            "plate":"3453GHM"
+            }
         }
 + Response 404 (application/json)
 
@@ -799,7 +803,7 @@ Retrieves the list of existing vehicles for the requesting user.
 + Response 404 (application/json)
 
         {
-        "status":"not found",
+        "status":"not found"
         }
 ### CREATE [POST]
 
@@ -809,7 +813,7 @@ Retrieves the list of existing vehicles for the requesting user.
 
         {
         "type":"vw golf gris",
-        "plate":"3453GHM",
+        "plate":"3453GHM"
         },
     + Headers
 
@@ -824,8 +828,8 @@ Retrieves the list of existing vehicles for the requesting user.
             {
             "vehicle_id":45346,
             "type":"vw golf gris",
-            "plate":"3453GHM",
-            },
+            "plate":"3453GHM"
+            }
         }
 ### UPDATE [PUT]
 
@@ -833,7 +837,7 @@ Retrieves the list of existing vehicles for the requesting user.
 
         {
         "type":"vw golf gris",
-        "plate":"3453GHM",
+        "plate":"3453GHM"
         },
     + Headers
 
@@ -847,8 +851,8 @@ Retrieves the list of existing vehicles for the requesting user.
             {
             "vehicle_id":45346,
             "type":"vw golf gris",
-            "plate":"3453GHM",
-            },
+            "plate":"3453GHM"
+            }
         }
 
 ## USER - Reset Password [/users/password_recovery]
@@ -870,12 +874,12 @@ email is mandatory.
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 + Response 404 (application/json)
 
         {
-        "status":"not found",
+        "status":"not found"
         }
 
 ## USER - Unsubscribe [/user/unsubscribe/{user_id}{?email,signature}]
@@ -895,12 +899,12 @@ proposal:
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 + Response 404 (application/json)
 
         {
-        "status":"not found",
+        "status":"not found"
         }
 
 ## USER - INVOICES - PENDING [/user/invoices]
@@ -994,7 +998,7 @@ When calling with company_id, card will be stored as company card if user has ad
             "lastcardnumbers": "4568",
             "expire": 1907
             "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
             }
         }
 ## PCI - Delete card [/deletecard{?user_id,authorization_token,paymethod_id}]
@@ -1036,7 +1040,7 @@ PCI SERVER will then:
             "lastcardnumbers": "4568",
             "expire": 1907
             "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
             }
         }
 
@@ -1120,40 +1124,40 @@ Server will respond with **304 Not-Modified**
                                             "place":
                                             {
                                                 "name":"Aeroport del Prat",
-                                                "type":"airport",
+                                                "type":"airport"
                                             },
                                             "service_info":
                                             [
                                                 {
                                                     "name":"Como llegar",
                                                     "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                 },
                                                 {
                                                     "name":"Horario",
-                                                    "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                    "body":"Abierto las 24 horas del dia los 365 días del año."
                                                 },
                                                 {
                                                     "name":"¿En qué terminal opera?",
-                                                    "body":"aparca&go opera en todas las terminales",
+                                                    "body":"aparca&go opera en todas las terminales"
                                                 },
                                                 {
                                                     "name":"¿Cuanto se tarda en llegar al aeropuerto?",
-                                                    "body":"Tardamos entre 4 y 5 minutos.",
+                                                    "body":"Tardamos entre 4 y 5 minutos."
                                                 },
                                                 {
                                                     "name":"¿Dónde nos dejá la lanzadera?",
-                                                    "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje.",
+                                                    "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
                                                 },
                                                 {
                                                     "name":"¿Qué debemos hacer para que venga a recogernos una lanzadera?",
-                                                    "body":"En aparca&go Express no es necesario una llamada, simplemente tenéis que ir a nuestro punto de recogida donde siempre estará una furgoneta esperándoos.",
+                                                    "body":"En aparca&go Express no es necesario una llamada, simplemente tenéis que ir a nuestro punto de recogida donde siempre estará una furgoneta esperándoos."
                                                 },
                                                 {
                                                     "name":"¿Dónde nos recogen a la vuelta?",
-                                                    "body":"Te indicaremos la ubicación exacta en la app, pero clica en el enlace para ver los puntos de recogida.",
-                                                },
-                                            ],
+                                                    "body":"Te indicaremos la ubicación exacta en la app, pero clica en el enlace para ver los puntos de recogida."
+                                                }
+                                            ]
                                         },
                                         "terminals":
                                         [
@@ -1164,24 +1168,24 @@ Server will respond with **304 Not-Modified**
                                                     "location":
                                                     {
                                                         "lat":2.245456,
-                                                        "lng":40.548756,
+                                                        "lng":40.548756
                                                     },
                                                     "instructions":
                                                     [
                                                         {
                                                             "icon":"map"
                                                             "name":null,
-                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking.",
+                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
                                                         },
                                                         {
                                                             "icon":"agent"
                                                             "name":null,
-                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario",
+                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
                                                         }
                                                         {
                                                             "icon":"bus"
                                                             "name":null,
-                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal",
+                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
                                                         }
                                                     ],
                                                     "final_instructions":
@@ -1189,35 +1193,33 @@ Server will respond with **304 Not-Modified**
                                                         {
                                                             "icon":"bus"
                                                             "name":null,
-                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal",
+                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
                                                         },
                                                         {
                                                             "icon":null
                                                             "name":null,
-                                                            "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames.",
+                                                            "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
                                                         }
-
                                                     ],
-
                                                     "info":
                                                     [
                                                         {
                                                             "name":"Como llegar",
                                                             "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         },
                                                         {
                                                             "name":"Horario",
-                                                            "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                            "body":"Abierto las 24 horas del dia los 365 días del año."
                                                         },
                                                         {
                                                             "name":"Dónde debo subir a la lanzadera",
-                                                            "body":"lorem ipsum",
+                                                            "body":"lorem ipsum"
                                                         },
                                                         {
                                                             "name":"Dónde me dejará la lanzadera",
-                                                            "body":"lorem ipsum",
-                                                        },
+                                                            "body":"lorem ipsum"
+                                                        }
                                                     ]
                                                 },
                                                 "check-out":
@@ -1225,19 +1227,19 @@ Server will respond with **304 Not-Modified**
                                                     "location":
                                                     {
                                                         "lat":2.245456,
-                                                        "lng":40.548756,
+                                                        "lng":40.548756
                                                     },
                                                     "instructions":
                                                     [
                                                         {
                                                             "icon":"bus"
                                                             "name":null,
-                                                            "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames.",
+                                                            "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
                                                         },
                                                         {
                                                             "icon":"map"
                                                             "name":null,
-                                                            "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1.",
+                                                            "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
                                                         }
                                                     ],
                                                     "final_instructions":
@@ -1245,7 +1247,7 @@ Server will respond with **304 Not-Modified**
                                                         {
                                                             "icon":"flag"
                                                             "name":"Gracias por tu estancia",
-                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com",
+                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                                         }
                                                     ],
                                                     "info":
@@ -1253,16 +1255,15 @@ Server will respond with **304 Not-Modified**
                                                         {
                                                             "name":"Punto de recogida",
                                                             "body":"El punto de recogida blablabla",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         },
                                                         {
                                                             "name":"Horario y frecuencia",
-                                                            "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año.",
+                                                            "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año."
                                                         },
                                                     ]
-                                                },
-                                            },
-
+                                                }
+                                            }
                                         ],
                                     "extras":
                                         [
@@ -1272,7 +1273,7 @@ Server will respond with **304 Not-Modified**
                                             "icon":"house",
                                             "description":"Aparcar en zona cubierta",
                                             "unitary_price":1,
-                                            "price_calculation":"daily",
+                                            "price_calculation":"daily"
                                             },
                                             {
                                             "extra_id":24,
@@ -1280,11 +1281,11 @@ Server will respond with **304 Not-Modified**
                                             "icon":"house",
                                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                                             "unitary_price":7.55,
-                                            "price_calculation":"final_price",
-                                            },
-                                        ],
-                                    },
-
+                                            "price_calculation":"final_price"
+                                            }
+                                        ]
+                                    }
+                                },
                                 {
                                     "product_id":5,
                                     "product_name":"Premium",
@@ -1301,35 +1302,35 @@ Server will respond with **304 Not-Modified**
                                             "place":
                                             {
                                                 "name":"Aeroport del Prat",
-                                                "type":"airport",
-                                            },
+                                                "type":"airport"
+                                            }
                                         },
                                         "service_info":
                                         [
                                             {
                                                 "name":"Punto de recogida",
                                                 "body":" lorem imsum"
-                                                "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                             },
                                             {
                                                 "name":"Horario",
-                                                "body":"Recogemos tu coche las 24 horas del dia los 365 días del año.",
+                                                "body":"Recogemos tu coche las 24 horas del dia los 365 días del año."
                                             },
                                             {
                                                 "name":"¿En qué terminal opera?",
-                                                "body":"aparca&go opera en todas las terminales",
+                                                "body":"aparca&go opera en todas las terminales"
                                             },
                                             {
                                                 "name":"¿Cuanto tendré que esperar?",
-                                                "body":"Si nos avisas con tiempo, te estaremos esperando en el punto de recogida.",
+                                                "body":"Si nos avisas con tiempo, te estaremos esperando en el punto de recogida."
                                             },
                                             {
                                                 "name":"¿Dónde me entregaréis mi coche a la vuelta?",
-                                                "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje.",
+                                                "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
                                             },
                                             {
                                                 "name":"¿Qué debemos hacer para avisar de nuestra llegada?",
-                                                "body":"Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello.",
+                                                "body":"Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello."
                                             },
                                         ],
                                     },
@@ -1343,24 +1344,24 @@ Server will respond with **304 Not-Modified**
                                                 "location":
                                                 {
                                                     "lat":2.245456,
-                                                    "lng":40.548756,
+                                                    "lng":40.548756
                                                 },
                                                 "instructions":
                                                 [
                                                     {
                                                         "icon":"map",
                                                         "name":null,
-                                                        "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking.",
+                                                        "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
                                                     },
                                                     {
                                                         "icon":"agent",
                                                         "name":null,
-                                                        "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario",
+                                                        "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
                                                     }
                                                     {
                                                         "icon":"bus",
                                                         "name":null,
-                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal",
+                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
                                                     }
                                                 ],
                                                 "final_instructions":
@@ -1368,35 +1369,33 @@ Server will respond with **304 Not-Modified**
                                                     {
                                                         "icon":"bus",
                                                         "name":null,
-                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal",
+                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
                                                     },
                                                     {
                                                         "icon":null,
                                                         "name":null,
-                                                        "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames.",
+                                                        "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
                                                     }
-
                                                 ],
-
                                                 "info":
                                                 [
                                                     {
                                                         "name":"Como llegar",
-                                                        "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                        "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>"
+                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                     },
                                                     {
                                                         "name":"Horario",
-                                                        "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                        "body":"Abierto las 24 horas del dia los 365 días del año."
                                                     },
                                                     {
                                                         "name":"Dónde debo subir a la lanzadera",
-                                                        "body":"lorem ipsum",
+                                                        "body":"lorem ipsum"
                                                     },
                                                     {
                                                         "name":"Dónde me dejará la lanzadera",
-                                                        "body":"lorem ipsum",
-                                                    },
+                                                        "body":"lorem ipsum"
+                                                    }
                                                 ]
                                             },
                                             "check-out":
@@ -1404,19 +1403,19 @@ Server will respond with **304 Not-Modified**
                                                 "location":
                                                 {
                                                     "lat":2.245456,
-                                                    "lng":40.548756,
+                                                    "lng":40.548756
                                                 },
                                                 "instructions":
                                                 [
                                                     {
                                                         "icon":"bus",
                                                         "name":null,
-                                                        "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames.",
+                                                        "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
                                                     },
                                                     {
                                                         "icon":"map",
                                                         "name":null,
-                                                        "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1.",
+                                                        "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
                                                     }
                                                 ],
                                                 "final_instructions":
@@ -1424,7 +1423,7 @@ Server will respond with **304 Not-Modified**
                                                     {
                                                         "icon":"flag"
                                                         "name":"Gracias por tu estancia",
-                                                        "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com",
+                                                        "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                                     }
                                                 ],
                                                 "info":
@@ -1432,16 +1431,15 @@ Server will respond with **304 Not-Modified**
                                                     {
                                                         "name":"Punto de recogida",
                                                         "body":"El punto de recogida blablabla",
-                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                     },
                                                     {
                                                         "name":"Horario y frecuencia",
-                                                        "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año.",
-                                                    },
+                                                        "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año."
+                                                    }
                                                 ]
-                                            },
-                                        },
-
+                                            }
+                                        }
                                     ],
                                 "extras":
                                         [
@@ -1451,7 +1449,7 @@ Server will respond with **304 Not-Modified**
                                             "icon":"house",
                                             "description":"Aparcar en zona cubierta",
                                             "unitary_price":1,
-                                            "price_calculation":"daily",
+                                            "price_calculation":"daily"
                                             },
                                             {
                                             "extra_id":24,
@@ -1459,11 +1457,10 @@ Server will respond with **304 Not-Modified**
                                             "icon":"house",
                                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                                             "unitary_price":7.55,
-                                            "price_calculation":"final_price",
-                                            },
-                                        ],
-                                },
-
+                                            "price_calculation":"final_price"
+                                            }
+                                        ]
+                                }
                             ]
                         },
                         {
@@ -1500,25 +1497,25 @@ Server will respond with **304 Not-Modified**
                                                 {
                                                     "name":"Como llegar",
                                                     "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                 },
                                                 {
                                                     "name":"Horario",
-                                                    "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                    "body":"Abierto las 24 horas del dia los 365 días del año."
                                                 },
                                                 {
                                                     "name":"¿Cuanto se tarda en llegar a la estación",
-                                                    "body":"Usualmente unos 2 minutos.",
+                                                    "body":"Usualmente unos 2 minutos."
                                                 },
                                                 {
                                                     "name":"¿Dónde nos dejá la lanzadera?",
-                                                    "body":"Este parking no necesita de un servicio de lanzadera.",
+                                                    "body":"Este parking no necesita de un servicio de lanzadera."
                                                 },
                                                 {
                                                     "name":"¿Dónde nos recogen a la vuelta?",
-                                                    "body":"Puedes acceder al parking caminando. está a 2 minutos de la estación.",
-                                                },
-                                            ],
+                                                    "body":"Puedes acceder al parking caminando. está a 2 minutos de la estación."
+                                                }
+                                            ]
                                         },
                                         "terminals":
                                         [
@@ -1530,24 +1527,24 @@ Server will respond with **304 Not-Modified**
                                                     "location":
                                                     {
                                                         "lat":2.245456,
-                                                        "lng":40.548756,
+                                                        "lng":40.548756
                                                     },
                                                     "instructions":
                                                     [
                                                         {
                                                             "icon":"map",
                                                             "name":null,
-                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking.",
+                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
                                                         },
                                                         {
                                                             "icon":"agent",
                                                             "name":null,
-                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario",
+                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
                                                         }
                                                         {
                                                             "icon":"walking",
                                                             "name":null,
-                                                            "body":"Tras aparcar tu coche puedes acceder a la estación andando. te mostraremos un mapa en cuanto aparques para que no te pierdas.",
+                                                            "body":"Tras aparcar tu coche puedes acceder a la estación andando. te mostraremos un mapa en cuanto aparques para que no te pierdas."
                                                         }
                                                     ],
                                                     "final_instructions":
@@ -1558,26 +1555,23 @@ Server will respond with **304 Not-Modified**
                                                             "body":"lorem ipum",
                                                             "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         }
-
-
                                                     ],
-
                                                     "info":
                                                     [
                                                         {
                                                             "name":"Como llegar",
                                                             "body":"blablabla",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg",
+                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         },
                                                         {
                                                             "name":"Horario",
-                                                            "body":"Abierto las 24 horas del dia los 365 días del año.",
+                                                            "body":"Abierto las 24 horas del dia los 365 días del año."
                                                         },
                                                         {
                                                             "name":"Como llego a la estación desde el parking?",
                                                             "body":"lorem ipum",
                                                             "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        },
+                                                        }
                                                     ]
                                                 },
                                                 "check-out":
@@ -1585,19 +1579,19 @@ Server will respond with **304 Not-Modified**
                                                     "location":
                                                     {
                                                         "lat":2.245456,
-                                                        "lng":40.548756,
+                                                        "lng":40.548756
                                                     },
                                                     "instructions":
                                                     [
                                                         {
                                                             "icon":"walking"
                                                             "name":null,
-                                                            "body":"A tu regreso, dirígete parking para recoger tu vehículo.",
+                                                            "body":"A tu regreso, dirígete parking para recoger tu vehículo."
                                                         },
                                                         {
                                                             "icon":"map",
                                                             "name":null,
-                                                            "body":"pulsa 'más información' para obtener indicaciones para llegar al parking.",
+                                                            "body":"pulsa 'más información' para obtener indicaciones para llegar al parking."
                                                         }
                                                     ],
                                                     "final_instructions":
@@ -1605,7 +1599,7 @@ Server will respond with **304 Not-Modified**
                                                         {
                                                             "icon":"flag",
                                                             "name":"Gracias por tu estancia",
-                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com",
+                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                                         }
                                                     ],
                                                     "info":
@@ -1615,28 +1609,24 @@ Server will respond with **304 Not-Modified**
                                                             "body":"Desde la estación, lorem ipum",
                                                             "image":"http://www.aparcandgo.com/images/lot/express.jpg"
                                                         }
-
                                                     ]
-                                                },
-                                            },
-
+                                                }
+                                            }
                                         ],
                                     "extras":
-                                        [ ],
+                                        [],
                                     }
-                                },
-                            ],
-                        },
-                    ],
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "id":2,
                     "name":"Madrid",
-                    "places":[],
-
-                },
-            ],
-
+                    "places":[]
+                }
+            ]
         }
 
 ## PRODUCT - CALCULATE PRICE [/product/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
@@ -1678,7 +1668,7 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
                     "description":"Aparcar en zona cubierta",
                     "unitary_price":1,
                     "price_calculation":"daily",
-                    "price":2,
+                    "price":2
                     },
                     {
                     "extra_id":24,
@@ -1687,8 +1677,8 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
                     "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                     "unitary_price":7.55,
                     "price_calculation":"final_price",
-                    "price":7.55,
-                    },
+                    "price":7.55
+                    }
                 ],
             "promos":
                 [
@@ -1696,11 +1686,11 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
                     "promo_id":23,
                     "promo_name":"RAC",
                     "discount":0.45
-                    },
+                    }
                 ],
             "total_price":28.00,
-            "hash":"5647858689689tjhgjf",
-            },
+            "hash":"5647858689689tjhgjf"
+            }
         }
 + Response 500 (application/json)
 
@@ -1755,7 +1745,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "product_id":12,
                             "service":"express"
                             "product_price":18.90,
-                            "paid":false,
+                            "paid":false
                             },
                         "reservation_date": "2017-05-01T22:35:17.02",
                         "start_date": "2017-05-05T22:35:17.02",
@@ -1769,10 +1759,9 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "vehicle":{
                                 "vehicle_id":null,
                                 "type":null
-                                "plate":"4565GHM",
-                                },
-                            },
-
+                                "plate":"4565GHM"
+                                }
+                            }
                         "extras":
                             [
                                 {
@@ -1783,7 +1772,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "unitary_price":1,
                                 "price_calculation":"daily",
                                 "price":2,
-                                "paid":false,
+                                "paid":false
                                 },
                                 {
                                 "extra_id":24,
@@ -1793,8 +1782,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "unitary_price":7.55,
                                 "price_calculation":"final_price",
                                 "price":7.55,
-                                "paid":false,
-                                },
+                                "paid":false
+                                }
                             ],
                         "promos":
                         [
@@ -1802,11 +1791,11 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "promo_id":23,
                             "promo_name":"RAC",
                             "discount":0.45
-                            },
+                            }
                         ],
                         "status":
                             {
-                            "service":"reserved",
+                            "service":"reserved"
                             },
                         "total_price":28.45,
                         "paid":false,
@@ -1821,8 +1810,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "timestamp":"9999-12-31 23:59:59",
                                 "source":"client",
                                 "event":"Entrada a parking"
-                                },
-                            ],
+                                }
+                            ]
                     },
                     {
                         "reservation_id":23444,
@@ -1833,7 +1822,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "product_id":12,
                             "service":"premium"
                             "product_price":18.90,
-                            "paid":false,
+                            "paid":false
                             },
                         "reservation_date": "2017-05-01T22:35:17.02",
                         "start_date": "2017-05-06T22:35:17.02",
@@ -1845,7 +1834,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "vehicle":{
                                 "vehicle_id":null,
                                 "type":null
-                                "plate":"4565GHM",
+                                "plate":"4565GHM"
                                 },
                             "flight_number":"IB45546",
                             },
@@ -1860,7 +1849,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "unitary_price":1,
                                 "price_calculation":"daily",
                                 "price":2,
-                                "paid":false,
+                                "paid":false
                                 },
                                 {
                                 "extra_id":24,
@@ -1870,8 +1859,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "unitary_price":7.55,
                                 "price_calculation":"final_price",
                                 "price":7.55,
-                                "paid":false,
-                                },
+                                "paid":false
+                                }
                             ],
                         "promos":
                         [
@@ -1879,7 +1868,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "promo_id":23,
                             "promo_name":"RAC",
                             "discount":0.45
-                            },
+                            }
                         ],
                         "status":
                             {
@@ -1890,17 +1879,17 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "check-out":"unconfirmed|requested|completed",
                                 "client":
                                     {
-                                        "waiting":0
+                                        "waiting":0,
                                         "position":
                                             {
-                                                "lat":0.34456645
+                                                "lat":0.34456645,
                                                 "lng":0.34456645
                                             },
                                         "prediction":
                                             {
                                             "distance":345,
-                                            "duration":34556,
-                                            },
+                                            "duration":34556
+                                            }
                                     },
                                 "agent":
                                     {
@@ -1910,16 +1899,16 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                         "waiting":0,
                                         "position":
                                             {
-                                                "lat":0.34456645
+                                                "lat":0.34456645,
                                                 "lng":0.34456645
                                             },
                                         "prediction":
                                             {
                                             "distance":345,
-                                            "duration":34556,
-                                            },
-                                    },
-                                {
+                                            "duration":34556
+                                            }
+                                    }
+                                }
                             },
                         "total_price":28.45,
                         "paid":false,
@@ -1934,9 +1923,9 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                                 "timestamp":"9999-12-31 23:59:59",
                                 "source":"client",
                                 "event":"Entrada a parking"
-                                },
-                            ],
-                    },
+                                }
+                            ]
+                    }
                 ]
         }
 
@@ -1971,6 +1960,7 @@ En frontend se pinta como el perfil personal.
 + Request (application/json)
 
     Reserva servicio express.
+    
     + Body
 
             {
@@ -1989,7 +1979,7 @@ En frontend se pinta como el perfil personal.
                     "vehicle":{
                         "vehicle_id":null,
                         "type":null
-                        "plate":"4565GHM",
+                        "plate":"4565GHM"
                         },
                     "flight_number":"IB45546",
                     },
@@ -2002,8 +1992,8 @@ En frontend se pinta como el perfil personal.
                         "extra_id":24
                         },
                     ],
-                "hash":"5647858689689tjhgjf",
-            },
+                "hash":"5647858689689tjhgjf"
+            }
 
     + Headers
 
@@ -2026,7 +2016,7 @@ En frontend se pinta como el perfil personal.
 + Response 500 (application/json)
 
         {
-        "status":"out-of-stock",
+        "status":"out-of-stock"
         }
 ### VIEW RESERVATION [GET]
     requiere reservation_id
@@ -2040,13 +2030,13 @@ En frontend se pinta como el perfil personal.
 
         {
         "status":"ok",
-        "reservation":"reservation object. see /reservations",
+        "reservation":"reservation object. see /reservations"
         }
 
 + Response 404 (application/json)
 
         {
-        "status":"not found",
+        "status":"not found"
         }
 ### DELETE RESERVATION [DELETE]
 
@@ -2054,13 +2044,13 @@ En frontend se pinta como el perfil personal.
 
         {
         "status":"ok",
-        "reservation":"reservation object. see /reservations",
+        "reservation":"reservation object. see /reservations"
         }
 
 + Response 404 (application/json)
 
         {
-        "status":"not found",
+        "status":"not found"
         }
 
 
@@ -2097,7 +2087,7 @@ Request reservation payment
 
         {
         "status":"ok",
-        "reservation":"objeto reserva. la reserva estará pagada o dará error.".
+        "reservation":"objeto reserva. la reserva estará pagada o dará error."
         }
 
 + Response 403 (application/json)
@@ -2110,13 +2100,13 @@ Request reservation payment
 + Response 404 (application/json)
 
         {
-        "status":"reservation not found",
+        "status":"reservation not found"
         }
 
 + Response 400 (application/json)
 
         {
-        "status":"invalid-paymethod",
+        "status":"invalid-paymethod"
         }
 
 
@@ -2162,8 +2152,8 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
                 "prediction":
                     {
                     "distance":345,
-                    "duration":34556,
-                    },
+                    "duration":34556
+                    }
             }
 
     + Headers
@@ -2180,14 +2170,14 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
             "reservation":
                 {
                 "reservation_id":43,
-                "status":"reservation status object. see /reservations",
+                "status":"reservation status object. see /reservations"
                 }
             }
 
 + Response 404 (application/json)
 
         {
-        "status":"reservation not found",
+        "status":"reservation not found"
         }
 ### UPDATE TRACKING INFORMATION [PUT]
  <blockquote>
@@ -2205,13 +2195,13 @@ Actualiza los datos de traking de cliente.
                 "reservation_id": 2342355,
                 "position":
                     {
-                        "lat":0.34456645
+                        "lat":0.34456645,
                         "lng":0.34456645
                     },
                 "prediction":
                     {
                     "distance":345,
-                    "duration":34556,
+                    "duration":34556
                     },
             }
 
@@ -2229,7 +2219,7 @@ Actualiza los datos de traking de cliente.
             "reservation":
                 {
                 "reservation_id":43,
-                "status":"reservation status object. see /reservations",
+                "status":"reservation status object. see /reservations"
                 }
             }
 ### VIEW TRACKING INFORMATION [GET]
@@ -2257,7 +2247,7 @@ No devuelve datos si no es una reserva premium activa.
             "reservation":
                 {
                 "reservation_id":43,
-                "status":"reservation status object. see /reservations",
+                "status":"reservation status object. see /reservations"
                 }
             }
 
@@ -2280,7 +2270,7 @@ valid
 
             {
                 "reservation_id": 2342355,
-                "qrscan":"47896y58967548975896475689576897546947667659d",
+                "qrscan":"47896y58967548975896475689576897546947667659d"
 
             }
 
@@ -2292,19 +2282,19 @@ valid
 
         {
         "status":"ok",
-        "reservation":"objeto reserva. la reserva estará pagada o dará error.".
+        "reservation":"objeto reserva. la reserva estará pagada o dará error."
         }
 
 + Response 404 (application/json)
 
         {
-        "status":"code not found",
+        "status":"code not found"
         }
 
 + Response 400 (application/json)
 
         {
-        "status":"invalid code",
+        "status":"invalid code"
         }
 
 ## RESERVATION - GET TICKET - [/reservation/ticket/{reservation_id}{?format}]
@@ -2332,7 +2322,7 @@ request ticket in html, pdf or by email.
 + Request
     + Headers
 
-        Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
 + Response 200 (text/json)
 
@@ -2344,13 +2334,13 @@ request ticket in html, pdf or by email.
                         "invoice_id":234534,
                         "date": "2016-01-01T22:35:17.02",
                         "amount": 17.58,
-                        "profile_id":45347,
+                        "profile_id":45347
                     },
                     {
                         "invoice_id":234537,
                         "date": "2016-02-01T22:35:17.02",
                         "amount": 17.58,
-                        "profile_id":45347,
+                        "profile_id":45347
                     }
                 ]
         }
@@ -2390,8 +2380,7 @@ Retrieves and store user information.
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-
+        "status":"ok"
         }
 ### UPDATE [PUT]
 
@@ -2416,7 +2405,7 @@ only update new information.
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 ###  CREATE [POST]
 
@@ -2434,7 +2423,7 @@ only update new information.
             "nif":"J57457g48",
             "address": "C/ dfgfdhg",
             "zip":08354,
-            "city": "la sacaremos en backend desde el CP no incluir en FE.",
+            "city": "la sacaremos en backend desde el CP no incluir en FE."
             }
 
 
@@ -2453,13 +2442,12 @@ only update new information.
             "monthly_invoice": false,
             "invoice_per_costcenter": false,
             "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
-            "send_invoice_copy":[{"user_id":345346},{"user_id":234345}],
-            },
-
+            "send_invoice_copy":[{"user_id":345346},{"user_id":234345}]
+            }
         }
 
-## BUSINESS - PENDING - PROMOS [/business/discount/{company_id}]
-
+## BUSINESS - PROMOS [/business/promos/{company_id}]
+    APROVAL PENDING
 ### GET current promos
 
 + Request
@@ -2475,16 +2463,18 @@ only update new information.
 
         {
         "status":"ok",
-        "discount":"TODO: define discounts and rappels",
-
-
+        "business_promos":
+            {
+                "discount": 5,
+                "rappel_multiplier": 1
+            }
         }
 
-## BUSINESS - PENDING - COST_CENTERS CREATE/UPDATE/VIEW [/business/costcenters/{company_id}]
+## BUSINESS- COST CENTERS [/business/costcenters]
+### LIST COST CENTERS [GET]
 
-### GET [GET]
-
-Retrieves company cost centers.
+Retrieves company cost centers.+
+null paymethod means that allow all company paymethods.
 + default_invoice_profile: should be updated on first purchase if null.
 
 + Request
@@ -2496,9 +2486,23 @@ Retrieves company cost centers.
 
         {
         "status":"ok",
-        "cost_centers":"TODO"
+        "costcenters":
+            [
+                {
+                "costcenter_id": 2345,
+                "costcenter_name":"Ventas",
+                "paymethod_id":456
+                },
+                {
+                "costcenter_id": 2346,
+                "costcenter_name":"Postventa",
+                "paymethod":null
+                }
+            ],
 
         }
+
+## BUSINESS - COST CENTERS CREATE/UPDATE/VIEW [/business/costcenters/{company_id}]
 ### UPDATE [PUT]
 
 only update new information.
@@ -2509,15 +2513,27 @@ only update new information.
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
     + Body
 
             {
+                "costcenter_id": 2345,
+                "costcenter_name":"Ventas",
+                "paymethod_id":456
             }
+
 
 + Response 200 (application/json)
 
         {
         "status":"ok",
+        "costcenter":
+            {
+                "costcenter_id": 2345,
+                "costcenter_name":"Ventas",
+                "paymethod_id":456
+            },
+
         }
 ###  CREATE [POST]
 
@@ -2528,9 +2544,13 @@ only update new information.
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
     + Body
 
             {
+                "costcenter_id": 2345,
+                "costcenter_name":"Ventas",
+                "paymethod_id":456
             }
 
 
@@ -2538,17 +2558,55 @@ only update new information.
 
         {
         "status":"ok",
-        "company":
+        "costcenter":
             {
-            "company_id":258,
-            "name":"Acmesa",
-            "nif":"J57457g48",
-            "address": "C/ dfgfdhg",
-            "zip":08354,
-            "city": "la sacaremos en backend desde el CP no incluir en FE.",
-            },
-
+                "costcenter_id": 2345,
+                "costcenter_name":"Ventas",
+                "paymethod_id":456
+            }
         }
 
-## BUSINESS RESERVATIONS - PENDING   [/business/reservations]
-## BUSINESS INVOICES - PENDING
+## BUSINESS HISTORY    [/business/history]
+Listado de estancias realizadas y pendientes de usar.
+<blockquote>
+NOTA PARA BACKEND
+    Al realizar la facturación mensual. Si un costcenter ha dejado de existir. Las estancias asignadas a ese costcenter se reasignan a costcenter null y pasan al grupo de estancias sin costcenter.
+</blockquote>
+<blockquote>
+NOTA PARA BACKEND
+        La tabla de ventas debe contener el id y el nombre del costcenter para controlar el caso del borrado.
+        La tabla de ventas debe contener el id y el nombde del usuario para controlar el caso de la eliminación del usuario.
+</blockquote>
+### LIST RESERVATIONS [GET]
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "history":
+            [
+                {
+                "reservation_id": 2345,
+                "status":"reserved",
+                "reservation_date": "2017-05-01T22:35:17.02",
+                "start_date": "2017-05-05T22:35:17.02",
+                "end_date": "2017-05-16T22:35:17.02",
+                "user_id": "pseglar@parkingkong.es",
+                "costcenter_id":"Ventas",
+                "paymethod":"Corporativa alias 1"
+                },
+                {
+                "costcenter_id": 2346,
+                "costcenter_name":"Postventa",
+                "paymethod":null
+                }
+            ]
+        }
+
+## BUSINESS INVOICES - PENDING [/]
