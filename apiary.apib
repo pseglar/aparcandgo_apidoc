@@ -91,7 +91,16 @@ Retrieves and store user information.
                         "profile_id":45346,
                         "type":"corporate",
                         "company_id":34536,
-                        "rights": "administrator",
+                        "rights":
+                        {
+                            "role":"administrator",
+                            "permissions": 
+                            {
+                                "manage_paymethods": true,
+                                "manage_users": true,
+                                "manage_reservations": true
+                            }
+                        },
                         "cost_center": 76645,
                         "invoice_name":"Acmesa",
                         "invoice_nif":"j66245523",
@@ -136,7 +145,7 @@ Retrieves and store user information.
                         "cost_center": null,
                         "alias": "Acmesa",
                         "last_card_numbers": "4568",
-                        "expire": 1907,
+                        "expire":{"year":19,"month":7},
                         "added": "2017-05-01T22:35:17.02",
                         "checked": "2017-05-01T22:35:17.02"
                     },
@@ -145,11 +154,15 @@ Retrieves and store user information.
                         "type":"card",
                         "alias": "Acmesa",
                         "lastcardnumbers": "4568",
-                        "expire": 1907,
+                        "expire":{"year":19,"month":7},
                         "added": "2017-05-01T22:35:17.02",
                         "checked": "2017-05-01T22:35:17.02"
                     }
-                ]
+                ],
+                "points":
+                    {
+                    "currentpoints":0.95,
+                    }
             }
         }
 ### UPDATE [PUT]
@@ -417,8 +430,6 @@ Retrieves the list of existing profiles for the requesting user.
                 }
             ]
         }
-        
-
 ## USER - Profile Management [/user/profile/{profile_id}]
 
 GET, CREATE or UPDATE a profile
@@ -556,7 +567,7 @@ rest of parameters are optional. will only update existing parameters.
         }
         }
 
-## USER - Payment Methods [/user/paymethods]
+## USER - Payment Methods [/user/paymethods{?company_id}]
 
 Retrieves the list of existing payment methods for the requesting user.
 
@@ -569,7 +580,8 @@ currently two types of payment methods:
 + expire: integer with the expiration time in format YYMM (year/month 2 digits)
 
 ### LIST [GET]
-
++ Parameters
+    + company_id (optional, number) - if set, only show this company cars. need rights.
 + Request
     + Headers
 
@@ -585,10 +597,10 @@ currently two types of payment methods:
                     "paymethod_id":45346,
                     "type":"corporate_card",
                     "company_id": 45678,
-                    "cost_center": null,
+                    "costcenter_id": null,
                     "alias": "Acmesa",
                     "last_card_numbers": "4568",
-                    "expire": 1907,
+                    "expire":{"year":19,"month":7}
                     "added": "2017-05-01T22:35:17.02",
                     "checked": "2017-05-01T22:35:17.02"
                 },
@@ -597,7 +609,7 @@ currently two types of payment methods:
                     "type":"card",
                     "alias": "Acmesa",
                     "lastcardnumbers": "4568",
-                    "expire": 1907,
+                    "expire":{"year":19,"month":7},
                     "added": "2017-05-01T22:35:17.02",
                     "checked": "2017-05-01T22:35:17.02"
                 }
@@ -625,7 +637,7 @@ currently two types of payment methods:
             "cost_center": null
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
-            "expire": 1907
+            "expire":{"year":19,"month":7}
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
             }
@@ -678,10 +690,10 @@ PCI_SIGNATURE is a made from a secret key shared between servers
        "paymethod_id":45346,
         "type":"corporate_card",
         "company_id": 45678,
-        "cost_center": null
+        "cost_center": null,
         "alias": "Acmesa",
         "lastcardnumbers": "4568",
-        "expire": 1907
+        "expire":{"year":19,"month":7},
         "added": "2017-05-01T22:35:17.02",
         "checked": "2017-05-01T22:35:17.02",
         "pci_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
@@ -727,7 +739,7 @@ Users can only update alias parameters.
             "cost_center": null
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
-            "expire": 1907
+            "expire":{"year":19,"month":7}
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
             }
@@ -910,24 +922,6 @@ proposal:
         "status":"not found"
         }
 
-## USER - INVOICES - PENDING [/user/invoices]
-
-+ RESOLUCIÓN problema del tick "monthly" cuando ya existen reservas.
-propuesta:
-cuando se genera un perfil de facturación (autonomo o corporativo), por defecto se configura en "factura mensual" o en "factura por servicio"? -> entiendo que factura por servicio.
-En cualquier caso, si tras N estancias durante un mes, se cambia esta opción, entiendo qeu se aplica a las siguientes estancias que finalizen, no a las previas.
-    + ejemplo:
-    empresa tiene configurada facturación por servicio.hace 2 servicios. cambia la conf a "facturación mensual". hace 2 servicios.
-        + Ese mes tendrá 3 facturas. las dos primeras al finalizar el servicio y la mensual a final de mes con otras 2.
-    + ejemplo 2:
-    empresa tiene configurada factura mensual.
-    Hace 2 servicios.
-    Cambnia la conf a facturación por servicio.
-        + La empresa recibirá 3 facturas. la mensual con las dos primeras a final de mes, y las otras 2 al momento.
-
-
-Card management.
-
 ## PCI- Add card [/addcard{?user_id,authorization_token,cardnumber,expiration_month,expiration_year,cvv,type,company_id,cost_center,alias}]
 
 ### GET [GET]
@@ -977,8 +971,8 @@ When calling with company_id, card will be stored as company card if user has ad
     + expiration_year - 18
     + cvv - 246
     + type (optional) - corporate_card
-    + company_id (optional) - 54647
-    + cost_center (optional) -
+    + company_id (optional) - if set. this card will be corporate card
+    + cost_center (optional) -if set. this card will be assigned to this costcenter only in API server. PCI won't store this info.
     + alias (optional) -
 
 + Request (application/json)
@@ -999,7 +993,7 @@ When calling with company_id, card will be stored as company card if user has ad
             "cost_center": null
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
-            "expire": 1907
+            "expire":{"year":19,"month":7}
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
             }
@@ -1041,7 +1035,7 @@ PCI SERVER will then:
             "cost_center": null
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
-            "expire": 1907
+            "expire":{"year":19,"month":7}
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
             }
@@ -1712,11 +1706,14 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
         }
 
 
-## RESERVATION -  LIST RESERVATIONS [/reservation/list]
+## RESERVATION -  LIST RESERVATIONS [/reservation/list{?finished,company_id}]
 
 <blockquote>
+BACKEND: ojo! tabla reservations debe guardar user_email y profile_name, company_name y costcenter_name para prevenir errores en caso de eliminar perfiles. o actualizarlos.
+</blockquote>
+<blockquote>
 Backend info:
-
+LOG
 se debe crear una tabla reservations_log con información relativa a cada reserva. debe ser diferente a la taba api_syslog que se generará para el registro de las llamadas API.
 
 + id
@@ -1732,6 +1729,10 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    
+    + Parameters
+        + finished (optional, boolean, `false`) - if true return finished reservation. 
+        + company_id (optional, number) - if set, it will return company reservations instead user reservations. user need rights.
 
 + Response 200 (application/json)
 
@@ -1742,7 +1743,13 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                 {
                     "reservation_id":23444,
                     "client_id":23455,
-                    "profile":3445,
+                    "client_email":"pseglar@gmail.com",
+                    "profile_id":3445,
+                    "profile_name":"Acmesa",
+                    "company_id": null,
+                    "company_name":null,
+                    "costcenter_id": null,
+                    "costcenter_name":null,
                     "product":
                     {
                         "product_id":12,
@@ -1801,16 +1808,18 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                         "service":"reserved"
                     },
                     "total_price":28.45,
+                    "paymethod_id":null,
+                    "paymethod":null,
                     "paid":false,
                     "log":
                     [
                         {
-                            "timestamp":"9999-12-31 23:59:59",
+                            "timestamp":"2017-01-05T22:35:17.02",
                             "source":"client|agent[pseglar@aparcandgo.com]",
                             "event":"Reserva realizada"
                         },
                         {
-                            "timestamp":"9999-12-31 23:59:59",
+                            "timestamp":"2017-01-05T22:35:17.02",
                             "source":"client",
                             "event":"Entrada a parking"
                         }
@@ -1819,7 +1828,13 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                 {
                     "reservation_id":23444,
                     "client_id":23455,
-                    "profile":3445,
+                    "client_email":"pseglar@gmail.com",
+                    "profile_id":3445,
+                    "profile_name":"Acmesa",
+                    "company_id": null,
+                    "company_name":null,
+                    "costcenter_id": null,
+                    "costcenter_name":null,
                     "product":
                     {
                         "product_id":12,
@@ -1918,12 +1933,12 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     "log":
                     [
                         {
-                            "timestamp":"9999-12-31 23:59:59",
+                            "timestamp":"2017-05-05T22:35:17.02",
                             "source":"client|agent[pseglar@aparcandgo.com]",
                             "event":"Reserva realizada"
                         },
                         {
-                            "timestamp":"9999-12-31 23:59:59",
+                            "timestamp":"2017-05-05T22:35:17.02",
                             "source":"client",
                             "event":"Entrada a parking"
                         }
@@ -1932,8 +1947,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
             ]
         }
 
-## RESERVATION -  VIEW/CREATE/UPDATE RESERVATION [/reservation/{reservation_id}]
-
+## RESERVATION -  CREATE RESERVATION [/reservation]
 Solicita una reserva.
 
 <blockquote>
@@ -1949,26 +1963,22 @@ En frontend se pinta como el perfil personal.
 </blockquote>
 <blockquote>
 **PRODUCT STATUS**
-+ Express
++ Product
     + reserved
     + in
     + out
-+ Premium
-    + reserved
-    +
-</blockquote>
 
+</blockquote>
 ### CREATE RESERVATION [POST]
 
 + Request (application/json)
-
     Reserva servicio express.
-    
     + Body
 
             {
                 "client_id":23455,
-                "profile":null,
+                "profile_id":null,
+                "paymethod_id":45,
                 "product_id": 12,
                 "start_date": "2017-05-05T22:35:17.02",
                 "end_date": "2017-05-06T22:35:17.02",
@@ -2021,6 +2031,9 @@ En frontend se pinta como el perfil personal.
         {
         "status":"out-of-stock"
         }
+
+
+## RESERVATION -  VIEW/UPDATE/DELETE RESERVATION [/reservation/{reservation_id}]
 ### VIEW RESERVATION [GET]
     requiere reservation_id
     devuelve objeto reservation (ver /reservations)
@@ -2046,14 +2059,50 @@ En frontend se pinta como el perfil personal.
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-        "reservation":"reservation object. see /reservations"
+        "status":"ok"
         }
 
 + Response 404 (application/json)
 
         {
         "status":"not found"
+        }
+### UPDATE RESERVATION [PUT]
+Currently Only profile_id and paymethod updates will be implemented
+
++ Request (application/json)
+
+    Reserva servicio express.
+    
+    + Body
+    
+            {
+                "profile_id":8,
+                "paymethod_id":246,
+            }
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "reservation": "mismo contenido que una de las del método GET /reservations"
+        }
+
+
++ Response 400 (application/json)
+
+        {
+        "status":"invalid-hash",
+        }
++ Response 500 (application/json)
+
+        {
+        "status":"out-of-stock"
         }
 
 
@@ -2320,12 +2369,42 @@ request ticket in html, pdf or by email.
 + Response 200 (application/pdf)
 
 
-## INVOICE - LIST INVOICES  [/invoice/list]
+## INVOICE - LIST INVOICES  [/invoice/list{?company_id}]
+
+<blockquote>
+
++ RESOLUCIÓN problema del tick "monthly" cuando ya existen reservas.
+propuesta:
+cuando se genera un perfil de facturación (autonomo o corporativo), por defecto se configura en "factura mensual" o en "factura por servicio"? -> entiendo que factura por servicio.
+En cualquier caso, si tras N estancias durante un mes, se cambia esta opción, entiendo qeu se aplica a las siguientes estancias que finalizen, no a las previas.
+    + ejemplo:
+    empresa tiene configurada facturación por servicio.hace 2 servicios. cambia la conf a "facturación mensual". hace 2 servicios.
+        + Ese mes tendrá 3 facturas. las dos primeras al finalizar el servicio y la mensual a final de mes con otras 2.
+    + ejemplo 2:
+    empresa tiene configurada factura mensual.
+    Hace 2 servicios.
+    Cambnia la conf a facturación por servicio.
+        + La empresa recibirá 3 facturas. la mensual con las dos primeras a final de mes, y las otras 2 al momento.
+
+</blockquote>
+<blockquote>
+NOTA PARA BACKEND
+    Al realizar la facturación mensual. Si un costcenter ha dejado de existir. Las estancias asignadas a ese costcenter se reasignan a costcenter null y pasan al grupo de estancias sin costcenter.
+</blockquote>
+
+<blockquote>
+NOTA PARA BACKEND
+    Al realizar la facturación. cost center debe guardarse en la tabla de facturas.
+</blockquote>
+
 ### GET INVOICE LIST [GET]
 + Request
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Parameters
+        + company_id (optional, number) - if set, it will return company invoices instead user invoices. user must have rights.
+
 
 + Response 200 (text/json)
 
@@ -2337,19 +2416,21 @@ request ticket in html, pdf or by email.
                         "invoice_id":234534,
                         "date": "2016-01-01T22:35:17.02",
                         "amount": 17.58,
-                        "profile_id":45347
+                        "profile_id":45347,
+                        "profile_name": "Acmesa",
+                        "cost_center_name":null,
                     },
                     {
                         "invoice_id":234537,
                         "date": "2016-02-01T22:35:17.02",
                         "amount": 17.58,
-                        "profile_id":45347
+                        "profile_id":45347,
+                        "profile_name": "Acmesa",
+                        "cost_center_id":null,
+                        "cost_center_name":null,
                     }
                 ]
         }
-
-
-+ Response 200 (application/pdf)
 
 ## INVOICE - GET INVOICE [/invoice/{invoice_id}{?format}]
 request invoice in html, pdf or by email.
@@ -2367,8 +2448,54 @@ request invoice in html, pdf or by email.
 
 + Response 200 (application/pdf)
 
+## BUSINESS - CREATE [/business]
 
-## BUSINESS - CREATE/UPDATE/VIEW [/business]
+###  CREATE [POST]
+
++ Request (application/json)
+    Create a business.
+    it will add an administrator business profile to the current user.
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":"08354",
+            "city": "la sacaremos en backend desde el CP no incluir en FE.",
+            "monthly_invoice": false
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "company":
+            {
+            "company_id":453,
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":"08354",
+            "city": "la sacaremos en backend desde el CP no incluir en FE.",
+            "monthly_invoice": false,
+            "invoice_per_costcenter": false,
+            "send_reservation_copy":false,
+            "send_invoice_copy":false
+            }
+        }
+
+## BUSINESS - VIEW/UPDATE [/business/{company_id}]
+<blockquote>
+BACKEND INFORMATION
+send reservation copy and send invoice copy elements will be returned within business information but internally will be treated as an array of users 
+[{"user_id":345346},{"user_id":234345}]
+</blockquote>
 
 ### GET [GET]
 
@@ -2380,54 +2507,8 @@ Retrieves and store user information.
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
-+ Response 200 (application/json)
-
-        {
-        "status":"ok"
-        }
-### UPDATE [PUT]
-
-only update new information.
-
-
-+ Request (application/json)
-    update business info
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Body
-
-            {
-            "name":"Acmesa",
-            "nif":"J57457g48",
-            "address": "C/ dfgfdhg",
-            "zip":08354,
-            "city": "la sacaremos en backend desde el CP"
-            }
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok"
-        }
-###  CREATE [POST]
-
-+ Request (application/json)
-    Create a business.
-    it will add an administrator business profile to the current user.
-
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Body
-
-            {
-            "name":"Acmesa",
-            "nif":"J57457g48",
-            "address": "C/ dfgfdhg",
-            "zip":08354,
-            "city": "la sacaremos en backend desde el CP no incluir en FE."
-            }
++ Parameters
+    + company_id (required,number,`456`) 
 
 
 + Response 200 (application/json)
@@ -2436,37 +2517,85 @@ only update new information.
         "status":"ok",
         "company":
             {
-            "company_id":258,
+            "company_id":453,
             "name":"Acmesa",
             "nif":"J57457g48",
             "address": "C/ dfgfdhg",
-            "zip":08354,
+            "zip":"08354",
             "city": "la sacaremos en backend desde el CP no incluir en FE.",
             "monthly_invoice": false,
             "invoice_per_costcenter": false,
-            "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
-            "send_invoice_copy":[{"user_id":345346},{"user_id":234345}]
+            "send_reservation_copy":true,
+            "send_invoice_copy":true,
+            "costcenters":
+            [
+                {
+                "costcenter_id": 2345,
+                "costcenter_name":"Ventas",
+                "paymethod_id":456
+                },
+                {
+                "costcenter_id": 2346,
+                "costcenter_name":"Postventa",
+                "paymethod":null
+                }
+            ]
             }
         }
+### UPDATE [PUT]
 
-## BUSINESS - PROMOS [/business/promos/{company_id}]
+only update new information.
+
++ Parameters
+    + company_id (required,number,`456`) 
+
++ Request (application/json)
+    update business info
+
+    
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    
+    + Body
+    
+            {
+            "name":"Acmesa",
+            "nif":"J57457g48",
+            "address": "C/ dfgfdhg",
+            "zip":"08354",
+            "city": "la sacaremos en backend desde el CP",
+            "monthly_invoice": false,
+            "invoice_per_costcenter": false,
+            "send_reservation_copy":false,
+            "send_invoice_copy":false
+            }
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+
+## BUSINESS - DISCOUNTS [/business/discounts/{company_id}]
     APROVAL PENDING
-### GET current promos [GET]
+    discount is a %
+    
++ Parameters
+    + company_id (required,number,`456`) 
+
+### GET current discounts [GET]
 
 + Request
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
-    + Parameters
-        + company_id - 258
-
-
 + Response 200 (application/json)
 
         {
         "status":"ok",
-        "business_promos":
+        "discounts":
             {
                 "discount": 5,
                 "rappel_multiplier": 1
@@ -2474,6 +2603,11 @@ only update new information.
         }
 
 ## BUSINESS - COST CENTERS [/business/costcenters/{company_id}]
+
++ Parameters
+    + company_id (required,number,`456`)
+
+
 ### LIST COST CENTERS [GET]
 
 Retrieves company cost centers.+
@@ -2504,9 +2638,7 @@ null paymethod means that allow all company paymethods.
             ],
 
         }
-
-## BUSINESS - COST CENTERS CREATE/UPDATE/VIEW [/business/costcenters]
-### UPDATE [PUT]
+### UPDATE COST CENTERS[PUT]
 
 only update new information.
 
@@ -2518,7 +2650,7 @@ only update new information.
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
     + Body
-
+    
             {
                 "costcenter_id": 2345,
                 "costcenter_name":"Ventas",
@@ -2538,7 +2670,7 @@ only update new information.
             },
 
         }
-###  CREATE [POST]
+### CREATE COST CENTERS[POST]
 
 + Request (application/json)
     Create a cc.
@@ -2549,8 +2681,8 @@ only update new information.
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
 
     + Body
-
-            {
+    
+            {   
                 "costcenter_id": 2345,
                 "costcenter_name":"Ventas",
                 "paymethod_id":456
@@ -2568,20 +2700,41 @@ only update new information.
                 "paymethod_id":456
             }
         }
+### DELETE COST CENTER [DELETE]
 
-## BUSINESS HISTORY    [/business/history]
-Listado de estancias realizadas y pendientes de usar.
-<blockquote>
-NOTA PARA BACKEND
-    Al realizar la facturación mensual. Si un costcenter ha dejado de existir. Las estancias asignadas a ese costcenter se reasignan a costcenter null y pasan al grupo de estancias sin costcenter.
-</blockquote>
-<blockquote>
-NOTA PARA BACKEND
-        La tabla de ventas debe contener el id y el nombre del costcenter para controlar el caso del borrado.
-        La tabla de ventas debe contener el id y el nombde del usuario para controlar el caso de la eliminación del usuario.
-</blockquote>
-### LIST RESERVATIONS [GET]
+**FRONTEND WARNING**
+Alert that :
+    Existing invoices won't be changed.
+    un-invoiced services assigned to this cost-center will not be assigned to any cost-center."
 
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+                "costcenter_id":589
+            }
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
+## BUSINESS - USERS [/business/users/{company_id}]
+
++ Parameters
+    + company_id (required,number,`456`)
+
+
+### LIST USERS [GET]
+
+Retrieves company users
+
++ default_invoice_profile: should be updated on first purchase if null.
 
 + Request
     + Headers
@@ -2592,24 +2745,145 @@ NOTA PARA BACKEND
 
         {
         "status":"ok",
-        "history":
+        "users":
             [
                 {
-                "reservation_id": 2345,
-                "status":"reserved",
-                "reservation_date": "2017-05-01T22:35:17.02",
-                "start_date": "2017-05-05T22:35:17.02",
-                "end_date": "2017-05-16T22:35:17.02",
-                "user_id": "pseglar@parkingkong.es",
-                "costcenter_id":"Ventas",
-                "paymethod":"Corporativa alias 1"
-                },
-                {
-                "costcenter_id": 2346,
-                "costcenter_name":"Postventa",
-                "paymethod":null
+                    "user_id": 589,
+                    "email":"pseglar@parkingkong.es",
+                    "costcenter_id": 2345,
+                    "rights":
+                    {
+                        "role":"administrator"
+                    }
                 }
             ]
         }
+### UPDATE USER[PUT]
 
-## BUSINESS INVOICES - PENDING [/]
+only update new information.
+
+
++ Request (application/json)
+    update cc info
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body
+    
+            {
+                "user_id": 589,
+                "email":"pseglar@parkingkong.es",
+                "costcenter_id": 2345,
+                "rights":
+                {
+                    "role":"administrator"
+                }
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+### CREATE USER[POST]
+<blockquote>
+FRONTEND: if user mail domain is different than company email domain, alert the user with cancel/continue option
+</blockquote>
+<blockquote>
+FRONTEND: currently accepted roles: administrator | manager | agent
+</blockquote>
+
++ Request (application/json)
+    Create a user or a list of users.
+    it will add the assigned business profile to new or existing users.
+    
+    **IMPORTANT**
+    This request always return 200. error is defined inside.
+    reason: bulk request may partly success.
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body
+    
+            {
+                [
+                    {
+                        "email":"pseglar@parkingkong.es",
+                        "costcenter_id": null,
+                        "rights":
+                        {
+                            "role":"administrator"
+                        }
+                    },
+                    {
+                        "email":"pseglar2@parkingkong.es",
+                        "costcenter_id": 546,
+                        "rights":
+                        {
+                            "role":"administrator"
+                        }
+                    },
+                    {
+                        "email":"buisdfparkingkong.es",
+                        "costcenter_id": null,
+                        "rights":
+                        {
+                            "role":"administrator"
+                        }
+                    }
+                ]
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "status":"errors found",
+            "errors":
+            [
+                {
+                    "email":"pseglar@parkingkong.es",
+                    "reason":"already_existing"
+                },
+                {
+                    "email":"pseglar2@parkingkong.es",
+                    "reason":"costcenter not found"
+                },
+                {
+                    "email":"buisdfparkingkong.es",
+                    "reason":"already_existing"
+                }
+            ]
+        }
+### DELETE USER [DELETE]
+
+**Only deletes from company.**
+User will still exist with personal profiles
+
+
++ Request (application/json)
+    
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+                "user_id":589
+            }
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
