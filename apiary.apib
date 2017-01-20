@@ -9,6 +9,7 @@ APARCA AND GO RESTFUL API DOCUMENTATION
     + Response Headers
         + Access-Control-Allow-Origin (string, `*`) ... Access-Control-Allow-Origin.
 
+# Group USER MANAGEMENT
 ## USER - Authentication [/user/token{?provider,email,password,keeplogged}]
 
 Login equivalent
@@ -922,6 +923,8 @@ proposal:
         "status":"not found"
         }
 
+# Group PCI Card management
+
 ## PCI- Add card [/addcard{?user_id,authorization_token,cardnumber,expiration_month,expiration_year,cvv,type,company_id,cost_center,alias}]
 
 ### GET [GET]
@@ -1041,7 +1044,7 @@ PCI SERVER will then:
             }
         }
 
-
+# Group PRODUCT INFORMATION
 ## PRODUCT - LIST PRODUCTS [/product/list{?lang}]
 
 <blockquote>
@@ -1705,8 +1708,9 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
         "status":"product-not-found",
         }
 
+# Group RESERVATIONS
 
-## RESERVATION -  LIST RESERVATIONS [/reservation/list{?finished,company_id}]
+## RESERVATION -  LIST RESERVATIONS - PENDING:reduce info in full listing. full info only in /reservation/id [/reservation/list{?finished,company_id}]
 
 <blockquote>
 BACKEND: ojo! tabla reservations debe guardar user_email y profile_name, company_name y costcenter_name para prevenir errores en caso de eliminar perfiles. o actualizarlos.
@@ -1897,6 +1901,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "check-out":"unconfirmed|requested|completed",
                             "client":
                             {
+                                "timestamp":"2017-05-01T22:35:17.02",
                                 "waiting":0,
                                 "position":
                                 {
@@ -2368,6 +2373,7 @@ request ticket in html, pdf or by email.
 
 + Response 200 (application/pdf)
 
+# Group INVOICES
 
 ## INVOICE - LIST INVOICES  [/invoice/list{?company_id}]
 
@@ -2447,6 +2453,8 @@ request invoice in html, pdf or by email.
 
 
 + Response 200 (application/pdf)
+
+# Group BUSINESS
 
 ## BUSINESS - CREATE [/business]
 
@@ -2865,7 +2873,7 @@ FRONTEND: currently accepted roles: administrator | manager | agent
                 }
             ]
         }
-### DELETE USER [DELETE]
+### DELETE BUSINESS USER [DELETE]
 
 **Only deletes from company.**
 User will still exist with personal profiles
@@ -2887,3 +2895,409 @@ User will still exist with personal profiles
         {
         "status":"ok"
         }
+
+# Group ADMIN RESOURCES
+Resources to administrate a product.
+Used in Valet APP and Administration panel.
+<blockquote>
+POSITION 
+
+Every PUT mehod allow sending the optional "position" object to update APP agent's current-position.
+</blockquote>
+
+
+## AGENT VIEW/UPDATE [/agent/{agent_id}]
+### VIEW AGENT [GET]
+
+Retrieve AGENT information
+<blockquote>
+APP multiple profiles. 
+
+app_product define the product used when using the app.
+</blockquote>
+
+<blockquote>
+PREMIUM AGENT POSIBLE STATUS
+
++ out - agente no disponible
++ ready - agente disponible
++ ack-requested - servicio asignado, pendiente de confirmar
++ check-in - servicio de recogida confirmado
++ check-out- servicio de entrega confirmado.
+
+</blockquote>
+<blockquote>
+BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla o separada)
+
++ agent-status
++ reservation_id
++ status-timestamp
++ lat
++ lng
++ position-timestamp
+
+</blockquote>
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "agent":
+            {
+                "agent_id": 333,
+                "email":"pseglar@aparcandgo.com",
+                "name":"Pau",
+                "surname": "Seglar",
+                "photo":"https://pbs.twimg.com/profile_images/1484098262/calicomensaje_400x400.png",
+                "phone":"607787857",
+                "app_product":5,
+                "premium":
+                {
+                    "agent-status":"ready",
+                    "status-timestamp":"2017-05-01T22:35:17.02",
+                    "reservation_id":null,
+                    "status-timestamp":"2017-05-01T22:35:17.02",
+                    "position":
+                    {
+                        "timestamp":"2017-05-01T22:35:17.02",
+                        "lat":0.34456645,
+                        "lng":0.34456645,
+                        "internal-description": "base",
+                    }
+                },
+                "products":
+                [
+                    {
+                    "product_id": 9,
+                    "product_name": "Express",
+                    "service": "express",
+                        "rights":
+                        {
+                            "role":"administrator",
+                            "permissions": 
+                            {
+                                "manage_agents": true,
+                                "manage_product": true,
+                                "manage_reservations": true
+                            }
+                        }
+                    },
+                    {
+                    "product_id": 5,
+                    "product_name": "Premium",
+                    "service": "premium",
+                        "rights":
+                        {
+                            "role":"agent",
+                            "permissions": 
+                            {
+                                "manage_agents": false,
+                                "manage_product": false,
+                                "manage_reservations": true
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+### UPDATE AGENT[PUT]
+
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body
+    
+            {
+                "agent":
+                {
+                    "email":"pseglar@aparcandgo.com",
+                    "name":"Pau",
+                    "surname": "Seglar",
+                    "phone":"607787857",
+                    "app_product":5
+                },
+                "position":
+                {
+                    "lat":0.34456645,
+                    "lng":0.34456645
+                } 
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+## AGENT - PASSWORD MANAGEMENT [/agent/password{?email}]
+User's pwd methods copy.
+### SET NEW PASSWORD [POST]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body
+
+            {
+            "current":"base64",
+            "new":"base64",
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+### REQUEST FORGOTTEN PASSWORD  [GET]
+
+
++ Parameters
+
+    + email (optional,string,`pseglar@aparcandgo.com`) - user email
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+## AGENT - PHOTO [/agent/photo]
+### SET NEW PHOTO [POST]
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body 
+
+            -----BOUNDARY
+            Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+            Content-Type: image/jpeg
+            Content-Transfer-Encoding: base64
+    
+            /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+            HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+            MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+            AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+            AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+            -----BOUNDARY
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+### DELETE PHOTO [DELETE]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+
+## ADMINPRODUCT AGENTS   [/adminproduct/agents/{product_id}]
+List product agents. 
+### LIST AGENTS [GET]
+
+Retrieve AGENT information
+
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "agents":
+            [
+                {
+                    "agent_id": 333,
+                    "email":"pseglar@aparcandgo.com",
+                    "name":"Pau",
+                    "surname": "Seglar",
+                    "photo":"https://pbs.twimg.com/profile_images/1484098262/calicomensaje_400x400.png",
+                    "phone":"607787857",
+                    "app_product":5,
+                    "premium":
+                    {
+                        "agent-status":"ready",
+                        "reservation_id":null,
+                        "last_action-timestamp":"2017-05-01T22:35:17.02",
+                        "position":
+                        {
+                            "timestamp":"2017-05-01T22:35:17.02",
+                            "lat":0.34456645,
+                            "lng":0.34456645,
+                            "internal-description": "base",
+                        }
+                    },
+                    "rights":
+                    {
+                        "role":"agent",
+                        "permissions": 
+                        {
+                            "manage_agents": false,
+                            "manage_product": false,
+                            "manage_reservations": true
+                        }
+                    }
+                },
+                {
+                    "agent_id": 334,
+                    "email":"pseglar2@aparcandgo.com",
+                    "name":"ertert",
+                    "surname": "ert",
+                    "photo":"https://pbs.twimg.com/profile_images/1484098262/calicomensaje_400x400.png",
+                    "phone":"607787857",
+                    "app_product":5,
+                    "premium":null
+                    "rights":
+                    {
+                        "role":"agent",
+                        "permissions": 
+                        {
+                            "manage_agents": false,
+                            "manage_product": false,
+                            "manage_reservations": true
+                        }
+                    }
+                }
+            ]
+        }
+### CREATE AGENT [POST]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body
+    
+            {
+            "email":"pseglar@aparcandgo.com",
+            "role":"administrator",
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+### UPDATE AGENT [POST]
+product agent update only updates agent role. rest of parameters should be updated from the agent account (by the agent user)
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body
+    
+            {
+            "agent_id":333,
+            "role":"administrator",
+            }
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        }
+### DELETE AGENT [DELETE]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+            "agent_id":333,
+            }
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+## ADMINPRODUCT - PENDING  [/adminproduct/{product_id}]
+## ADMINPRODUCT INVOICES - PENDING  [/adminproduct/invoices/{product_id}]
+## ADMINSERVICE LIST NEXT SERVICES - PENDING  [/adminservice/nextservices/{product_id}]
+### LIST AGENTS [GET]
+
+Retrieve AGENT information
+
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "reservations":
+            [
+                {
+                    "reservation_id":23444,
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-06T22:35:17.02",
+                    "end_date": "2017-05-07T22:35:17.02",
+                    "client_id": 23455,
+                    "client_email": "pseglar@gmail.com",
+                    "status": {
+                        "service": "reserved",
+                        "premium": {
+                            "check-in": "unconfirmed|requested|completed",
+                            "check-out": "unconfirmed|requested|completed",
+                            "client": {
+                                "timestamp": "2017-05-01T22:35:17.02",
+                                "waiting": 0,
+                                "position": {
+                                    "lat": 0.34456645,
+                                    "lng": 0.34456645
+                                },
+                                "prediction": {
+                                    "distance": 345,
+                                    "duration": 34556
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+
+## ADMINSERVICE VIEW/UPDATE- PENDING [/adminservice/{reservation_id}]
+## ADMINSERVICE CHARGE- PENDING [/adminservice/update]
