@@ -58,12 +58,14 @@ Log out equivalent. deletes valid token from system
 ### GET [GET]
 
 Retrieves and store user information.
+
 + default_invoice_profile: should be updated on first purchase if null.
 
 + Request
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+        
 
 + Response 200 (application/json)
 
@@ -1710,7 +1712,11 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
 
 # Group RESERVATIONS
 
-## RESERVATION -  LIST RESERVATIONS - PENDING:reduce info in full listing. full info only in /reservation/id [/reservation/list{?finished,company_id}]
+## LIST RESERVATIONS  [/reservation/list{?finished,company_id}]
+Compact reservation list without:
++ log
++ status.premium
+
 
 <blockquote>
 BACKEND: ojo! tabla reservations debe guardar user_email y profile_name, company_name y costcenter_name para prevenir errores en caso de eliminar perfiles. o actualizarlos.
@@ -1766,6 +1772,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     "end_date": "2017-05-16T22:35:17.02",
                     "trip":
                     {
+                        "driver":null,
+                        "phone":null,
                         "in_terminal":1001,
                         "in_passengers":2,
                         "out_terminal":1002,
@@ -1812,22 +1820,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                         "service":"reserved"
                     },
                     "total_price":28.45,
-                    "paymethod_id":null,
-                    "paymethod":null,
                     "paid":false,
-                    "log":
-                    [
-                        {
-                            "timestamp":"2017-01-05T22:35:17.02",
-                            "source":"client|agent[pseglar@aparcandgo.com]",
-                            "event":"Reserva realizada"
-                        },
-                        {
-                            "timestamp":"2017-01-05T22:35:17.02",
-                            "source":"client",
-                            "event":"Entrada a parking"
-                        }
-                    ]
                 },
                 {
                     "reservation_id":23444,
@@ -1858,6 +1851,198 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "type":null,
                             "plate":"4565GHM"
                         },
+                        "flight_number":"IB45546",
+                        "baggage": true
+                    },
+        
+                    "extras":
+                    [
+                        {
+                            "extra_id":23,
+                            "name":"Cubierto",
+                            "icon":"house",
+                            "description":"Aparcar en zona cubierta",
+                            "unitary_price":1,
+                            "price_calculation":"daily",
+                            "price":2,
+                            "paid":false
+                        },
+                        {
+                            "extra_id":24,
+                            "name":"Lavado exterior",
+                            "icon":"house",
+                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                            "unitary_price":7.55,
+                            "price_calculation":"final_price",
+                            "price":7.55,
+                            "paid":false
+                        }
+                    ],
+                    "promos":
+                    [
+                        {
+                            "promo_id":23,
+                            "promo_name":"RAC",
+                            "discount":0.45
+                        }
+                    ],
+                    "status":
+                    {
+                        "service":"reserved"
+                    },
+                    "total_price":28.45,
+                    "paid":false,
+                    "log":
+                    [
+                        {
+                            "timestamp":"2017-05-05T22:35:17.02",
+                            "source":"client|agent[pseglar@aparcandgo.com]",
+                            "event":"Reserva realizada"
+                        },
+                        {
+                            "timestamp":"2017-05-05T22:35:17.02",
+                            "source":"client",
+                            "event":"Entrada a parking"
+                        }
+                    ]
+                }
+            ]
+        }
+
+## CREATE RESERVATION [/reservation]
+Solicita una reserva.
+
+<blockquote>
+**HASHES**
+El parámetro hash asegura que la reserva coincide con la oferta.
+Los hash se computan a partir del md5 del objeto offer. no se guardan en ninguna parte.
+</blockquote>
+
+<blockquote>
+**PROFILE_ID**
+Si el profile_id es null se considera que la reserva "no necesita factura"
+En frontend se pinta como el perfil personal.
+</blockquote>
+<blockquote>
+**PRODUCT STATUS**
++ Product
+    + reserved
+    + in
+    + out
+
+</blockquote>
+### CREATE RESERVATION [POST]
+
++ Request (application/json)
+    Reserva servicio express.
+    + Body
+
+            {
+                "client_id":23455,
+                "profile_id":null,
+                "paymethod_id":45,
+                "product_id": 12,
+                "start_date": "2017-05-05T22:35:17.02",
+                "end_date": "2017-05-06T22:35:17.02",
+                "promocode": "RAC",
+                "trip":
+                    {
+                    "driver":null,
+                    "phone":null,
+                    "in_terminal":1001,
+                    "in_passengers":2,
+                    "out_terminal":1002,
+                    "out_passengers":2,
+                    "vehicle":{
+                        "vehicle_id":null,
+                        "type":null
+                        "plate":"4565GHM"
+                        },
+                    "flight_number":"IB45546",
+                    },
+                "extras":
+                    [
+                        {
+                        "extra_id":23
+                        },
+                        {
+                        "extra_id":24
+                        },
+                    ],
+                "hash":"5647858689689tjhgjf"
+            }
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "reservation": "mismo contenido que una de las del método GET /reservations"
+        }
+
+
++ Response 400 (application/json)
+
+        {
+        "status":"invalid-hash",
+        }
++ Response 500 (application/json)
+
+        {
+        "status":"out-of-stock"
+        }
+
+
+## VIEW/UPDATE/DELETE RESERVATION [/reservation/{reservation_id}]
+### VIEW RESERVATION [GET]
+    requiere reservation_id
+    devuelve objeto reservation (ver /reservations)
+
++ Parameters
+    + reservation_id - 5465467
+
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "reservation":
+                {
+                    "reservation_id":23444,
+                    "client_id":23455,
+                    "client_email":"pseglar@gmail.com",
+                    "profile_id":3445,
+                    "profile_name":"Acmesa",
+                    "company_id": null,
+                    "company_name":null,
+                    "costcenter_id": null,
+                    "costcenter_name":null,
+                    "product":
+                    {
+                        "product_id":12,
+                        "service":"premium",
+                        "product_price":18.90,
+                        "paid":false
+                    },
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-06T22:35:17.02",
+                    "end_date": "2017-05-07T22:35:17.02",
+                    "trip":
+                    {
+                        "driver":null,
+                        "phone":null,
+                        "in_terminal":1001,
+                        "out_terminal":1002,
+                        "vehicle":{
+                            "vehicle_id":null,
+                            "type":null,
+                            "plate":"4565GHM"
+                        },
+                        "baggage": true,
                         "flight_number":"IB45546"
                     },
         
@@ -1917,6 +2102,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                             "agent":
                             {
                                 "agent_id":345435,
+                                "agent-status":"check-in"
                                 "name":"Pau Seglar",
                                 "picture":"https://www.aparcandgo.com/images/43534645645",
                                 "waiting":0,
@@ -1935,6 +2121,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     },
                     "total_price":28.45,
                     "paid":false,
+                    "paymethod_id":45678,
+                    "paymethod_alias":"Acmesa",
                     "log":
                     [
                         {
@@ -1949,110 +2137,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                         }
                     ]
                 }
-            ]
-        }
-
-## RESERVATION -  CREATE RESERVATION [/reservation]
-Solicita una reserva.
-
-<blockquote>
-**HASHES**
-El parámetro hash asegura que la reserva coincide con la oferta.
-Los hash se computan a partir del md5 del objeto offer. no se guardan en ninguna parte.
-</blockquote>
-
-<blockquote>
-**PROFILE_ID**
-Si el profile_id es null se considera que la reserva "no necesita factura"
-En frontend se pinta como el perfil personal.
-</blockquote>
-<blockquote>
-**PRODUCT STATUS**
-+ Product
-    + reserved
-    + in
-    + out
-
-</blockquote>
-### CREATE RESERVATION [POST]
-
-+ Request (application/json)
-    Reserva servicio express.
-    + Body
-
-            {
-                "client_id":23455,
-                "profile_id":null,
-                "paymethod_id":45,
-                "product_id": 12,
-                "start_date": "2017-05-05T22:35:17.02",
-                "end_date": "2017-05-06T22:35:17.02",
-                "promocode": "RAC",
-                "trip":
-                    {
-                    "in_terminal":1001,
-                    "in_passengers":2,
-                    "out_terminal":1002,
-                    "out_passengers":2,
-                    "vehicle":{
-                        "vehicle_id":null,
-                        "type":null
-                        "plate":"4565GHM"
-                        },
-                    "flight_number":"IB45546",
-                    },
-                "extras":
-                    [
-                        {
-                        "extra_id":23
-                        },
-                        {
-                        "extra_id":24
-                        },
-                    ],
-                "hash":"5647858689689tjhgjf"
-            }
-
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok",
-        "reservation": "mismo contenido que una de las del método GET /reservations"
-        }
-
-
-+ Response 400 (application/json)
-
-        {
-        "status":"invalid-hash",
-        }
-+ Response 500 (application/json)
-
-        {
-        "status":"out-of-stock"
-        }
-
-
-## RESERVATION -  VIEW/UPDATE/DELETE RESERVATION [/reservation/{reservation_id}]
-### VIEW RESERVATION [GET]
-    requiere reservation_id
-    devuelve objeto reservation (ver /reservations)
-
-+ Parameters
-    + reservation_id - 5465467
-
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok",
-        "reservation":"reservation object. see /reservation/list"
-        }
+        }   
 
 + Response 404 (application/json)
 
@@ -2095,7 +2180,6 @@ Currently Only profile_id and paymethod updates will be implemented
 
         {
         "status":"ok",
-        "reservation": "mismo contenido que una de las del método GET /reservations"
         }
 
 
@@ -2111,7 +2195,7 @@ Currently Only profile_id and paymethod updates will be implemented
         }
 
 
-## RESERVATION -  PAY [/reservation/pay]
+## PAY [/reservation/pay]
 
 ### PAY REQUEST [POST]
 <blockquote>
@@ -2167,7 +2251,7 @@ Request reservation payment
         }
 
 
-## RESERVATION - PREMIUM SERVICE [/reservation/premium/{reservation_id}]
+## PREMIUM SERVICE [/reservation/premium/{reservation_id}]
 
 <blockquote>
 
@@ -2298,17 +2382,58 @@ No devuelve datos si no es una reserva premium activa.
     Respueta OK.
 
     + Body
-
+    
             {
             "status":"ok",
             "reservation":
                 {
                 "reservation_id":43,
-                "status":"reservation status object. see /reservations"
+                "status":
+                    {
+                        "service":"reserved",
+                        "premium":
+                        {
+                            "check-in":"unconfirmed|requested|completed",
+                            "check-out":"unconfirmed|requested|completed",
+                            "client":
+                            {
+                                "timestamp":"2017-05-01T22:35:17.02",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            },
+                            "agent":
+                            {
+                                "agent_id":345435,
+                                "agent-status":"check-in"
+                                "name":"Pau Seglar",
+                                "picture":"https://www.aparcandgo.com/images/43534645645",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-## RESERVATION - QR SCAN [/reservation/qrscan]
+## QR SCAN [/reservation/qrscan]
 
 ### ACCESS REQUEST [POST]
 Used for automatic check-in/check-out Requests using scanned QR text
@@ -2354,7 +2479,7 @@ valid
         "status":"invalid code"
         }
 
-## RESERVATION - GET TICKET - [/reservation/ticket/{reservation_id}{?format}]
+## GET TICKET - [/reservation/ticket/{reservation_id}{?format}]
 request ticket in html, pdf or by email.
 
 ### REQUEST TICKET [GET]
@@ -2456,7 +2581,7 @@ request invoice in html, pdf or by email.
 
 # Group BUSINESS
 
-## BUSINESS - CREATE [/business]
+## CREATE [/business]
 
 ###  CREATE [POST]
 
@@ -2498,7 +2623,7 @@ request invoice in html, pdf or by email.
             }
         }
 
-## BUSINESS - VIEW/UPDATE [/business/{company_id}]
+## VIEW/UPDATE [/business/{company_id}]
 <blockquote>
 BACKEND INFORMATION
 send reservation copy and send invoice copy elements will be returned within business information but internally will be treated as an array of users 
@@ -2585,7 +2710,7 @@ only update new information.
         "status":"ok"
         }
 
-## BUSINESS - DISCOUNTS [/business/discounts/{company_id}]
+## DISCOUNTS [/business/discounts/{company_id}]
     APROVAL PENDING
     discount is a %
     
@@ -2610,7 +2735,7 @@ only update new information.
             }
         }
 
-## BUSINESS - COST CENTERS [/business/costcenters/{company_id}]
+## COST CENTERS [/business/costcenters/{company_id}]
 
 + Parameters
     + company_id (required,number,`456`)
@@ -2732,7 +2857,7 @@ Alert that :
         "status":"ok"
         }
         
-## BUSINESS - USERS [/business/users/{company_id}]
+## USERS [/business/users/{company_id}]
 
 + Parameters
     + company_id (required,number,`456`)
@@ -2896,7 +3021,9 @@ User will still exist with personal profiles
         "status":"ok"
         }
 
-# Group ADMIN RESOURCES
+# Group ----
+
+# Group MANAGEMENT SECTION
 Resources to administrate a product.
 Used in Valet APP and Administration panel.
 <blockquote>
@@ -2906,7 +3033,52 @@ Every PUT mehod allow sending the optional "position" object to update APP agent
 </blockquote>
 
 
-## AGENT VIEW/UPDATE [/agent/{agent_id}]
+
+# Group AGENT MANAGEMENT
+Service management methods for agents.
+## LOGIN [/agent/token{?email,password,keeplogged}]
+
+Login equivalent
+
+### TOKEN GET [GET]
+Log in equivalent.
+
++ New session token request. Used also to renew the existing token.
++ email and password required.
++ If keeplogged true: token expirement set to long term (X month)
++ If request has a valid token. current token is deleted (used for token renewal)
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Parameters
+    + email (optional,string, `pseglar@gmail.com`) - user identification
+    + password (optional,number, `3489576897`) - base64 encoded password
+    + keeplogged (optional, boolean, `true`) - boolean. false by default.
+
++ Response 200 (application/json)
+
+        {
+        "access_token":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
+        "expires_in":"2017-05-01"
+        }
+### TOKEN DELETE  [DELETE]
+
+Log out equivalent. deletes valid token from system
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        }
+
+## VIEW/UPDATE [/agent/{agent_id}]
 ### VIEW AGENT [GET]
 
 Retrieve AGENT information
@@ -2921,7 +3093,7 @@ PREMIUM AGENT POSIBLE STATUS
 
 + out - agente no disponible
 + ready - agente disponible
-+ ack-requested - servicio asignado, pendiente de confirmar
++ service-requested - servicio asignado, pendiente de confirmar
 + check-in - servicio de recogida confirmado
 + check-out- servicio de entrega confirmado.
 
@@ -3041,7 +3213,7 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
         {
         "status":"ok"
         }
-## AGENT - PASSWORD MANAGEMENT [/agent/password{?email}]
+## PASSWORD  [/agent/password{?email}]
 User's pwd methods copy.
 ### SET NEW PASSWORD [POST]
 
@@ -3076,7 +3248,7 @@ User's pwd methods copy.
         {
         "status":"ok"
         }
-## AGENT - PHOTO [/agent/photo]
+## PHOTO [/agent/photo]
 ### SET NEW PHOTO [POST]
 
 + Request (multipart/form-data; boundary=---BOUNDARY)
@@ -3116,7 +3288,48 @@ User's pwd methods copy.
         {
         "status":"ok"
         }
+        
+## AGENT READY  [/agent/ready]
+notify agent-status ready
+### SET AGENT READY [POST]
 
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+## AGENT OUT  [/agent/out]
+notify agent not ready to accept services.
+Agent-status must be "ready" to accept an /agent/out request.
+If agent has any service assigned, this request will fail.
+### SET AGENT READY [POST]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
++ Response 403 (application/json)
+
+        {
+        "status":"service-assigned"
+        }
+# Group PRODUCT MANAGEMENT
+Service management methods for manage a product (agents, invoices, etc)
+
+## MANAGE PRODUCT - PENDING  [/adminproduct/{product_id}]
+requiere permisos de superadmin.
+usado para actualizar datos del producto. 
 ## ADMINPRODUCT AGENTS   [/adminproduct/agents/{product_id}]
 List product agents. 
 ### LIST AGENTS [GET]
@@ -3211,7 +3424,7 @@ Retrieve AGENT information
         {
         "status":"ok"
         }
-### UPDATE AGENT [POST]
+### UPDATE AGENT [PUT]
 product agent update only updates agent role. rest of parameters should be updated from the agent account (by the agent user)
 + Request
     + Headers
@@ -3248,13 +3461,77 @@ product agent update only updates agent role. rest of parameters should be updat
         {
         "status":"ok"
         }
-## ADMINPRODUCT - PENDING  [/adminproduct/{product_id}]
-## ADMINPRODUCT INVOICES - PENDING  [/adminproduct/invoices/{product_id}]
-## ADMINSERVICE LIST NEXT SERVICES - PENDING  [/adminservice/nextservices/{product_id}]
-### LIST AGENTS [GET]
+## ADMINPRODUCT LIST INVOICES  [/adminproduct/invoicelists/{product_id}]
+### GET INVOICE LIST [GET]
++ Request
+    + Headers
 
-Retrieve AGENT information
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Parameters
+        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
 
+
++ Response 200 (text/json)
+
+        {
+            "status":"ok",
+            "product_invoices":
+                [
+                    {
+                        "product_invoice_id":234534,
+                        "date": "2016-01-01T22:35:17.02",
+                        "amount": 17.58,
+                    },
+                    {
+                        "product_invoice_id":234537,
+                        "date": "2016-02-01T22:35:17.02",
+                        "amount": 17.58,
+                    }
+                ]
+        }
+
+## INVOICE - GET INVOICE [/adminproduct/invoice/{product_id}/{invoice_id}{?format}]
+request invoice in html, pdf or by email.
+### REQUEST INVOICE [GET]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Parameters
+    + product_id (required,number,`5`) - Product Id
+    + invoice_id (required,number,`234534`) - Reservation Id
+    + format (optional,string,`pdf`) - | pdf(default) | email
+
+
++ Response 200 (application/pdf)
+
+## CITY [/city]
+Require superadmin privileges.
+
+## PLACE [/place]
+Require superadmin privileges.
+## CREATE PRODUCT - PENDING  [/adminproduct]
+Require superadmin privileges
+
+# Group SERVICE MANAGEMENT
+Service management methods for manage reservations
+## LIST NEXT  [/adminservice/nextservices/{product_id}{?page,start_date}]
+### LIST NEXT SERVICES [GET]
+
+Listado de servicios previstos en las próximas 24 horas.
+Mismo formato que GET RESERVATION salvo log.
+Únicamente muestra servicios:
++ Reserved (no caducados)
++ in (pendientes de salida).
+
+
+
+Variable possible values
++ status.service options: reserved | in | out
++ status.premium.check-in: unconfirmed|requested|completed
++ status.premium.check-out: unconfirmed|requested|completed
 
 
 
@@ -3262,11 +3539,164 @@ Retrieve AGENT information
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Parameters
+        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
+        + page (optional,number,`1`) - Pagination index.
+        + start_date (optional,timestamp,) - start_date to show reservations. If not set, service default will be used.
+        + start_date (optional,timestamp,) - end_date to show reservations. If not set, service default will be used.
 
 + Response 200 (application/json)
 
         {
             "status":"ok",
+            "page":0,
+            "pagination": 100,
+            "total_services":203,
+            "reservations":
+            [
+                {
+                    "reservation_id":23444,
+                    "client_id":23455,
+                    "client_email":"pseglar@gmail.com",
+                    "profile_id":3445,
+                    "profile_name":"Acmesa",
+                    "company_id": null,
+                    "company_name":null,
+                    "costcenter_id": null,
+                    "costcenter_name":null,
+                    "product":
+                    {
+                        "product_id":12,
+                        "service":"premium",
+                        "product_price":18.90,
+                        "paid":false
+                    },
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-06T22:35:17.02",
+                    "end_date": "2017-05-07T22:35:17.02",
+                    "trip":
+                    {
+                        "driver":null,
+                        "phone":null,
+                        "in_terminal":1001,
+                        "out_terminal":1002,
+                        "vehicle":{
+                            "vehicle_id":null,
+                            "type":null,
+                            "plate":"4565GHM"
+                        },
+                        "flight_number":"IB45546"
+                    },
+        
+                    "extras":
+                    [
+                        {
+                            "extra_id":23,
+                            "name":"Cubierto",
+                            "icon":"house",
+                            "description":"Aparcar en zona cubierta",
+                            "unitary_price":1,
+                            "price_calculation":"daily",
+                            "price":2,
+                            "paid":false
+                        },
+                        {
+                            "extra_id":24,
+                            "name":"Lavado exterior",
+                            "icon":"house",
+                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                            "unitary_price":7.55,
+                            "price_calculation":"final_price",
+                            "price":7.55,
+                            "paid":false
+                        }
+                    ],
+                    "promos":
+                    [
+                        {
+                            "promo_id":23,
+                            "promo_name":"RAC",
+                            "discount":0.45
+                        }
+                    ],
+                    "status":
+                    {
+                        "service":"reserved",
+                        "premium":
+                        {
+                            "check-in":"unconfirmed|requested|completed",
+                            "check-out":"unconfirmed|requested|completed",
+                            "client":
+                            {
+                                "timestamp":"2017-05-01T22:35:17.02",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            },
+                            "agent":
+                            {
+                                "agent_id":345435,
+                                "name":"Pau Seglar",
+                                "picture":"https://www.aparcandgo.com/images/43534645645",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            }
+                        }
+                    },
+                    "total_price":28.45,
+                    "paid":false
+                }
+            ]
+        }    
+
+## LIST FINISHED  [/adminservice/history/{product_id}{?page,start_date}]
+### LIST COMPLETED SERVICES [GET]
+
+Listado de servicios completados
+
+
+
+variable possible values
++ status.service options: reserved | in | out
++ status.premium.check-in: unconfirmed|requested|completed
++ status.premium.check-out: unconfirmed|requested|completed
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Parameters
+        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
+        + page (optional,number,`1`) - Pagination index.
+        + start_date (optional,timestamp,) - start_date to show reservations. If not set, service default will be used.
+        + start_date (optional,timestamp,) - end_date to show reservations. If not set, service default will be used.
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "page":0,
+            "pagination": 100,
+            "total_services":1,
             "reservations":
             [
                 {
@@ -3276,7 +3706,153 @@ Retrieve AGENT information
                     "end_date": "2017-05-07T22:35:17.02",
                     "client_id": 23455,
                     "client_email": "pseglar@gmail.com",
-                    "status": {
+                    "extras":"string",
+                    "total_price": 28.45,
+                    "paid": true
+                }
+            ]
+        }
+        
+## SEARCH RESERVATION [/adminservice/search/{product_id}{?page,query}]
+### LIST COMPLETED SERVICES [GET]
+
+Search for a reservation using reservation id, user email or phone_number. incomplete strings allowed. 
+
+
+
+variable possible values
++ status.service options: reserved | in | out
++ status.premium.check-in: unconfirmed|requested|completed
++ status.premium.check-out: unconfirmed|requested|completed
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Parameters
+        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
+        + page (optional,number,`1`) - Pagination index.
+        + query (required, string, `23444`) - reservation id, user email or phone_number. incomplete strings allowed. 
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "page":0,
+            "pagination": 100,
+            "total_services":1,
+            "reservations":
+            [
+                {
+                    "reservation_id":23444,
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-06T22:35:17.02",
+                    "end_date": "2017-05-07T22:35:17.02",
+                    "client_id": 23455,
+                    "client_email": "pseglar@gmail.com",
+                    "total_price": 28.45,
+                    "paid": true,
+                    "status":
+                    {
+                        "service":"reserved"
+                    }
+                }
+            ]
+        }
+
+## MANAGE SERVICE [/adminservice/{reservation_id}]
+### VIEW SERVICE [GET]
+
+Listado de servicios completados
+
+
+
+variable possible values
++ status.service options: reserved | in | out
++ status.premium.check-in: unconfirmed|requested|completed
++ status.premium.check-out: unconfirmed|requested|completed
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Parameters
+        + reservation_id (required,number,`23444`) - Id. user must have rights
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "reservation":
+                {
+                    "reservation_id": 23444,
+                    "client_id": 23455,
+                    "client_email": "pseglar@gmail.com",
+                    "profile_id": 3445,
+                    "profile_name": "Acmesa",
+                    "company_id": null,
+                    "company_name": null,
+                    "costcenter_id": null,
+                    "costcenter_name": null,
+                    "product": {
+                        "product_id": 12,
+                        "service": "express",
+                        "product_price": 18.9,
+                        "paid": false
+                    },
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-05T22:35:17.02",
+                    "end_date": "2017-05-16T22:35:17.02",
+                    "trip": {
+                        "driver":null,
+                        "phone":null,
+                        "in_terminal": 1001,
+                        "in_passengers": 2,
+                        "out_terminal": 1002,
+                        "out_passengers": 2,
+                        "vehicle": {
+                            "vehicle_id": null,
+                            "type": null,
+                            "plate": "4565GHM"
+                        },
+                        "flight_number":"IB45546",
+                        "baggage": true
+                    },
+                    "extras": [
+                        {
+                            "extra_id": 23,
+                            "name": "Cubierto",
+                            "icon": "house",
+                            "description": "Aparcar en zona cubierta",
+                            "unitary_price": 1,
+                            "price_calculation": "daily",
+                            "price": 2,
+                            "paid": false
+                        },
+                        {
+                            "extra_id": 24,
+                            "name": "Lavado exterior",
+                            "icon": "house",
+                            "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                            "unitary_price": 7.55,
+                            "price_calculation": "final_price",
+                            "price": 7.55,
+                            "paid": false
+                        }
+                    ],
+                    "promos": [
+                        {
+                            "promo_id": 23,
+                            "promo_name": "RAC",
+                            "discount": 0.45
+                        }
+                    ],
+                    "status":
+                    {
                         "service": "reserved",
                         "premium": {
                             "check-in": "unconfirmed|requested|completed",
@@ -3292,12 +3868,477 @@ Retrieve AGENT information
                                     "distance": 345,
                                     "duration": 34556
                                 }
+                            },
+                            "agent": {
+                                "agent_id": 345435,
+                                "name": "Pau Seglar",
+                                "picture": "https://www.aparcandgo.com/images/43534645645",
+                                "waiting": 0,
+                                "position": {
+                                    "lat": 0.34456645,
+                                    "lng": 0.34456645
+                                },
+                                "prediction": {
+                                    "distance": 345,
+                                    "duration": 34556
+                                }
                             }
                         }
+                    },
+                    "total_price": 28.45,
+                    "paymethod_id": null,
+                    "paymethod": null,
+                    "paid": false,
+                    "agent_observations":"blablabla",
+                    "park_lot":
+                    {
+                        "observations":"blablabla",
                     }
+                    "log": [
+                        {
+                            "timestamp": "2017-01-05T22:35:17.02",
+                            "source": "client|agent[pseglar@aparcandgo.com]",
+                            "event": "Reserva realizada"
+                        },
+                        {
+                            "timestamp": "2017-01-05T22:35:17.02",
+                            "source": "client",
+                            "event": "Entrada a parking"
+                        }
+        
+                    ]
                 }
-            ]
+        }
+### UPDATE SERVICE [PUT]
+all items are optional.
+profile and paymethod must be valid user profile/paymethod
+
+updatable items:
++ profile
++ paymethod
++ trip - reservation trip parameters will be updated from VALET APP CHECK-IN
++ enddate
++ extras -> WARNING. IF EXTRAS ARE UPDATE. ALL WANTED EXTRAS MUST BE SEND. TO REMOVE EXTRAS, SEND VOID "extras" array
++ enddate
++ observations (multiple items)
+
++ Request (application/json)
+
+    Reserva servicio express.
+    
+    + Body
+    
+            {
+                "profile_id":8,
+                "paymethod_id":246,
+                "end_date": "2017-05-16T22:35:17.02",
+                "trip":
+                    {
+                        "driver":"Pau Seglar,
+                        "phone":607789898,
+                        "in_terminal":1001,
+                        "out_terminal":1002,
+                        "vehicle":{
+                            "vehicle_id":null,
+                            "type":null,
+                            "plate":"4565GHM",
+                            "km":130000,
+                            "fuel_level":6,
+                        },
+                        "flight_number":"IB45546",
+                        "baggage": true
+                        
+                    },
+                "extras":
+                    [
+                        {
+                        "extra_id":23
+                        },
+                        {
+                        "extra_id":24
+                        },
+                    ],
+                
+                "agent_observations":"blablabla",
+                "park_lot":
+                {
+                    "observations":"blablabla",
+                }
+            }
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        }
+## UPLOAD IMAGES [/adminservice/image/{reservation_id}]
+### SET PHOTOS [POST]
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body 
+
+            -----BOUNDARY
+            Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+            Content-Type: image/jpeg
+            Content-Transfer-Encoding: base64
+    
+            /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+            HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+            MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+            AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+            AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+            -----BOUNDARY
+            Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+            Content-Type: image/jpeg
+            Content-Transfer-Encoding: base64
+    
+            /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+            HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+            MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+            AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+            AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+            -----BOUNDARY
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
         }
 
-## ADMINSERVICE VIEW/UPDATE- PENDING [/adminservice/{reservation_id}]
-## ADMINSERVICE CHARGE- PENDING [/adminservice/update]
+## UPLOAD SIGNATURE [/adminserice/sign/{reservation_id}]
+### UPLOAD USER SIGNATURE [POST]
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    + Body 
+
+            -----BOUNDARY
+            Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+            Content-Type: image/jpeg
+            Content-Transfer-Encoding: base64
+    
+            /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+            HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+            MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+            AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+            AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+            -----BOUNDARY
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 403 (application/json)
+
+        {
+        "status":"already-signed"
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not-found"
+        }
+## GATE VALIDATION [/adminservice/gatevalidation/{reservation_id}]
+Usado para entrada/salida manual desde el pandel de gestion para el servicio express.
+Sirve para indicar que el usuario procede a la entrada o a la salida. 
+Para proceder a la salida, el servicio debe estar pagado. (ver /adminservice/charge)
+### VALIDATE CAR ACCESS [POST]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 403 (application/json)
+
+        {
+        "status":"payment-needed"
+        }
++ Response 403 (application/json)
+
+        {
+        "status":"not-found"
+        }
+
+## CHARGE PAYMENT  [/adminservice/charge/{reservation_id}]
+Una respuesta satisfactoria confirma el pago.
+### REQUEST PAYMENT [POST]
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 402 (application/json)
+
+        {
+        "status":"payment-required",
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not-found"
+        }
+        
+## REQUEST PREMIUM  [/adminservice/requestpremium/{reservation_id}]
+### REQUEST ASSIGNATION [POST]
+Request Premium service assignation to an agent.
+If agent is not specified, automatic assignation is performed.
+This method will send a push notification to the specified agent and will update reservation.status.premium.agent and reservation.status.premium.agent-status.
+if reservation is already assigned, request will fail.
+
+timeout will be set in secs.
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+            "agent_id":333,
+            "timeout":60,
+            }
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 403 (application/json)
+
+        {
+        "status":"already-assigned",
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not-found"
+        }
+        
+## ASSIGN PREMIUM [/adminservice/assignpremium/{reservation_id}]
+### ASSIGN PREMIUM SERVICE [POST]
+Assigns a service to the requesting agent.
+Used to accept premium assignation requests or to self-assign a service.
+if reservation is already assigned, request will fail if force is not set to true
+use force  in  combination with warning modals.
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+            "agent_id":333,
+            "force":false,
+            }
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 403 (application/json)
+
+        {
+        "status":"already-assigned",
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not-found"
+        }
+### UN-ASSIGN PREMIUM SERVICE [DELETE]
+UN-Assigns a service to the requesting agent.
+Used to reject premium assignation requests or to self-unassign a service.
+
+Reason object is required.
+Allowed reason.type:
++ timeout - Service was not accepted in time. User will be updated to OUT state and a push notification will be send to confirm new status.
++ change_service - User will perform a other service . if possible, reason.info should point to new service_id.
++ user_delay - User is delayed. reservation will be re-set to previous state and agent will Be ready again.
++ end_shift - Agent status will be set to out. service request will be automatically sent to other available agent.
++ other - reason.info required. service will be updated to previous state and agent status will be set to ready. This option will be erased in future. Agent must perform extra actions 
+
+
+
+
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+    + Body
+    
+            {
+            "agent_id":333,
+            "reason":
+            {
+                "type":"change_service",
+                "info":null,
+            },
+            }
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 403 (application/json)
+
+        {
+        "status":"already-assigned"
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not-found"
+        }
+        
+        
+## VIEW USER [/adminservice/user/{reservation_id}]
+### GET [GET]
+
+Retrieves user information 
+
+
++ default_invoice_profile: should be updated on first purchase if null.
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+        
+
++ Response 200 (application/json)
+
+        {
+            "status":"ok",
+            "user":
+            {
+                "user_id":45346,
+                "email":"pseglar@gmail.com",
+                "name":"Pau",
+                "lastname":"Seglar Segura",
+                "phone": "607787857",
+                "zip": "08301",
+                "lang":"ca_ES",
+                "accept_promos": true,
+                "default_invoice_profile": null,
+                "email_validated": true,
+                "phone_validated": true,
+                "points":
+                {
+                    "currentpoints":0.95
+                },
+                "profiles":
+                [
+                    {
+                        "profile_id":45346,
+                        "type":"corporate",
+                        "company_id":34536,
+                        "rights":
+                        {
+                            "role":"administrator",
+                            "permissions": 
+                            {
+                                "manage_paymethods": true,
+                                "manage_users": true,
+                                "manage_reservations": true
+                            }
+                        },
+                        "cost_center": 76645,
+                        "invoice_name":"Acmesa",
+                        "invoice_nif":"j66245523",
+                        "invoice_email":"invoices@acmesa.com",
+                        "invoice_address":"c/ alegria 23",
+                        "invoice_city":"Barcelona",
+                        "invoice_state":"Barcelona",
+                        "invoice_zip": "08355"
+                    },
+                    {
+                        "profile_id":45347,
+                        "type":"professional",
+                        "monthly_invoice": false,
+                        "invoice_name":"Acmesa",
+                        "invoice_nif":"j66245523",
+                        "invoice_email":"invoices@acmesa.com",
+                        "invoice_address":"c/ alegria 23",
+                        "invoice_city":"Barcelona",
+                        "invoice_state":"Barcelona",
+                        "invoice_zip": "08355"
+                    }
+                ],
+                "vehicles":
+                [
+                    {
+                        "vehicle_id":45346,
+                        "type":"vw golf gris",
+                        "plate":"3453GHM"
+                    },
+                    {
+                        "vehicle_id":45347,
+                        "type":"renault twingo azul",
+                        "plate":"B-5468-UC"
+                    }
+                ],
+                "paymethods":
+                [
+                    {
+                        "paymethod_id":45346,
+                        "type":"corporate_card",
+                        "company_id": 45678,
+                        "cost_center": null,
+                        "alias": "Acmesa",
+                        "last_card_numbers": "4568",
+                        "expire":{"year":19,"month":7},
+                        "added": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02"
+                    },
+                    {
+                        "paymethod_id":45346,
+                        "type":"card",
+                        "alias": "Acmesa",
+                        "lastcardnumbers": "4568",
+                        "expire":{"year":19,"month":7},
+                        "added": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02"
+                    }
+                ],
+                "points":
+                    {
+                    "currentpoints":0.95,
+                    }
+            }
+        }
