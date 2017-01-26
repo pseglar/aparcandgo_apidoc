@@ -2601,6 +2601,8 @@ request invoice in html, pdf or by email.
             "zip":"08354",
             "city": "la sacaremos en backend desde el CP no incluir en FE.",
             "monthly_invoice": false
+            "billing_sendinvoicecopy":false,
+            "billing_email":null
             }
 
 
@@ -2619,7 +2621,9 @@ request invoice in html, pdf or by email.
             "monthly_invoice": false,
             "invoice_per_costcenter": false,
             "send_reservation_copy":false,
-            "send_invoice_copy":false
+            "send_invoice_copy":false,
+            "billing_send_invoice_copy":false,
+            "billing_email":null
             }
         }
 
@@ -2660,6 +2664,8 @@ Retrieves and store user information.
             "invoice_per_costcenter": false,
             "send_reservation_copy":true,
             "send_invoice_copy":true,
+            "billing_send_invoice_copy":false,
+            "billing_email":null,
             "costcenters":
             [
                 {
@@ -2702,6 +2708,8 @@ only update new information.
             "invoice_per_costcenter": false,
             "send_reservation_copy":false,
             "send_invoice_copy":false
+            "billing_send_invoice_copy":false,
+            "billing_email":null
             }
 
 + Response 200 (application/json)
