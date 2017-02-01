@@ -50,7 +50,7 @@ Log out equivalent. deletes valid token from system
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 
 ## USER - VIEW/CREATE/UPDATE USER [/user]
@@ -161,11 +161,7 @@ Retrieves and store user information.
                         "added": "2017-05-01T22:35:17.02",
                         "checked": "2017-05-01T22:35:17.02"
                     }
-                ],
-                "points":
-                    {
-                    "currentpoints":0.95,
-                    }
+                ]
             }
         }
 ### UPDATE [PUT]
@@ -194,7 +190,7 @@ only update new information. profiles and vehicles are updated under custom endp
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 ###  CREATE [POST]
 
@@ -234,8 +230,6 @@ Two examples:
             "accept_promos": true,
             "default_invoice_profile": null,
             "lang":"ca_ES"
-
-
             }
         }
 
@@ -346,7 +340,7 @@ Two examples:
         "status":"ok",
         "points":
             {
-            "currentpoints":0.95,
+            "currentpoints":0.95
             }
         }
 ## USER RESEND SMS  [/user/smsvalidation]
@@ -603,7 +597,7 @@ currently two types of payment methods:
                     "costcenter_id": null,
                     "alias": "Acmesa",
                     "last_card_numbers": "4568",
-                    "expire":{"year":19,"month":7}
+                    "expire":{"year":19,"month":7},
                     "added": "2017-05-01T22:35:17.02",
                     "checked": "2017-05-01T22:35:17.02"
                 },
@@ -618,63 +612,7 @@ currently two types of payment methods:
                 }
             ]
         }
-## USER - Paymethod Management [/user/paymethod/{paymethod_id}{?pci_signature}]
-
-### GET [GET]
-+ Request
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-+ Parameters
-    + paymethod_id
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok",
-        "paymethod":
-            {
-            "paymethod_id":45346,
-            "type":"corporate_card",
-            "company_id": 45678,
-            "cost_center": null
-            "alias": "Acmesa",
-            "lastcardnumbers": "4568",
-            "expire":{"year":19,"month":7}
-            "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02"
-            }
-        }
-+ Response 404 (application/json)
-
-        {
-        "status":"not found",
-        }
-### DELETE [DELETE]
-<blockquote>
-
-**Atention: only PCI SERVER CAN DELETE CARDS IN API SERVER.**
-TO DELETE A CARD USERS MUST USE **/deletecard** endpoint in the PCI SERVER.
-</blockquote>
-
-+ Request
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-+ Parameters
-    + paymethod_id (integer)
-    + pci_signature
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok"
-        }
-+ Response 404 (application/json)
-
-        {
-        "status":"not found"
-        }
+## CREATE PAYMETHOD [/user/paymethod{?pci_signature}]
 ### CREATE [POST]
 <blockquote>
 
@@ -712,6 +650,63 @@ PCI_SIGNATURE is a made from a secret key shared between servers
         "status":"ok",
         "api_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
         }
+## PAYMETHOD MANAGEMENT [/user/paymethod/{paymethod_id}{?pci_signature}]
+
+### GET [GET]
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + paymethod_id (optional, number) - optional if POST. required if GET or PUT
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "paymethod":
+            {
+            "paymethod_id":45346,
+            "type":"corporate_card",
+            "company_id": 45678,
+            "cost_center": null,
+            "alias": "Acmesa",
+            "lastcardnumbers": "4568",
+            "expire":{"year":19,"month":7},
+            "added": "2017-05-01T22:35:17.02",
+            "checked": "2017-05-01T22:35:17.02"
+            }
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not found",
+        }
+### DELETE [DELETE]
+<blockquote>
+
+**Atention: only PCI SERVER CAN DELETE CARDS IN API SERVER.**
+TO DELETE A CARD USERS MUST USE **/deletecard** endpoint in the PCI SERVER.
+</blockquote>
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
++ Parameters
+    + paymethod_id (integer)
+    + pci_signature
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
++ Response 404 (application/json)
+
+        {
+        "status":"not found"
+        }
 ### UPDATE [PUT]
 
 <blockquote>
@@ -739,7 +734,7 @@ Users can only update alias parameters.
             "paymethod_id":45346,
             "type":"corporateCard",
             "company_id": 45678,
-            "cost_center": null
+            "cost_center": null,
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire":{"year":19,"month":7}
@@ -748,7 +743,7 @@ Users can only update alias parameters.
             }
         }
 
-## USER - Vehicles [/user/vehicles]
+## LIST Vehicles [/user/vehicles]
 
 Retrieves the list of existing vehicles for the requesting user.
 
@@ -777,7 +772,34 @@ Retrieves the list of existing vehicles for the requesting user.
                     }
                 ]
         }
-## USER - Vehicle Management [/user/vehicle/{vehicle_id}]
+## CREATE VEHICLE [/user/vehicle]
+### CREATE [POST]
+
+
+
++ Request (application/json)
+
+        {
+        "type":"vw golf gris",
+        "plate":"3453GHM"
+        },
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "vehicle":
+            {
+            "vehicle_id":45346,
+            "type":"vw golf gris",
+            "plate":"3453GHM"
+            }
+        }
+## MANAGE VEHICLE [/user/vehicle/{vehicle_id}]
 
 ### GET [GET]
 + Request
@@ -823,32 +845,7 @@ Retrieves the list of existing vehicles for the requesting user.
         {
         "status":"not found"
         }
-### CREATE [POST]
 
-
-
-+ Request (application/json)
-
-        {
-        "type":"vw golf gris",
-        "plate":"3453GHM"
-        },
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok",
-        "vehicle":
-            {
-            "vehicle_id":45346,
-            "type":"vw golf gris",
-            "plate":"3453GHM"
-            }
-        }
 ### UPDATE [PUT]
 
 + Request (application/json)
@@ -995,10 +992,10 @@ When calling with company_id, card will be stored as company card if user has ad
             "paymethod_id":45346,
             "type":"corporateCard",
             "company_id": 45678,
-            "cost_center": null
+            "cost_center": null,
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
-            "expire":{"year":19,"month":7}
+            "expire":{"year":19,"month":7},
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
             }
@@ -1031,19 +1028,7 @@ PCI SERVER will then:
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-        "paymethods":
-            {
-            "paymethod_id":45346,
-            "type":"corporateCard",
-            "company_id": 45678,
-            "cost_center": null
-            "alias": "Acmesa",
-            "lastcardnumbers": "4568",
-            "expire":{"year":19,"month":7}
-            "added": "2017-05-01T22:35:17.02",
-            "checked": "2017-05-01T22:35:17.02"
-            }
+        "status":"ok"
         }
 
 # Group PRODUCT INFORMATION
@@ -1275,11 +1260,13 @@ Server will respond with **304 Not-Modified**
                                                 "icon":"house",
                                                 "description":"Aparcar en zona cubierta",
                                                 "unitary_price":1,
-                                                "price_calculation":"daily"
+                                                "price_calculation":"daily",
+                                                
                                             },
                                             {
                                                 "extra_id":24,
                                                 "name":"Lavado exterior",
+                                                "type":"wash",
                                                 "icon":"house",
                                                 "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                                                 "unitary_price":7.55,
@@ -1675,6 +1662,7 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
                     {
                     "extra_id":24,
                     "name":"Lavado exterior",
+                    "type":"wash",
                     "icon":"house",
                     "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                     "unitary_price":7.55,
@@ -1799,6 +1787,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                         {
                             "extra_id":24,
                             "name":"Lavado exterior",
+                            "type":"wash",
                             "icon":"house",
                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                             "unitary_price":7.55,
@@ -1821,6 +1810,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     },
                     "total_price":28.45,
                     "paid":false,
+                    "paymethod_id":45678,
+                    "paymethod_alias":"Acmesa"
                 },
                 {
                     "reservation_id":23444,
@@ -1870,6 +1861,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                         {
                             "extra_id":24,
                             "name":"Lavado exterior",
+                            "type":"wash",
                             "icon":"house",
                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                             "unitary_price":7.55,
@@ -1892,19 +1884,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     },
                     "total_price":28.45,
                     "paid":false,
-                    "log":
-                    [
-                        {
-                            "timestamp":"2017-05-05T22:35:17.02",
-                            "source":"client|agent[pseglar@aparcandgo.com]",
-                            "event":"Reserva realizada"
-                        },
-                        {
-                            "timestamp":"2017-05-05T22:35:17.02",
-                            "source":"client",
-                            "event":"Entrada a parking"
-                        }
-                    ]
+                    "paymethod_id":45678,
+                    "paymethod_alias":"Acmesa"
                 }
             ]
         }
@@ -1981,7 +1962,96 @@ En frontend se pinta como el perfil personal.
 
         {
         "status":"ok",
-        "reservation": "mismo contenido que una de las del método GET /reservations"
+        "reservation":
+                {
+                    "reservation_id":23444,
+                    "client_id":23455,
+                    "client_email":"pseglar@gmail.com",
+                    "profile_id":3445,
+                    "profile_name":"Acmesa",
+                    "company_id": null,
+                    "company_name":null,
+                    "costcenter_id": null,
+                    "costcenter_name":null,
+                    "product":
+                    {
+                        "product_id":12,
+                        "service":"premium",
+                        "product_price":18.90,
+                        "paid":false
+                    },
+                    "reservation_date": "2017-05-01T22:35:17.02",
+                    "start_date": "2017-05-06T22:35:17.02",
+                    "end_date": "2017-05-07T22:35:17.02",
+                    "trip":
+                    {
+                        "driver":null,
+                        "phone":null,
+                        "in_terminal":1001,
+                        "out_terminal":1002,
+                        "vehicle":{
+                            "vehicle_id":null,
+                            "type":null,
+                            "plate":"4565GHM"
+                        },
+                        "baggage": false,
+                        "flight_number":"IB45546"
+                    },
+        
+                    "extras":
+                    [
+                        {
+                            "extra_id":23,
+                            "name":"Cubierto",
+                            "icon":"house",
+                            "description":"Aparcar en zona cubierta",
+                            "unitary_price":1,
+                            "price_calculation":"daily",
+                            "price":2,
+                            "paid":false
+                        },
+                        {
+                            "extra_id":24,
+                            "name":"Lavado exterior",
+                            "type":"wash",
+                            "icon":"house",
+                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                            "unitary_price":7.55,
+                            "price_calculation":"final_price",
+                            "price":7.55,
+                            "paid":false
+                        }
+                    ],
+                    "promos":
+                    [
+                        {
+                            "promo_id":23,
+                            "promo_name":"RAC",
+                            "discount":0.45
+                        }
+                    ],
+                    "status":
+                    {
+                        "service":"reserved"
+                    },
+                    "total_price":28.45,
+                    "paid":false,
+                    "paymethod_id":45678,
+                    "paymethod_alias":"Acmesa",
+                    "log":
+                    [
+                        {
+                            "timestamp":"2017-05-05T22:35:17.02",
+                            "source":"client|agent[pseglar@aparcandgo.com]",
+                            "event":"Reserva realizada"
+                        },
+                        {
+                            "timestamp":"2017-05-05T22:35:17.02",
+                            "source":"client",
+                            "event":"Entrada a parking"
+                        }
+                    ]
+                }
         }
 
 
@@ -2061,6 +2131,7 @@ En frontend se pinta como el perfil personal.
                         {
                             "extra_id":24,
                             "name":"Lavado exterior",
+                            "type":"wash",
                             "icon":"house",
                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                             "unitary_price":7.55,
@@ -2102,7 +2173,7 @@ En frontend se pinta como el perfil personal.
                             "agent":
                             {
                                 "agent_id":345435,
-                                "agent-status":"check-in"
+                                "agent-status":"check-in",
                                 "name":"Pau Seglar",
                                 "picture":"https://www.aparcandgo.com/images/43534645645",
                                 "waiting":0,
@@ -2168,7 +2239,7 @@ Currently Only profile_id and paymethod updates will be implemented
     
             {
                 "profile_id":8,
-                "paymethod_id":246,
+                "paymethod_id":246
             }
 
     + Headers
@@ -2179,7 +2250,7 @@ Currently Only profile_id and paymethod updates will be implemented
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 
 
@@ -2227,8 +2298,7 @@ Request reservation payment
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-        "reservation":"objeto reserva. la reserva estará pagada o dará error."
+        "status":"ok"
         }
 
 + Response 403 (application/json)
@@ -2282,9 +2352,8 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
     para ahorra llamadas a Google API, la APP premium no utilizará prediction.
 
     + Body
-
+    
             {
-                "reservation_id": 2342355,
                 "position":
                     {
                         "lat":0.34456645
@@ -2310,7 +2379,7 @@ Solicita un servicio de entrega o recogida (depende del estado de la reserva)
             "status":"ok",
             "reservation":
                 {
-                "reservation_id":43,
+                "reservation_id":23444,
                 "status":"reservation status object. see /reservations"
                 }
             }
@@ -2331,9 +2400,9 @@ Actualiza los datos de traking de cliente.
     para ahorra llamadas a Google API, la APP premium no utilizará prediction.
 
     + Body
-
+    
             {
-                "reservation_id": 2342355,
+            
                 "position":
                     {
                         "lat":0.34456645,
@@ -2354,13 +2423,54 @@ Actualiza los datos de traking de cliente.
     Respueta OK.
 
     + Body
-
+    
             {
             "status":"ok",
             "reservation":
                 {
-                "reservation_id":43,
-                "status":"reservation status object. see /reservations"
+                    "reservation_id":23444,
+                    "status":
+                    {
+                        "service":"reserved",
+                        "premium":
+                        {
+                            "check-in":"unconfirmed|requested|completed",
+                            "check-out":"unconfirmed|requested|completed",
+                            "client":
+                            {
+                                "timestamp":"2017-05-01T22:35:17.02",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            },
+                            "agent":
+                            {
+                                "agent_id":345435,
+                                "agent-status":"check-in",
+                                "name":"Pau Seglar",
+                                "picture":"https://www.aparcandgo.com/images/43534645645",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            }
+                        }
+                    }
                 }
             }
 ### VIEW TRACKING INFORMATION [GET]
@@ -2387,7 +2497,7 @@ No devuelve datos si no es una reserva premium activa.
             "status":"ok",
             "reservation":
                 {
-                "reservation_id":43,
+                "reservation_id":23444,
                 "status":
                     {
                         "service":"reserved",
@@ -2413,7 +2523,7 @@ No devuelve datos si no es una reserva premium activa.
                             "agent":
                             {
                                 "agent_id":345435,
-                                "agent-status":"check-in"
+                                "agent-status":"check-in",
                                 "name":"Pau Seglar",
                                 "picture":"https://www.aparcandgo.com/images/43534645645",
                                 "waiting":0,
@@ -2549,7 +2659,7 @@ NOTA PARA BACKEND
                         "amount": 17.58,
                         "profile_id":45347,
                         "profile_name": "Acmesa",
-                        "cost_center_name":null,
+                        "cost_center_name":null
                     },
                     {
                         "invoice_id":234537,
@@ -2558,7 +2668,7 @@ NOTA PARA BACKEND
                         "profile_id":45347,
                         "profile_name": "Acmesa",
                         "cost_center_id":null,
-                        "cost_center_name":null,
+                        "cost_center_name":null
                     }
                 ]
         }
@@ -2678,7 +2788,21 @@ Retrieves and store user information.
                 "costcenter_name":"Postventa",
                 "paymethod":null
                 }
-            ]
+            ],
+            "paymethods":
+                [
+                    {
+                        "paymethod_id":45346,
+                        "type":"corporate_card",
+                        "company_id": 456,
+                        "cost_center": null,
+                        "alias": "Acmesa",
+                        "last_card_numbers": "4568",
+                        "expire":{"year":19,"month":7},
+                        "added": "2017-05-01T22:35:17.02",
+                        "checked": "2017-05-01T22:35:17.02"
+                    }
+                ]
             }
         }
 ### UPDATE [PUT]
@@ -2747,7 +2871,7 @@ only update new information.
 
 + Parameters
     + company_id (required,number,`456`)
-
+    
 
 ### LIST COST CENTERS [GET]
 
@@ -2779,6 +2903,12 @@ null paymethod means that allow all company paymethods.
             ],
 
         }
+        
+## COST CENTERS [/business/costcenter/{company_id}]
+
++ Parameters
+    + company_id (required,number,`456`)
+
 ### UPDATE COST CENTERS[PUT]
 
 only update new information.
@@ -2795,7 +2925,7 @@ only update new information.
             {
                 "costcenter_id": 2345,
                 "costcenter_name":"Ventas",
-                "paymethod_id":456
+                "paymethod_id":45346
             }
 
 
@@ -2824,9 +2954,8 @@ only update new information.
     + Body
     
             {   
-                "costcenter_id": 2345,
                 "costcenter_name":"Ventas",
-                "paymethod_id":456
+                "paymethod_id":45346
             }
 
 
@@ -2838,7 +2967,7 @@ only update new information.
             {
                 "costcenter_id": 2345,
                 "costcenter_name":"Ventas",
-                "paymethod_id":456
+                "paymethod_id":45346
             }
         }
 ### DELETE COST CENTER [DELETE]
@@ -2856,7 +2985,7 @@ Alert that :
     + Body
     
             {
-                "costcenter_id":589
+                "costcenter_id":2345
             }
 
 + Response 200 (application/json)
@@ -3044,6 +3173,7 @@ Every PUT mehod allow sending the optional "position" object to update APP agent
 
 # Group AGENT MANAGEMENT
 Service management methods for agents.
+
 ## LOGIN [/agent/token{?email,password,keeplogged}]
 
 Login equivalent
@@ -3083,10 +3213,10 @@ Log out equivalent. deletes valid token from system
 + Response 200 (application/json)
 
         {
-        "status":"ok",
+        "status":"ok"
         }
 
-## VIEW/UPDATE [/agent/{agent_id}]
+## VIEW/UPDATE/CREATE [/agent]
 ### VIEW AGENT [GET]
 
 Retrieve AGENT information
@@ -3128,8 +3258,8 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
 + Response 200 (application/json)
 
         {
-        "status":"ok",
-        "agent":
+            "status":"ok",
+            "agent":
             {
                 "agent_id": 333,
                 "email":"pseglar@aparcandgo.com",
@@ -3143,25 +3273,24 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
                     "agent-status":"ready",
                     "status-timestamp":"2017-05-01T22:35:17.02",
                     "reservation_id":null,
-                    "status-timestamp":"2017-05-01T22:35:17.02",
                     "position":
                     {
                         "timestamp":"2017-05-01T22:35:17.02",
                         "lat":0.34456645,
                         "lng":0.34456645,
-                        "internal-description": "base",
+                        "internal-description": "base"
                     }
                 },
                 "products":
                 [
                     {
-                    "product_id": 9,
-                    "product_name": "Express",
-                    "service": "express",
+                        "product_id": 9,
+                        "product_name": "Express",
+                        "service": "express",
                         "rights":
                         {
                             "role":"administrator",
-                            "permissions": 
+                            "permissions":
                             {
                                 "manage_agents": true,
                                 "manage_product": true,
@@ -3170,13 +3299,13 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
                         }
                     },
                     {
-                    "product_id": 5,
-                    "product_name": "Premium",
-                    "service": "premium",
+                        "product_id": 5,
+                        "product_name": "Premium",
+                        "service": "premium",
                         "rights":
                         {
                             "role":"agent",
-                            "permissions": 
+                            "permissions":
                             {
                                 "manage_agents": false,
                                 "manage_product": false,
@@ -3216,6 +3345,27 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
             }
 
 
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+### CREATE AGENT [POST]
+**ONLY SUPERAGENTS CAN CREATE NEW AGENTS**
+This method create product admin roles. low privileged accounts must be created from adminproduct methods from an admin account
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
+    + Body
+        
+            {
+                "email": "pseglar@aparcandgo.com",
+                "password":"base64encoded",
+                "product_id": "9"
+            }
 + Response 200 (application/json)
 
         {
@@ -3611,6 +3761,7 @@ Variable possible values
                         {
                             "extra_id":24,
                             "name":"Lavado exterior",
+                            "type":"wash",
                             "icon":"house",
                             "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                             "unitary_price":7.55,
@@ -3844,6 +3995,7 @@ variable possible values
                         {
                             "extra_id": 24,
                             "name": "Lavado exterior",
+                            "type":"wash",
                             "icon": "house",
                             "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
                             "unitary_price": 7.55,
