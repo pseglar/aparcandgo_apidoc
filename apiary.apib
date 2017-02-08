@@ -104,7 +104,7 @@ Retrieves and store user information.
                                 "manage_reservations": true
                             }
                         },
-                        "cost_center": 76645,
+                        "costcenter_id": 76645,
                         "invoice_name":"Acmesa",
                         "invoice_nif":"j66245523",
                         "invoice_email":"invoices@acmesa.com",
@@ -145,7 +145,7 @@ Retrieves and store user information.
                         "paymethod_id":45346,
                         "type":"corporate_card",
                         "company_id": 45678,
-                        "cost_center": null,
+                        "costcenter_id": null,
                         "alias": "Acmesa",
                         "last_card_numbers": "4568",
                         "expire":{"year":19,"month":7},
@@ -400,7 +400,7 @@ Retrieves the list of existing profiles for the requesting user.
                             "manage_reservations": true
                         }
                     },
-                        "cost_center": 76645,
+                        "costcenter_id": 76645,
                         "monthly_invoice": false,
                         "invoice_per_costcenter": false,
                         "send_reservation_copy":[{"user_id":345346},{"user_id":234345}],
@@ -612,29 +612,29 @@ currently two types of payment methods:
                 }
             ]
         }
-## CREATE PAYMETHOD [/user/paymethod{?pci_signature}]
+## CREATE PAYMETHOD [/user/paymethod]
 ### CREATE [POST]
 <blockquote>
 
 **Atention: only PCI SERVER CAN CREATE CARDS IN API SERVER.**
-TO ADD A CARD USERS MUST USE **/addcard** endpoint in the PCI SERVER.
+
 </blockquote>
 
-<blockquote>
+<blockquote>TO ADD A CARD USERS MUST USE **/addcard** endpoint in the PCI SERVER.
 PCI_SIGNATURE is a made from a secret key shared between servers
 </blockquote>
-
 
 + Request (application/json)
 
         {
-       "paymethod_id":45346,
+        "user_id":3456456
         "type":"corporate_card",
         "company_id": 45678,
-        "cost_center": null,
+        "costcenter_id": null,
         "alias": "Acmesa",
         "lastcardnumbers": "4568",
-        "expire":{"year":19,"month":7},
+        "expiration_month":7,
+        "expiration_year":19,
         "added": "2017-05-01T22:35:17.02",
         "checked": "2017-05-01T22:35:17.02",
         "pci_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
@@ -642,12 +642,16 @@ PCI_SIGNATURE is a made from a secret key shared between servers
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+            
+          
+
 
 
 + Response 200 (application/json)
 
         {
         "status":"ok",
+        "paymethod_id":45346,
         "api_signature":"03807cb390319329bdf6c777d4dfae9c0d3b3c35"
         }
 ## PAYMETHOD MANAGEMENT [/user/paymethod/{paymethod_id}{?pci_signature}]
@@ -669,7 +673,7 @@ PCI_SIGNATURE is a made from a secret key shared between servers
             "paymethod_id":45346,
             "type":"corporate_card",
             "company_id": 45678,
-            "cost_center": null,
+            "costcenter_id": null,
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire":{"year":19,"month":7},
@@ -719,7 +723,7 @@ Users can only update alias parameters.
         {
        "paymethod_id":45346,
         "alias": "Acmesa",
-        "cost_center": null
+        "costcenter_id": null
         }
     + Headers
 
@@ -734,7 +738,7 @@ Users can only update alias parameters.
             "paymethod_id":45346,
             "type":"corporateCard",
             "company_id": 45678,
-            "cost_center": null,
+            "costcenter_id": null,
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire":{"year":19,"month":7}
@@ -924,7 +928,7 @@ proposal:
 
 # Group PCI Card management
 
-## PCI- Add card [/addcard{?user_id,authorization_token,cardnumber,expiration_month,expiration_year,cvv,type,company_id,cost_center,alias}]
+## PCI- Add card [/addcard{?user_id,authorization_token,cardnumber,expiration_month,expiration_year,cvv,type,company_id,costcenter_id,alias,signature}]
 
 ### GET [GET]
 PCI EXIGE MÉTODO GET.
@@ -974,8 +978,9 @@ When calling with company_id, card will be stored as company card if user has ad
     + cvv - 246
     + type (optional) - corporate_card
     + company_id (optional) - if set. this card will be corporate card
-    + cost_center (optional) -if set. this card will be assigned to this costcenter only in API server. PCI won't store this info.
+    + costcenter_id (optional) -if set. this card will be assigned to this costcenter only in API server. PCI won't store this info.
     + alias (optional) -
+    + signature (string, required) - sign using 
 
 + Request (application/json)
 
@@ -992,7 +997,7 @@ When calling with company_id, card will be stored as company card if user has ad
             "paymethod_id":45346,
             "type":"corporateCard",
             "company_id": 45678,
-            "cost_center": null,
+            "costcenter_id": null,
             "alias": "Acmesa",
             "lastcardnumbers": "4568",
             "expire":{"year":19,"month":7},
@@ -1051,6 +1056,10 @@ product description debe estar en los 4 idiomas.
 Nota para desarrollo frontend.
 
 product short_description debe ser usado en la pantalla de selección de producto (tras la seleccion de ciudad y área de servicio)
+</blockquote>
+
+<blockquote>
+Les seccions informatives han de ser totes iguals i han de poder tenir el titol, cos, imatge o icona. totes opcionals.
 </blockquote>
 ### GET [GET]
 
@@ -2659,7 +2668,8 @@ NOTA PARA BACKEND
                         "amount": 17.58,
                         "profile_id":45347,
                         "profile_name": "Acmesa",
-                        "cost_center_name":null
+                        "costcenter_id":null,
+                        "costcenter_name":null
                     },
                     {
                         "invoice_id":234537,
@@ -2667,8 +2677,8 @@ NOTA PARA BACKEND
                         "amount": 17.58,
                         "profile_id":45347,
                         "profile_name": "Acmesa",
-                        "cost_center_id":null,
-                        "cost_center_name":null
+                        "costcenter_id":null,
+                        "costcenter_name":null
                     }
                 ]
         }
@@ -2795,7 +2805,7 @@ Retrieves and store user information.
                         "paymethod_id":45346,
                         "type":"corporate_card",
                         "company_id": 456,
-                        "cost_center": null,
+                        "costcenter_id": null,
                         "alias": "Acmesa",
                         "last_card_numbers": "4568",
                         "expire":{"year":19,"month":7},
@@ -4438,7 +4448,7 @@ Retrieves user information
                                 "manage_reservations": true
                             }
                         },
-                        "cost_center": 76645,
+                        "costcenter_id": 76645,
                         "invoice_name":"Acmesa",
                         "invoice_nif":"j66245523",
                         "invoice_email":"invoices@acmesa.com",
@@ -4479,7 +4489,7 @@ Retrieves user information
                         "paymethod_id":45346,
                         "type":"corporate_card",
                         "company_id": 45678,
-                        "cost_center": null,
+                        "costcenter_id": null,
                         "alias": "Acmesa",
                         "last_card_numbers": "4568",
                         "expire":{"year":19,"month":7},
