@@ -1269,7 +1269,7 @@ Server will respond with **304 Not-Modified**
                                                 "icon":"house",
                                                 "description":"Aparcar en zona cubierta",
                                                 "unitary_price":1,
-                                                "price_calculation":"daily",
+                                                "price_calculation":"daily"
                                                 
                                             },
                                             {
@@ -1760,6 +1760,8 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     "product":
                     {
                         "product_id":12,
+                         "product_name": "Express",
+                         "provider": "Aparca&Go",
                         "service":"express",
                         "product_price":18.90,
                         "paid":false
@@ -1833,8 +1835,10 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     "costcenter_id": null,
                     "costcenter_name":null,
                     "product":
-                    {
+                    {   
                         "product_id":12,
+                        "product_name": "Premium",
+                        "provider": "Aparca&Go",
                         "service":"premium",
                         "product_price":18.90,
                         "paid":false
@@ -1932,6 +1936,8 @@ En frontend se pinta como el perfil personal.
                 "profile_id":null,
                 "paymethod_id":45,
                 "product_id": 12,
+                "product_name": "Premium",
+                "provider": "Aparca&Go",
                 "start_date": "2017-05-05T22:35:17.02",
                 "end_date": "2017-05-06T22:35:17.02",
                 "promocode": "RAC",
@@ -2103,6 +2109,8 @@ En frontend se pinta como el perfil personal.
                     "product":
                     {
                         "product_id":12,
+                        "product_name": "Premium",
+                        "provider": "Aparca&Go",
                         "service":"premium",
                         "product_price":18.90,
                         "paid":false
