@@ -2192,7 +2192,7 @@ En frontend se pinta como el perfil personal.
                             "agent":
                             {
                                 "agent_id":345435,
-                                "agent-status":"check-in",
+                                "agent_status":"check-in",
                                 "name":"Pau Seglar",
                                 "picture":"https://www.aparcandgo.com/images/43534645645",
                                 "waiting":0,
@@ -2473,7 +2473,7 @@ Actualiza los datos de traking de cliente.
                             "agent":
                             {
                                 "agent_id":345435,
-                                "agent-status":"check-in",
+                                "agent_status":"check-in",
                                 "name":"Pau Seglar",
                                 "picture":"https://www.aparcandgo.com/images/43534645645",
                                 "waiting":0,
@@ -2542,7 +2542,7 @@ No devuelve datos si no es una reserva premium activa.
                             "agent":
                             {
                                 "agent_id":345435,
-                                "agent-status":"check-in",
+                                "agent_status":"check-in",
                                 "name":"Pau Seglar",
                                 "picture":"https://www.aparcandgo.com/images/43534645645",
                                 "waiting":0,
@@ -3259,9 +3259,9 @@ PREMIUM AGENT POSIBLE STATUS
 <blockquote>
 BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla o separada)
 
-+ agent-status
++ agent_status
 + reservation_id
-+ status-timestamp
++ status_timestamp
 + lat
 + lng
 + position-timestamp
@@ -3290,15 +3290,15 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
                 "app_product":5,
                 "premium":
                 {
-                    "agent-status":"ready",
-                    "status-timestamp":"2017-05-01T22:35:17.02",
+                    "agent_status":"ready",
+                    "status_timestamp":"2017-05-01T22:35:17.02",
                     "reservation_id":null,
                     "position":
                     {
                         "timestamp":"2017-05-01T22:35:17.02",
                         "lat":0.34456645,
                         "lng":0.34456645,
-                        "internal-description": "base"
+                        "position_description": "base"
                     }
                 },
                 "products":
@@ -3468,7 +3468,7 @@ User's pwd methods copy.
         }
         
 ## AGENT READY  [/agent/ready]
-notify agent-status ready
+notify agent_status ready
 ### SET AGENT READY [POST]
 
 + Request
@@ -3483,7 +3483,7 @@ notify agent-status ready
         }
 ## AGENT OUT  [/agent/out]
 notify agent not ready to accept services.
-Agent-status must be "ready" to accept an /agent/out request.
+agent_status must be "ready" to accept an /agent/out request.
 If agent has any service assigned, this request will fail.
 ### SET AGENT READY [POST]
 
@@ -3538,7 +3538,7 @@ Retrieve AGENT information
                     "app_product":5,
                     "premium":
                     {
-                        "agent-status":"ready",
+                        "agent_status":"ready",
                         "reservation_id":null,
                         "last_action-timestamp":"2017-05-01T22:35:17.02",
                         "position":
@@ -3546,7 +3546,7 @@ Retrieve AGENT information
                             "timestamp":"2017-05-01T22:35:17.02",
                             "lat":0.34456645,
                             "lng":0.34456645,
-                            "internal-description": "base",
+                            "position_description": "base",
                         }
                     },
                     "rights":
@@ -4290,7 +4290,7 @@ Una respuesta satisfactoria confirma el pago.
 ### REQUEST ASSIGNATION [POST]
 Request Premium service assignation to an agent.
 If agent is not specified, automatic assignation is performed.
-This method will send a push notification to the specified agent and will update reservation.status.premium.agent and reservation.status.premium.agent-status.
+This method will send a push notification to the specified agent and will update reservation.status.premium.agent and reservation.status.premium.agent_status.
 if reservation is already assigned, request will fail.
 
 timeout will be set in secs.
