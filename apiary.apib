@@ -14,6 +14,16 @@ APARCA AND GO RESTFUL API DOCUMENTATION
 
 Login equivalent
 
+<blockquote>
+ABOUT USING TOKENS
+
+Tokens can be used within **Authorization** header and as a URI parameter **access_token**
+examples:
++ **POST** url/method?access_token=348543y958789673598
++ **GET** url/method -> Authorization:348543y958789673598
+
+</blockquote>
+
 ### TOKEN GET [GET]
 Log in equivalent.
 
@@ -431,7 +441,7 @@ Retrieves the list of existing profiles for the requesting user.
         }
 ## USER - Profile Management [/user/profile/{profile_id}]
 
-GET, CREATE or UPDATE a profile
+GET, DELETE or UPDATE a profile
 
 ### VIEW PROFILE [GET]
 
@@ -476,50 +486,7 @@ GET, CREATE or UPDATE a profile
         {
         "status":"ok"
         }
-### CREATE PROFILE [POST]
 
-profile_id not needed in this case.
-**profile creation only creates personal profiles.**
-rights is always administrator for personal profiles. not needed.
-corporate profiles are created when a business account is created using other endpoint.
-
-+ Request
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-
-+ Request (application/json)
-
-        {
-            "monthly_invoice": false,
-            "invoice_name":"Acmesa",
-            "invoice_nif":"j66245523",
-            "invoice_email":"invoices@acmesa.com",
-            "invoice_address":"c/ alegria 23",
-            "invoice_city":"Barcelona",
-            "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
-            "default_invoice_profile":true
-        }
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok",
-        "profile":
-            {
-            "profile_id":45347,
-            "type":"professional",
-            "monthly_invoice": false,
-            "invoice_name":"Acmesa",
-            "invoice_nif":"j66245523",
-            "invoice_email":"invoices@acmesa.com",
-            "invoice_address":"c/ alegria 23",
-            "invoice_city":"Barcelona",
-            "invoice_state":"Barcelona",
-            "invoice_zip": "08355"
-            }
-        }
 ### UPDATE PROFILE [PUT]
 
 profile_id is mandatory.
@@ -564,6 +531,52 @@ rest of parameters are optional. will only update existing parameters.
             "invoice_state":"Barcelona",
             "invoice_zip": "08355"
         }
+        }
+
+## USER - Create invoice profile [/user/profile]
+### CREATE PROFILE [POST]
+
+profile_id not needed in this case.
+**profile creation only creates personal profiles.**
+rights is always administrator for personal profiles. not needed.
+corporate profiles are created when a business account is created using other endpoint.
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Request (application/json)
+
+        {
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355",
+            "default_invoice_profile":true
+        }
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok",
+        "profile":
+            {
+            "profile_id":45347,
+            "type":"professional",
+            "monthly_invoice": false,
+            "invoice_name":"Acmesa",
+            "invoice_nif":"j66245523",
+            "invoice_email":"invoices@acmesa.com",
+            "invoice_address":"c/ alegria 23",
+            "invoice_city":"Barcelona",
+            "invoice_state":"Barcelona",
+            "invoice_zip": "08355"
+            }
         }
 
 ## USER - Payment Methods [/user/paymethods{?company_id}]
@@ -2666,7 +2679,7 @@ NOTA PARA BACKEND
         + company_id (optional, number) - if set, it will return company invoices instead user invoices. user must have rights.
 
 
-+ Response 200 (text/json)
++ Response 200 (application/json)
 
         {
             "status":"ok",
@@ -3540,13 +3553,13 @@ Retrieve AGENT information
                     {
                         "agent_status":"ready",
                         "reservation_id":null,
-                        "last_action-timestamp":"2017-05-01T22:35:17.02",
+                        "status_timestamp":"2017-05-01T22:35:17.02",
                         "position":
                         {
                             "timestamp":"2017-05-01T22:35:17.02",
                             "lat":0.34456645,
                             "lng":0.34456645,
-                            "position_description": "base",
+                            "description": "base",
                         }
                     },
                     "rights":
@@ -3649,7 +3662,7 @@ product agent update only updates agent role. rest of parameters should be updat
         + product_id (required,number,`5`) - Product Id. user must have product admin rights.
 
 
-+ Response 200 (text/json)
++ Response 200 (application/json)
 
         {
             "status":"ok",
