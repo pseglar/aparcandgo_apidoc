@@ -166,7 +166,7 @@ Retrieves and store user information.
                         "paymethod_id":45346,
                         "type":"card",
                         "alias": "Acmesa",
-                        "lastcardnumbers": "4568",
+                        "last_card_numbers": "4568",
                         "expire":{"year":19,"month":7},
                         "added": "2017-05-01T22:35:17.02",
                         "checked": "2017-05-01T22:35:17.02"
@@ -620,7 +620,7 @@ currently two types of payment methods:
                     "paymethod_id":45346,
                     "type":"card",
                     "alias": "Acmesa",
-                    "lastcardnumbers": "4568",
+                    "last_card_numbers": "4568",
                     "expire":{"year":19,"month":7},
                     "added": "2017-05-01T22:35:17.02",
                     "checked": "2017-05-01T22:35:17.02"
@@ -647,7 +647,7 @@ PCI_SIGNATURE is a made from a secret key shared between servers
         "company_id": 45678,
         "costcenter_id": null,
         "alias": "Acmesa",
-        "lastcardnumbers": "4568",
+        "last_card_numbers": "4568",
         "expiration_month":7,
         "expiration_year":19,
         "added": "2017-05-01T22:35:17.02",
@@ -690,7 +690,7 @@ PCI_SIGNATURE is a made from a secret key shared between servers
             "company_id": 45678,
             "costcenter_id": null,
             "alias": "Acmesa",
-            "lastcardnumbers": "4568",
+            "last_card_numbers": "4568",
             "expire":{"year":19,"month":7},
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
@@ -755,7 +755,7 @@ Users can only update alias parameters.
             "company_id": 45678,
             "costcenter_id": null,
             "alias": "Acmesa",
-            "lastcardnumbers": "4568",
+            "last_card_numbers": "4568",
             "expire":{"year":19,"month":7}
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
@@ -1014,7 +1014,7 @@ When calling with company_id, card will be stored as company card if user has ad
             "company_id": 45678,
             "costcenter_id": null,
             "alias": "Acmesa",
-            "lastcardnumbers": "4568",
+            "last_card_numbers": "4568",
             "expire":{"year":19,"month":7},
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
@@ -3442,6 +3442,8 @@ User's pwd methods copy.
 ## PHOTO [/agent/photo]
 ### SET NEW PHOTO [POST]
 
+** ONLY JPEG FILE TYPE is ACCEPTED**
+
 + Request (multipart/form-data; boundary=---BOUNDARY)
     + Headers
 
@@ -3477,7 +3479,18 @@ User's pwd methods copy.
 + Response 200 (application/json)
 
         {
-        "status":"ok"
+        "status":"ok",
+        "agent": {
+            "agent_id": "274",
+            "email": "pseglar@aparcandgo.com",
+            "name": "Pau",
+            "surname": "Seglar",
+            "phone": "607787857",
+            "photo": "274_20170221012913.jpg",
+            "app_product": "0",
+            "premium": null,
+            "products": null
+          }
         }
         
 ## AGENT READY  [/agent/ready]
@@ -4523,7 +4536,7 @@ Retrieves user information
                         "paymethod_id":45346,
                         "type":"card",
                         "alias": "Acmesa",
-                        "lastcardnumbers": "4568",
+                        "last_card_numbers": "4568",
                         "expire":{"year":19,"month":7},
                         "added": "2017-05-01T22:35:17.02",
                         "checked": "2017-05-01T22:35:17.02"
