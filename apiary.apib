@@ -153,7 +153,7 @@ Retrieves and store user information.
                 [
                     {
                         "paymethod_id":45346,
-                        "type":"corporate_card",
+                        "type":"company_card",
                         "company_id": 45678,
                         "costcenter_id": null,
                         "alias": "Acmesa",
@@ -587,7 +587,7 @@ in corporate accounts, only return valid cards for the current user (not showing
 
 currently two types of payment methods:
 + card
-+ corporate_card
++ company_card
 
 + expire: integer with the expiration time in format YYMM (year/month 2 digits)
 
@@ -607,7 +607,7 @@ currently two types of payment methods:
             [
                 {
                     "paymethod_id":45346,
-                    "type":"corporate_card",
+                    "type":"company_card",
                     "company_id": 45678,
                     "costcenter_id": null,
                     "alias": "Acmesa",
@@ -643,7 +643,7 @@ PCI_SIGNATURE is a made from a secret key shared between servers
 
         {
         "user_id":3456456
-        "type":"corporate_card",
+        "type":"company_card",
         "company_id": 45678,
         "costcenter_id": null,
         "alias": "Acmesa",
@@ -686,7 +686,7 @@ PCI_SIGNATURE is a made from a secret key shared between servers
         "paymethod":
             {
             "paymethod_id":45346,
-            "type":"corporate_card",
+            "type":"company_card",
             "company_id": 45678,
             "costcenter_id": null,
             "alias": "Acmesa",
@@ -751,12 +751,12 @@ Users can only update alias parameters.
         "paymethods":
             {
             "paymethod_id":45346,
-            "type":"corporateCard",
+            "type":"minot ,
             "company_id": 45678,
             "costcenter_id": null,
             "alias": "Acmesa",
             "last_card_numbers": "4568",
-            "expire":{"year":19,"month":7}
+            "expire":{"year":19,"month":7},
             "added": "2017-05-01T22:35:17.02",
             "checked": "2017-05-01T22:35:17.02"
             }
@@ -991,7 +991,7 @@ When calling with company_id, card will be stored as company card if user has ad
     + expiration_month - 10
     + expiration_year - 18
     + cvv - 246
-    + type (optional) - corporate_card
+    + type (optional) - company_card
     + company_id (optional) - if set. this card will be corporate card
     + costcenter_id (optional) -if set. this card will be assigned to this costcenter only in API server. PCI won't store this info.
     + alias (optional) -
@@ -1010,7 +1010,7 @@ When calling with company_id, card will be stored as company card if user has ad
         "paymethod":
             {
             "paymethod_id":45346,
-            "type":"corporateCard",
+            "type":"company_card",
             "company_id": 45678,
             "costcenter_id": null,
             "alias": "Acmesa",
@@ -1095,551 +1095,401 @@ Server will respond with **304 Not-Modified**
 + Response 200 (application/json)
 
         {
-            "status":"ok",
-            "cities":
-            [
+            "status": "ok",
+            "cities": [
                 {
-                    "id":1,
-                    "name":"Barcelona",
-                    "location":
-                    {
-                        "lat":2.245456,
-                        "lng":40.548756
-                    },
-                    "places":
-                    [
-                        {
-                            "id": 12,
-                            "name": "Aeropuerto de Barcelona",
-                            "type":"airport",
-                            "location":
-                            {
-                                "lat":2.245456,
-                                "lng":40.548756
-                            },
-                            "products":
-                            [
-                                {
-                                    "product_id":9,
-                                    "product_name":"Express",
-                                    "provider":"Aparca&Go",
-                                    "service":"express",
-                                    "info":
-                                    {
-                                        "short_description":"Dejas el coche en nuestro aparcamiento y te llevamos en bus.",
-                                        "location":
-                                        {
-                                            "lat":2.245456,
-                                            "lng":40.548756,
-                                            "city":{"name":"Barcelona"},
-                                            "place":
-                                            {
-                                                "name":"Aeroport del Prat",
-                                                "type":"airport"
-                                            },
-                                            "service_info":
-                                            [
-                                                {
-                                                    "name":"Como llegar",
-                                                    "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                },
-                                                {
-                                                    "name":"Horario",
-                                                    "body":"Abierto las 24 horas del dia los 365 días del año."
-                                                },
-                                                {
-                                                    "name":"¿En qué terminal opera?",
-                                                    "body":"aparca&go opera en todas las terminales"
-                                                },
-                                                {
-                                                    "name":"¿Cuanto se tarda en llegar al aeropuerto?",
-                                                    "body":"Tardamos entre 4 y 5 minutos."
-                                                },
-                                                {
-                                                    "name":"¿Dónde nos dejá la lanzadera?",
-                                                    "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
-                                                },
-                                                {
-                                                    "name":"¿Qué debemos hacer para que venga a recogernos una lanzadera?",
-                                                    "body":"En aparca&go Express no es necesario una llamada, simplemente tenéis que ir a nuestro punto de recogida donde siempre estará una furgoneta esperándoos."
-                                                },
-                                                {
-                                                    "name":"¿Dónde nos recogen a la vuelta?",
-                                                    "body":"Te indicaremos la ubicación exacta en la app, pero clica en el enlace para ver los puntos de recogida."
-                                                }
-                                            ]
-                                        },
-                                        "terminals":
-                                        [
-                                            {
-                                                "name":"Terminal1",
-                                                "check-in":
-                                                {
-                                                    "location":
-                                                    {
-                                                        "lat":2.245456,
-                                                        "lng":40.548756
-                                                    },
-                                                    "instructions":
-                                                    [
-                                                        {
-                                                            "icon":"map",
-                                                            "name":null,
-                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
-                                                        },
-                                                        {
-                                                            "icon":"agent",
-                                                            "name":null,
-                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
-                                                        },
-                                                        {
-                                                            "icon":"bus",
-                                                            "name":null,
-                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
-                                                        }
-                                                    ],
-                                                    "final_instructions":
-                                                    [
-                                                        {
-                                                            "icon":"bus",
-                                                            "name":null,
-                                                            "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
-                                                        },
-                                                        {
-                                                            "icon":null,
-                                                            "name":null,
-                                                            "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
-                                                        }
-                                                    ],
-                                                    "info":
-                                                    [
-                                                        {
-                                                            "name":"Como llegar",
-                                                            "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        },
-                                                        {
-                                                            "name":"Horario",
-                                                            "body":"Abierto las 24 horas del dia los 365 días del año."
-                                                        },
-                                                        {
-                                                            "name":"Dónde debo subir a la lanzadera",
-                                                            "body":"lorem ipsum"
-                                                        },
-                                                        {
-                                                            "name":"Dónde me dejará la lanzadera",
-                                                            "body":"lorem ipsum"
-                                                        }
-                                                    ]
-                                                },
-                                                "check-out":
-                                                {
-                                                    "location":
-                                                    {
-                                                        "lat":2.245456,
-                                                        "lng":40.548756
-                                                    },
-                                                    "instructions":
-                                                    [
-                                                        {
-                                                            "icon":"bus",
-                                                            "name":null,
-                                                            "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
-                                                        },
-                                                        {
-                                                            "icon":"map",
-                                                            "name":null,
-                                                            "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
-                                                        }
-                                                    ],
-                                                    "final_instructions":
-                                                    [
-                                                        {
-                                                            "icon":"flag",
-                                                            "name":"Gracias por tu estancia",
-                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
-                                                        }
-                                                    ],
-                                                    "info":
-                                                    [
-                                                        {
-                                                            "name":"Punto de recogida",
-                                                            "body":"El punto de recogida blablabla",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        },
-                                                        {
-                                                            "name":"Horario y frecuencia",
-                                                            "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año."
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ],
-                                        "extras":
-                                        [
-                                            {
-                                                "extra_id":23,
-                                                "name":"Cubierto",
-                                                "icon":"house",
-                                                "description":"Aparcar en zona cubierta",
-                                                "unitary_price":1,
-                                                "price_calculation":"daily"
-                                                
-                                            },
-                                            {
-                                                "extra_id":24,
-                                                "name":"Lavado exterior",
-                                                "type":"wash",
-                                                "icon":"house",
-                                                "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                                "unitary_price":7.55,
-                                                "price_calculation":"final_price"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "product_id":5,
-                                    "product_name":"Premium",
-                                    "provider":"Aparca&Go",
-                                    "service":"premium",
-                                    "info":
-                                    {
-                                        "short_description":"Dejas el coche en la terminal, nos llamas y te lo venimos a recoger.",
-                                        "location":
-                                        {
-                                            "lat":2.245456,
-                                            "lng":40.548756,
-                                            "city":{"name":"Barcelona"},
-                                            "place":
-                                            {
-                                                "name":"Aeroport del Prat",
-                                                "type":"airport"
-                                            }
-                                        },
-                                        "service_info":
-                                        [
-                                            {
-                                                "name":"Punto de recogida",
-                                                "body":" lorem imsum",
-                                                "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                            },
-                                            {
-                                                "name":"Horario",
-                                                "body":"Recogemos tu coche las 24 horas del dia los 365 días del año."
-                                            },
-                                            {
-                                                "name":"¿En qué terminal opera?",
-                                                "body":"aparca&go opera en todas las terminales"
-                                            },
-                                            {
-                                                "name":"¿Cuanto tendré que esperar?",
-                                                "body":"Si nos avisas con tiempo, te estaremos esperando en el punto de recogida."
-                                            },
-                                            {
-                                                "name":"¿Dónde me entregaréis mi coche a la vuelta?",
-                                                "body":"Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
-                                            },
-                                            {
-                                                "name":"¿Qué debemos hacer para avisar de nuestra llegada?",
-                                                "body":"Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello."
-                                            }
-                                        ]
-                                    },
-                                    "terminals":
-                                    [
-                                        {
-                                            "terminal_id":1001,
-                                            "name":"Terminal1",
-                                            "check-in":
-                                            {
-                                                "location":
-                                                {
-                                                    "lat":2.245456,
-                                                    "lng":40.548756
-                                                },
-                                                "instructions":
-                                                [
-                                                    {
-                                                        "icon":"map",
-                                                        "name":null,
-                                                        "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
-                                                    },
-                                                    {
-                                                        "icon":"agent",
-                                                        "name":null,
-                                                        "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
-                                                    },
-                                                    {
-                                                        "icon":"bus",
-                                                        "name":null,
-                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
-                                                    }
-                                                ],
-                                                "final_instructions":
-                                                [
-                                                    {
-                                                        "icon":"bus",
-                                                        "name":null,
-                                                        "body":"Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
-                                                    },
-                                                    {
-                                                        "icon":null,
-                                                        "name":null,
-                                                        "body":"A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
-                                                    }
-                                                ],
-                                                "info":
-                                                [
-                                                    {
-                                                        "name":"Como llegar",
-                                                        "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                    },
-                                                    {
-                                                        "name":"Horario",
-                                                        "body":"Abierto las 24 horas del dia los 365 días del año."
-                                                    },
-                                                    {
-                                                        "name":"Dónde debo subir a la lanzadera",
-                                                        "body":"lorem ipsum"
-                                                    },
-                                                    {
-                                                        "name":"Dónde me dejará la lanzadera",
-                                                        "body":"lorem ipsum"
-                                                    }
-                                                ]
-                                            },
-                                            "check-out":
-                                            {
-                                                "location":
-                                                {
-                                                    "lat":2.245456,
-                                                    "lng":40.548756
-                                                },
-                                                "instructions":
-                                                [
-                                                    {
-                                                        "icon":"bus",
-                                                        "name":null,
-                                                        "body":"A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
-                                                    },
-                                                    {
-                                                        "icon":"map",
-                                                        "name":null,
-                                                        "body":"El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
-                                                    }
-                                                ],
-                                                "final_instructions":
-                                                [
-                                                    {
-                                                        "icon":"flag",
-                                                        "name":"Gracias por tu estancia",
-                                                        "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
-                                                    }
-                                                ],
-                                                "info":
-                                                [
-                                                    {
-                                                        "name":"Punto de recogida",
-                                                        "body":"El punto de recogida blablabla",
-                                                        "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                    },
-                                                    {
-                                                        "name":"Horario y frecuencia",
-                                                        "body":"Cada 5 minutos, las 24 horas del dia, todos los dias del año."
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ],
-                                    "extras":
-                                    [
-                                        {
-                                            "extra_id":23,
-                                            "name":"Cubierto",
-                                            "icon":"house",
-                                            "description":"Aparcar en zona cubierta",
-                                            "unitary_price":1,
-                                            "price_calculation":"daily"
-                                        },
-                                        {
-                                            "extra_id":24,
-                                            "name":"Lavado exterior",
-                                            "icon":"house",
-                                            "description":"Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                            "unitary_price":7.55,
-                                            "price_calculation":"final_price"
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "id": 13,
-                            "name": "Estació de Sants",
-                            "type":"train",
-                            "location":
-                            {
-                                "lat":2.245456,
-                                "lng":40.548756
-                            },
-                            "products":
-                            [
-                                {
-                                    "product_id":5,
-                                    "product_name":"ServicioPendienteDeNombre",
-                                    "provider":"Aparca&Go",
-                                    "service":"parking",
-                                    "info":
-                                    {
-                                        "short_description":"Aparcamiento a 2 minutos andando de la estación.",
-                                        "location":
-                                        {
-                                            "lat":2.245456,
-                                            "lng":40.548756,
-                                            "city":{"name":"Barcelona"},
-                                            "place":
-                                            {
-                                                "name":"Estació de sants.",
-                                                "type":"train"
-                                            },
-                                            "service_info":
-                                            [
-                                                {
-                                                    "name":"Como llegar",
-                                                    "body":"<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                                    "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                },
-                                                {
-                                                    "name":"Horario",
-                                                    "body":"Abierto las 24 horas del dia los 365 días del año."
-                                                },
-                                                {
-                                                    "name":"¿Cuanto se tarda en llegar a la estación",
-                                                    "body":"Usualmente unos 2 minutos."
-                                                },
-                                                {
-                                                    "name":"¿Dónde nos dejá la lanzadera?",
-                                                    "body":"Este parking no necesita de un servicio de lanzadera."
-                                                },
-                                                {
-                                                    "name":"¿Dónde nos recogen a la vuelta?",
-                                                    "body":"Puedes acceder al parking caminando. está a 2 minutos de la estación."
-                                                }
-                                            ]
-                                        },
-                                        "terminals":
-                                        [
-                                            {
-                                                "terminal_id":2001,
-                                                "name":"Estación de Sants",
-                                                "check-in":
-                                                {
-                                                    "location":
-                                                    {
-                                                        "lat":2.245456,
-                                                        "lng":40.548756
-                                                    },
-                                                    "instructions":
-                                                    [
-                                                        {
-                                                            "icon":"map",
-                                                            "name":null,
-                                                            "body":"Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
-                                                        },
-                                                        {
-                                                            "icon":"agent",
-                                                            "name":null,
-                                                            "body":"Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
-                                                        },
-                                                        {
-                                                            "icon":"walking",
-                                                            "name":null,
-                                                            "body":"Tras aparcar tu coche puedes acceder a la estación andando. te mostraremos un mapa en cuanto aparques para que no te pierdas."
-                                                        }
-                                                    ],
-                                                    "final_instructions":
-                                                    [
-                                                        {
-                                                            "icon":"walking",
-                                                            "name":"Instrucciones para acceder a la estación",
-                                                            "body":"lorem ipum",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        }
-                                                    ],
-                                                    "info":
-                                                    [
-                                                        {
-                                                            "name":"Como llegar",
-                                                            "body":"blablabla",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        },
-                                                        {
-                                                            "name":"Horario",
-                                                            "body":"Abierto las 24 horas del dia los 365 días del año."
-                                                        },
-                                                        {
-                                                            "name":"Como llego a la estación desde el parking?",
-                                                            "body":"lorem ipum",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        }
-                                                    ]
-                                                },
-                                                "check-out":
-                                                {
-                                                    "location":
-                                                    {
-                                                        "lat":2.245456,
-                                                        "lng":40.548756
-                                                    },
-                                                    "instructions":
-                                                    [
-                                                        {
-                                                            "icon":"walking",
-                                                            "name":null,
-                                                            "body":"A tu regreso, dirígete parking para recoger tu vehículo."
-                                                        },
-                                                        {
-                                                            "icon":"map",
-                                                            "name":null,
-                                                            "body":"pulsa 'más información' para obtener indicaciones para llegar al parking."
-                                                        }
-                                                    ],
-                                                    "final_instructions":
-                                                    [
-                                                        {
-                                                            "icon":"flag",
-                                                            "name":"Gracias por tu estancia",
-                                                            "body":"Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
-                                                        }
-                                                    ],
-                                                    "info":
-                                                    [
-                                                        {
-                                                            "name":"Como llegar al parking",
-                                                            "body":"Desde la estación, lorem ipum",
-                                                            "image":"http://www.aparcandgo.com/images/lot/express.jpg"
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ],
-                                        "extras":
-                                        []
-                                    }
-                                }
-                            ]
-                        }
-                    ]
+                "id": 1,
+                "name": "Barcelona",
+                "location": {
+                    "lat": 2.245456,
+                    "lng": 40.548756
                 },
-                {
-                    "id":2,
-                    "name":"Madrid",
-                    "places":[]
-                }
-            ]
+                "places": [{
+                    "id": 12,
+                    "name": "Aeropuerto de Barcelona",
+                    "type": "airport",
+                    "location": {
+                        "lat": 2.245456,
+                        "lng": 40.548756
+                    },
+                    "products": [{
+                        "product_id": 9,
+                        "product_name": "Express",
+                        "provider": "Aparca&Go",
+                        "service": "express",
+                        "info": {
+                            "short_description": "Dejas el coche en nuestro aparcamiento y te llevamos en bus.",
+                            "location": {
+                                "lat": 2.245456,
+                                "lng": 40.548756,
+                                "city": {
+                                    "name": "Barcelona"
+                                },
+                                "place": {
+                                    "name": "Aeroport del Prat",
+                                    "type": "airport"
+                                }
+                            },
+                            "service_info": [{
+                                "name": "Como llegar",
+                                "body": "<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                            }, {
+                                "name": "Horario",
+                                "body": "Abierto las 24 horas del dia los 365 días del año."
+                            }, {
+                                "name": "¿En qué terminal opera?",
+                                "body": "aparca&go opera en todas las terminales"
+                            }, {
+                                "name": "¿Cuanto se tarda en llegar al aeropuerto?",
+                                "body": "Tardamos entre 4 y 5 minutos."
+                            }, {
+                                "name": "¿Dónde nos dejá la lanzadera?",
+                                "body": "Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
+                            }, {
+                                "name": "¿Qué debemos hacer para que venga a recogernos una lanzadera?",
+                                "body": "En aparca&go Express no es necesario una llamada, simplemente tenéis que ir a nuestro punto de recogida donde siempre estará una furgoneta esperándoos."
+                            }, {
+                                "name": "¿Dónde nos recogen a la vuelta?",
+                                "body": "Te indicaremos la ubicación exacta en la app, pero clica en el enlace para ver los puntos de recogida."
+                            }],
+                            "terminals": [{
+                                "name": "Terminal1",
+                                "check-in": {
+                                    "location": {
+                                        "lat": 2.245456,
+                                        "lng": 40.548756
+                                    },
+                                    "instructions": [{
+                                        "icon": "map",
+                                        "name": null,
+                                        "body": "Antes de partir, pulsa 'más información' para obtener indicaciones sobre cómo llegar al Parking."
+                                    }, {
+                                        "icon": "agent",
+                                        "name": null,
+                                        "body": "Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
+                                    }, {
+                                        "icon": "bus",
+                                        "name": null,
+                                        "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
+                                    }],
+                                    "final_instructions": [{
+                                        "icon": "bus",
+                                        "name": null,
+                                        "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
+                                    }, {
+                                        "icon": null,
+                                        "name": null,
+                                        "body": "A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
+                                    }],
+                                    "info": [{
+                                        "name": "Como llegar",
+                                        "body": "<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }, {
+                                        "name": "Horario",
+                                        "body": "Abierto las 24 horas del dia los 365 días del año."
+                                    }, {
+                                        "name": "Dónde debo subir a la lanzadera",
+                                        "body": "lorem ipsum"
+                                    }, {
+                                        "name": "Dónde me dejará la lanzadera",
+                                        "body": "lorem ipsum"
+                                    }]
+                                },
+                                "check-out": {
+                                    "location": {
+                                        "lat": 2.245456,
+                                        "lng": 40.548756
+                                    },
+                                    "instructions": [{
+                                        "icon": "bus",
+                                        "name": null,
+                                        "body": "A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
+                                    }, {
+                                        "icon": "map",
+                                        "name": null,
+                                        "body": "El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
+                                    }],
+                                    "final_instructions": [{
+                                        "icon": "flag",
+                                        "name": "Gracias por tu estancia",
+                                        "body": "Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
+                                    }],
+                                    "info": [{
+                                        "name": "Punto de recogida",
+                                        "body": "El punto de recogida blablabla",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }, {
+                                        "name": "Horario y frecuencia",
+                                        "body": "Cada 5 minutos, las 24 horas del dia, todos los dias del año."
+                                    }]
+                                }
+                            }],
+                            "extras": [{
+                                "extra_id": 23,
+                                "name": "Cubierto",
+                                "icon": "house",
+                                "description": "Aparcar en zona cubierta",
+                                "unitary_price": 1,
+                                "price_calculation": "daily"
+                            }, {
+                                "extra_id": 24,
+                                "name": "Lavado exterior",
+                                "type": "wash",
+                                "icon": "house",
+                                "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                "unitary_price": 7.55,
+                                "price_calculation": "final_price"
+                            }]
+                        }
+                    }, {
+                        "product_id": 5,
+                        "product_name": "Premium",
+                        "provider": "Aparca&Go",
+                        "service": "premium",
+                        "info": {
+                            "short_description": "Dejas el coche en la terminal, nos llamas y te lo venimos a recoger.",
+                            "location": {
+                                "lat": 2.245456,
+                                "lng": 40.548756,
+                                "city": {
+                                    "name": "Barcelona"
+                                },
+                                "place": {
+                                    "name": "Aeroport del Prat",
+                                    "type": "airport"
+                                }
+                            },
+                            "service_info": [{
+                                "name": "Punto de recogida",
+                                "body": " lorem imsum",
+                                "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                            }, {
+                                "name": "Horario",
+                                "body": "Recogemos tu coche las 24 horas del dia los 365 días del año."
+                            }, {
+                                "name": "¿En qué terminal opera?",
+                                "body": "aparca&go opera en todas las terminales"
+                            }, {
+                                "name": "¿Cuanto tendré que esperar?",
+                                "body": "Si nos avisas con tiempo, te estaremos esperando en el punto de recogida."
+                            }, {
+                                "name": "¿Dónde me entregaréis mi coche a la vuelta?",
+                                "body": "Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
+                            }, {
+                                "name": "¿Qué debemos hacer para avisar de nuestra llegada?",
+                                "body": "Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello."
+                            }],
+                            "terminals": [{
+                                "terminal_id": 1001,
+                                "name": "Terminal1",
+                                "check-in": {
+                                    "location": {
+                                        "lat": 2.245456,
+                                        "lng": 40.548756
+                                    },
+                                    "instructions": [{
+                                        "icon": "map",
+                                        "name": null,
+                                        "body": "Antes de partir, pulsa 'más información' para obtener indicaciones sobre cómo llegar al Parking."
+                                    }, {
+                                        "icon": "agent",
+                                        "name": null,
+                                        "body": "Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
+                                    }, {
+                                        "icon": "bus",
+                                        "name": null,
+                                        "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
+                                    }],
+                                    "final_instructions": [{
+                                        "icon": "bus",
+                                        "name": null,
+                                        "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
+                                    }, {
+                                        "icon": null,
+                                        "name": null,
+                                        "body": "A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
+                                    }],
+                                    "info": [{
+                                        "name": "Como llegar",
+                                        "body": "<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }, {
+                                        "name": "Horario",
+                                        "body": "Abierto las 24 horas del dia los 365 días del año."
+                                    }, {
+                                        "name": "Dónde debo subir a la lanzadera",
+                                        "body": "lorem ipsum"
+                                    }, {
+                                        "name": "Dónde me dejará la lanzadera",
+                                        "body": "lorem ipsum"
+                                    }]
+                                },
+                                "check-out": {
+                                    "location": {
+                                        "lat": 2.245456,
+                                        "lng": 40.548756
+                                    },
+                                    "instructions": [{
+                                        "icon": "bus",
+                                        "name": null,
+                                        "body": "A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
+                                    }, {
+                                        "icon": "map",
+                                        "name": null,
+                                        "body": "El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
+                                    }],
+                                    "final_instructions": [{
+                                        "icon": "flag",
+                                        "name": "Gracias por tu estancia",
+                                        "body": "Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
+                                    }],
+                                    "info": [{
+                                        "name": "Punto de recogida",
+                                        "body": "El punto de recogida blablabla",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }, {
+                                        "name": "Horario y frecuencia",
+                                        "body": "Cada 5 minutos, las 24 horas del dia, todos los dias del año."
+                                    }]
+                                }
+                            }],
+                            "extras": [{
+                                "extra_id": 23,
+                                "name": "Cubierto",
+                                "icon": "house",
+                                "description": "Aparcar en zona cubierta",
+                                "unitary_price": 1,
+                                "price_calculation": "daily"
+                            }, {
+                                "extra_id": 24,
+                                "name": "Lavado exterior",
+                                "icon": "house",
+                                "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                                "unitary_price": 7.55,
+                                "price_calculation": "final_price"
+                            }]
+                        }
+                    }]
+                }, {
+                    "id": 13,
+                    "name": "Estació de Sants",
+                    "type": "train",
+                    "location": {
+                        "lat": 2.245456,
+                        "lng": 40.548756
+                    },
+                    "products": [{
+                        "product_id": 5,
+                        "product_name": "ServicioPendienteDeNombre",
+                        "provider": "Aparca&Go",
+                        "service": "parking",
+                        "info": {
+                            "short_description": "Aparcamiento a 2 minutos andando de la estación.",
+                            "location": {
+                                "lat": 2.245456,
+                                "lng": 40.548756,
+                                "city": {
+                                    "name": "Barcelona"
+                                },
+                                "place": {
+                                    "name": "Estació de sants.",
+                                    "type": "train"
+                                }
+                            },
+                            "service_info": [{
+                                "name": "Como llegar",
+                                "body": "<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                                "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                            }, {
+                                "name": "Horario",
+                                "body": "Abierto las 24 horas del dia los 365 días del año."
+                            }, {
+                                "name": "¿Cuanto se tarda en llegar a la estación",
+                                "body": "Usualmente unos 2 minutos."
+                            }, {
+                                "name": "¿Dónde nos dejá la lanzadera?",
+                                "body": "Este parking no necesita de un servicio de lanzadera."
+                            }, {
+                                "name": "¿Dónde nos recogen a la vuelta?",
+                                "body": "Puedes acceder al parking caminando. está a 2 minutos de la estación."
+                            }],
+                            "terminals": [{
+                                "terminal_id": 2001,
+                                "name": "Estación de Sants",
+                                "check-in": {
+                                    "location": {
+                                        "lat": 2.245456,
+                                        "lng": 40.548756
+                                    },
+                                    "instructions": [{
+                                        "icon": "map",
+                                        "name": null,
+                                        "body": "Antes de partir, pulsa 'más información' para obtener indicaciones sobre cómo llegar al Parking."
+                                    }, {
+                                        "icon": "agent",
+                                        "name": null,
+                                        "body": "Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
+                                    }, {
+                                        "icon": "walking",
+                                        "name": null,
+                                        "body": "Tras aparcar tu coche puedes acceder a la estación andando. te mostraremos un mapa en cuanto aparques para que no te pierdas."
+                                    }],
+                                    "final_instructions": [{
+                                        "icon": "walking",
+                                        "name": "Instrucciones para acceder a la estación",
+                                        "body": "lorem ipum",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }],
+                                    "info": [{
+                                        "name": "Como llegar",
+                                        "body": "blablabla",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }, {
+                                        "name": "Horario",
+                                        "body": "Abierto las 24 horas del dia los 365 días del año."
+                                    }, {
+                                        "name": "Como llego a la estación desde el parking?",
+                                        "body": "lorem ipum",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }]
+                                },
+                                "check-out": {
+                                    "location": {
+                                        "lat": 2.245456,
+                                        "lng": 40.548756
+                                    },
+                                    "instructions": [{
+                                        "icon": "walking",
+                                        "name": null,
+                                        "body": "A tu regreso, dirígete parking para recoger tu vehículo."
+                                    }, {
+                                        "icon": "map",
+                                        "name": null,
+                                        "body": "pulsa 'más información' para obtener indicaciones para llegar al parking."
+                                    }],
+                                    "final_instructions": [{
+                                        "icon": "flag",
+                                        "name": "Gracias por tu estancia",
+                                        "body": "Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
+                                    }],
+                                    "info": [{
+                                        "name": "Como llegar al parking",
+                                        "body": "Desde la estación, lorem ipum",
+                                        "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                    }]
+                                }
+                            }],
+                            "extras": []
+                        }
+                    }]
+                }]
+            }, {
+                "id": 2,
+                "name": "Madrid",
+                "places": []
+            }]
         }
 
 ## PRODUCT - CALCULATE PRICE [/product/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
@@ -2082,7 +1932,7 @@ En frontend se pinta como el perfil personal.
                         }
                     ]
                 }
-        }
+            }
 
 
 + Response 400 (application/json)
@@ -2826,7 +2676,7 @@ Retrieves and store user information.
                 [
                     {
                         "paymethod_id":45346,
-                        "type":"corporate_card",
+                        "type":"company_card",
                         "company_id": 456,
                         "costcenter_id": null,
                         "alias": "Acmesa",
@@ -2933,7 +2783,7 @@ null paymethod means that allow all company paymethods.
                 "costcenter_name":"Postventa",
                 "paymethod":null
                 }
-            ],
+            ]
 
         }
         
@@ -3648,17 +3498,17 @@ product agent update only updates agent role. rest of parameters should be updat
         {
         "status":"ok",
         }
+        
+## ADMINPRODUCT AGENTS   [/adminproduct/agents/{product_id}/{agent_id}]
+body in DELETE violates RFC
+
 ### DELETE AGENT [DELETE]
 
 + Request
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Body
     
-            {
-            "agent_id":333,
-            }
 
 + Response 200 (application/json)
 
@@ -4523,7 +4373,7 @@ Retrieves user information
                 [
                     {
                         "paymethod_id":45346,
-                        "type":"corporate_card",
+                        "type":"company_card",
                         "company_id": 45678,
                         "costcenter_id": null,
                         "alias": "Acmesa",
