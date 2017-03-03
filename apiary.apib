@@ -2576,6 +2576,15 @@ request invoice in html, pdf or by email.
 
 ## CREATE [/business]
 
+<blockquote>
+Parameter definition:
+
+  + "send_reservation_copy": boolean - means that this user wants a copy of each reservation in this company
+  + "send_invoice_copy": boolean - means that this user wants a copy of each invoice.
+  + "billing_send_invoice_copy": boolean - means that a copy of each invoice should be sent to the billing address
+  + "billing_email": email -- email address for billing purposes. only used if billing_send_invoice_copy is set to true.
+</blockquote>
+
 ###  CREATE [POST]
 
 + Request (application/json)
@@ -2593,7 +2602,9 @@ request invoice in html, pdf or by email.
             "address": "C/ dfgfdhg",
             "zip":"08354",
             "city": "la sacaremos en backend desde el CP no incluir en FE.",
-            "monthly_invoice": false
+            "monthly_invoice": false,
+            "send_reservation_copy":false,
+            "send_invoice_copy":false,
             "billing_sendinvoicecopy":false,
             "billing_email":null
             }
