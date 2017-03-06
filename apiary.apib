@@ -379,9 +379,9 @@ Retrieves the list of existing profiles for the requesting user.
     + **professional**: different invoicing profiles created by a user for personal use. he can change it.
     + **corporate**: invoice profile created by a company for this user. only corporate owners can modify.
 + rights:
-    + **user**: account can use this profile.
-    + **manager**: account can manage this profile (make reservations for other corporate users)
-    + **administrator**: administrator access. professional profiles has always full access.
+    + **user**: this profile is member of this company
+    + **manager**: this profile can manage this company (make reservations for other corporate users)
+    + **administrator**: this profile has administrator access. professional profiles has always full access.
 + monthly_invoice: tells to group invoices.
 + send_reservation_copy: corporate account option.
 + send_invoice_copy: corporate account option.
@@ -511,8 +511,7 @@ rest of parameters are optional. will only update existing parameters.
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
-            "default_invoice_profile":true
+            "invoice_zip": "08355"
         }
 
 + Response 200 (application/json)
@@ -556,8 +555,7 @@ corporate profiles are created when a business account is created using other en
             "invoice_address":"c/ alegria 23",
             "invoice_city":"Barcelona",
             "invoice_state":"Barcelona",
-            "invoice_zip": "08355",
-            "default_invoice_profile":true
+            "invoice_zip": "08355"
         }
 
 + Response 200 (application/json)
