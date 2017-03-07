@@ -2862,24 +2862,22 @@ only update new information.
                 "paymethod_id":45346
             }
         }
+## DISABLE COST CENTERS [/business/costcenters/{costcenter_id}]
 ### DELETE COST CENTER [DELETE]
+require company administrator privileges
 
 **FRONTEND WARNING**
 Alert that :
     Existing invoices won't be changed.
     un-invoiced services assigned to this cost-center will not be assigned to any cost-center."
+    costcenters wont be erased. costenters will be disabled.
 
 + Request (application/json)
     
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Body
     
-            {
-                "costcenter_id":2345
-            }
-
 + Response 200 (application/json)
 
         {
