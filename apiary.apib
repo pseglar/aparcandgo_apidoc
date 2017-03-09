@@ -223,7 +223,8 @@ Two examples:
             "lastname":"Seglar Segura",
             "phone": "607787857",
             "zip":08354,
-            "lang":"ca_ES"
+            "lang":"ca_ES",
+            "activation_code":"34578934756389"
             }
 
 
@@ -938,7 +939,42 @@ proposal:
         {
         "status":"not found"
         }
+        
+## VALIDATE CODE [/user/code_validation/{user_id}{?code}]
 
+###VALIDATE [GET]
+
+Multipurpose validation system.
+Main purpose of this method is to send one clic requests to users (i.e. company invitations)
+
+Response will depend on code type.
+it may be a json reponse, a redirection or HTML
+
++ Parameters
+    + user_id
+    + code - provided hash
+
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+        
++ Response 200 (application/html)
+
+        <html>
+            <body>
+                Good!
+            </body>
+        </html>
+        
++ Response 302
+
+    + Header
+    
+            Location: http://api.example.com/redirection
+            
+            
 # Group PCI Card management
 
 ## PCI- Add card [/addcard{?user_id,authorization_token,cardnumber,expiration_month,expiration_year,cvv,type,company_id,costcenter_id,alias,signature}]
