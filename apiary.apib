@@ -1552,7 +1552,7 @@ Server will respond with **304 Not-Modified**
             }]
         }
 
-## PRODUCT - CALCULATE PRICE [/product/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
+## PRODUCT - CALCULATE PRICE [/reservationa/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
 Proporciona los datos de precio de un producto.
 IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash para validar que el cliente ha visto el mismo precio.
 ### GET [GET]
@@ -1839,9 +1839,20 @@ Los hash se computan a partir del md5 del objeto offer. no se guardan en ninguna
 
 <blockquote>
 **PROFILE_ID**
-Si el profile_id es null se considera que la reserva "no necesita factura"
+Si el profile_id es null se considera que la reserva "no necesita factura" 
 En frontend se pinta como el perfil personal.
 </blockquote>
+
+<blockquote>
+**RESERVA DE EMPRESA PARA UN TERCER USUARIO**
+Para realizar una reserva para un tercer usuario la reserva debe proveer los siguientes datos:
+client_id: usuario destino
+profile_id: perfil de empresa del usuario destino
+company_id: Id de empresa
+
+</blockquote>
+
+
 <blockquote>
 **PRODUCT STATUS**
 + Product
@@ -2971,6 +2982,7 @@ Retrieves company users
             [
                 {
                     "user_id": 589,
+                    "profile_id": 324235,
                     "email":"pseglar@parkingkong.es",
                     "costcenter_id": 2345,
                     "rights":
