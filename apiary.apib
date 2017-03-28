@@ -1093,22 +1093,24 @@ PCI SERVER will then:
 GET /product/{id} will return information only for this product ID.
 </blockquote>
 
-<blockquote>
-Nota para desarrollo backend.
 
-place y city de un product debe ser un dato relacional de la tabla cities y places respectivamente para evitar duplicidad de ciudades y productos.
-place y city deben disponer de nombre en los 4 idiomas.
-product description debe estar en los 4 idiomas.
-</blockquote>
 
 <blockquote>
-Nota para desarrollo frontend.
-
 product short_description debe ser usado en la pantalla de selección de producto (tras la seleccion de ciudad y área de servicio)
 </blockquote>
 
 <blockquote>
-Les seccions informatives han de ser totes iguals i han de poder tenir el titol, cos, imatge o icona. totes opcionals.
+Las secciones informativas (info y instructions) pueden tener cualquiera de estos elementos opcionales:
+
++ name - título
++ body - contenido
++ ico - icono (se usa en instrucciones)
++ image - añade una imagen. a evitar.
++ type - habilita extras en las cajas de info.
+
+el listado de types disponible es este:
++ gps - muestra tras el body un botón a la app GPS
+
 </blockquote>
 ### GET [GET]
 
@@ -1196,15 +1198,16 @@ Server will respond with **304 Not-Modified**
                                     },
                                     "instructions": [{
                                         "icon": "map",
-                                        "name": null,
-                                        "body": "Antes de partir, pulsa 'más información' para obtener indicaciones sobre cómo llegar al Parking."
+                                        "name": "Dirígete al parking",
+                                        "body": "Antes de partir, pulsa 'más información' para obtener información sobre cómo llegar al Parking o abre la aplicación GPS pultando sobre el siguiente botón",
+                                        "type": "gps"
                                     }, {
                                         "icon": "agent",
-                                        "name": null,
+                                        "name": "Muestra tu reserva al operario",
                                         "body": "Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
                                     }, {
                                         "icon": "bus",
-                                        "name": null,
+                                        "name": "Súbete al bus lanzadera" ,
                                         "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
                                     }],
                                     "final_instructions": [{
@@ -1552,7 +1555,7 @@ Server will respond with **304 Not-Modified**
             }]
         }
 
-## PRODUCT - CALCULATE PRICE [/reservationa/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
+## PRODUCT - CALCULATE PRICE [/reservation/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
 Proporciona los datos de precio de un producto.
 IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash para validar que el cliente ha visto el mismo precio.
 ### GET [GET]
@@ -1830,6 +1833,12 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
 
 ## CREATE RESERVATION [/reservation]
 Solicita una reserva.
+
+<blockquote>
+En el caso que no haya stock suficiente para reservar una plaza el resultado será status out-of-stock
+La petición de calcular precio no comprueba stock.
+
+</blockquote>
 
 <blockquote>
 **HASHES**
