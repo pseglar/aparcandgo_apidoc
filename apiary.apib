@@ -1539,8 +1539,7 @@ Server will respond with **304 Not-Modified**
                                         "body": "Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                     }],
                                     "info": [{
-                                        "name": "Como llegar al parking",)
-                                        
+                                        "name": "Como llegar al parking",
                                         "body": "Desde la estación, lorem ipum",
                                         "image": "http://www.aparcandgo.com/images/lot/express.jpg"
                                     }]
@@ -1557,6 +1556,178 @@ Server will respond with **304 Not-Modified**
             }]
         }
 
+## PRODUCT - VIEW  PRODUCT [/product/{product_id}{?lang}]
+proporciona info de un único producto
+### GET [GET]
+
++ Parameters
+    + lang - es
+    + product_id (integer) - 4
+    
++ Response 200 (application/json)
+
+        {
+          "product_id": "4",
+          "place_id": "1",
+          "product_name": "Aparca y vola - Aeropuerto del prat",
+          "provider": "Aparca&Go",
+          "service": "express",
+          "info": {
+            "short_description": "Aparca a 5 minutos del aeropuerto y te llevamos en nuestro bus lanzadera hasta la terminal",
+            "location": {
+              "lat": "2.24545600",
+              "lng": "40.54875600"
+            },
+            "service_info": [
+              {
+                "name": "Punto de recogida",
+                "body": " lorem imsum",
+                "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+              },
+              {
+                "name": "Horario",
+                "body": "Recogemos tu coche las 24 horas del dia los 365 días del año."
+              },
+              {
+                "name": "¿En qué terminal opera?",
+                "body": "aparca&go opera en todas las terminales"
+              },
+              {
+                "name": "¿Cuanto tendré que esperar?",
+                "body": "Si nos avisas con tiempo, te estaremos esperando en el punto de recogida."
+              },
+              {
+                "name": "¿Dónde me entregaréis mi coche a la vuelta?",
+                "body": "Justo delante de la terminal, así evitáis tener que desplazaros con el equipaje."
+              },
+              {
+                "name": "¿Qué debemos hacer para avisar de nuestra llegada?",
+                "body": "Te lo indicaremos claramente cuando hayas hecho la reserva. Simplemente, cuando salgas hacia el aeropuerto, solicita tu recogida pulsando el botón habilitado para ello."
+              }
+            ],
+            "terminals": [
+              {
+                "terminal_id": "1001",
+                "name": "Barcelona T1",
+                "name_short": "Bcn T1",
+                "product_id": "4",
+                "check-in": {
+                  "location": {
+                    "lat": 2.245456,
+                    "lng": 40.548756
+                  },
+                  "instructions": [
+                    {
+                      "icon": "map",
+                      "name": null,
+                      "body": "Antes de partir, pulsa \"más información\" para obtener indicaciones sobre cómo llegar al Parking."
+                    },
+                    {
+                      "icon": "agent",
+                      "name": null,
+                      "body": "Cuando llegues al parking, pulsa 'entrar al parking' y muestra tu pantalla al operario"
+                    },
+                    {
+                      "icon": "bus",
+                      "name": null,
+                      "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a tu terminal"
+                    }
+                  ],
+                  "final_instructions": [
+                    {
+                      "icon": "bus",
+                      "name": null,
+                      "body": "Tras aparcar tu coche, súbete al bus lanzadera que te llevará a la terminal"
+                    },
+                    {
+                      "icon": null,
+                      "name": null,
+                      "body": "A la vuelta, te estaremos esperando en el punto de recogida, no es necesario que nos llames."
+                    }
+                  ],
+                  "info": [
+                    {
+                      "name": "Como llegar",
+                      "body": "<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
+                      "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                    },
+                    {
+                      "name": "Horario",
+                      "body": "Abierto las 24 horas del dia los 365 días del año."
+                    },
+                    {
+                      "name": "Dónde debo subir a la lanzadera",
+                      "body": "lorem ipsum"
+                    },
+                    {
+                      "name": "Dónde me dejará la lanzadera",
+                      "body": "lorem ipsum"
+                    }
+                  ]
+                },
+                "check-out": {
+                  "location": {
+                    "lat": 2.245456,
+                    "lng": 40.548756
+                  },
+                  "instructions": [
+                    {
+                      "icon": "bus",
+                      "name": null,
+                      "body": "A tu regreso, dirígete al punto de recogida y coge un bus lanzadera, no hace falta que nos llames."
+                    },
+                    {
+                      "icon": "map",
+                      "name": null,
+                      "body": "El punto de recogida se encuentra enfrente del mosaico de la terminal 1."
+                    }
+                  ],
+                  "final_instructions": [
+                    {
+                      "icon": "flag",
+                      "name": "Gracias por tu estancia",
+                      "body": "Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
+                    }
+                  ],
+                  "info": [
+                    {
+                      "name": "Punto de recogida",
+                      "body": "El punto de recogida blablabla",
+                      "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                    },
+                    {
+                      "name": "Horario y frecuencia",
+                      "body": "Cada 5 minutos, las 24 horas del dia, todos los dias del año."
+                    }
+                  ]
+                }
+              }
+            ],
+            "extras": [
+              {
+                "extra_id": "2",
+                "id_product": "4",
+                "name": "Cubierto",
+                "type": "covered",
+                "icon": "house",
+                "description": "Aparcar en zona cubierta",
+                "unitary_price": "1.00",
+                "price_calculation": "daily"
+              },
+              {
+                "extra_id": "8",
+                "id_product": "4",
+                "name": "Lavado exterior",
+                "type": "wash",
+                "icon": "house",
+                "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
+                "unitary_price": "7.95",
+                "price_calculation": "final_price"
+              }
+            ]
+          }
+        }
+
 ## PRODUCT - CALCULATE PRICE [/reservation/calculate/{product_id}{?start_date,end_date,extras,lang,promocode}]
 Proporciona los datos de precio de un producto.
 IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash para validar que el cliente ha visto el mismo precio.
@@ -1564,7 +1735,7 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
 
 + Parameters
     + lang - es
-    + product_id (integer) - 15
+    + product_id (integer) - 4
     + extras (optional) - 23,24
     + start_date (required, date, `2017-05-01T22:35:17.02`- 2017-05-01T22:35:17.02
     + end_date - (required, date `2017-05-01T22:35:17.02`) -2017-05-01T22:35:17.02
