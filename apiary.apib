@@ -1149,7 +1149,7 @@ Server will respond with **304 Not-Modified**
                         "lng": 40.548756
                     },
                     "products": [{
-                        "product_id": 9,
+                        "product_id": 4,
                         "product_name": "Express",
                         "provider": "Aparca&Go",
                         "service": "express",
@@ -1169,7 +1169,8 @@ Server will respond with **304 Not-Modified**
                             "service_info": [{
                                 "name": "Como llegar",
                                 "body": "<h2>Desde Ronda de Dalt</h2><p>Tomamos la salida 54 “aeropuerto”, nos incorporamos a la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mtrs. estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Rda. Litoral</h2><p>Tomamos la salida 18 “aeropuerto”, continuamos en dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Desde Gran Vía</h2><p>Seguimos la Gran via y continuamos por la Autovía C-31 dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autopista C-32, desde Tarragona</h2><p>Dirección Barcelona, tomamos la salida 54 (El Prat - Aeropuerto) y continuamos dirección Aeropuerto T1, pasada la gasolinera Cepsa, a 1000 mts., tomamos la salida 190 (Viladecans - Cargoparc), llegaremos a una rotonda, cogemos la primera salida, a 20 mts estamos en Aparca&Go (Edificio Orange Serviauto).</p><h2>Viniendo por la autovía C-31 desde Castelldefels</h2><p>Tomamos la salida de Viladecans/Les filipines/Mercabarna-flor. Continuamos dirección Viladecans, pasaremos dos rotondas dirección Viladecans, en la tercera rotonda, tomamos primera salida a la derecha dirección Barcelona/Mercabarna-flor, continuamos recto por la carretera B-204 hasta la próxima rotonda, la bordeamos y tomamos la tercera salida, estamos en Aparca&Go (Edificio Orange Serviauto).</p>",
-                                "image": "http://www.aparcandgo.com/images/lot/express.jpg"
+                                "image": "http://www.aparcandgo.com/images/lot/express.jpg",
+                                "type": "gps"
                             }, {
                                 "name": "Horario",
                                 "body": "Abierto las 24 horas del dia los 365 días del año."
@@ -1281,7 +1282,7 @@ Server will respond with **304 Not-Modified**
                             }]
                         }
                     }, {
-                        "product_id": 5,
+                        "product_id": 2,
                         "product_name": "Premium",
                         "provider": "Aparca&Go",
                         "service": "premium",
@@ -1444,7 +1445,7 @@ Server will respond with **304 Not-Modified**
                         "lng": 40.548756
                     },
                     "products": [{
-                        "product_id": 5,
+                        "product_id": 9,
                         "product_name": "ServicioPendienteDeNombre",
                         "provider": "Aparca&Go",
                         "service": "parking",
@@ -1538,7 +1539,8 @@ Server will respond with **304 Not-Modified**
                                         "body": "Recuerda que puedes consultar tus tickets y tus facturas via web desde tu cuenta de usuario en www.aparcandgo.com"
                                     }],
                                     "info": [{
-                                        "name": "Como llegar al parking",
+                                        "name": "Como llegar al parking",)
+                                        
                                         "body": "Desde la estación, lorem ipum",
                                         "image": "http://www.aparcandgo.com/images/lot/express.jpg"
                                     }]
@@ -1581,7 +1583,7 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
         "status":"ok",
         "offer":
             {
-            "product_id": 12,
+            "product_id": 4,
             "start_date": "2017-05-01T22:35:17.02",
             "end_date": "2017-05-01T22:35:17.02",
             "product_price":18.90,
@@ -1687,7 +1689,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     "costcenter_name":null,
                     "product":
                     {
-                        "product_id":12,
+                        "product_id":4,
                          "product_name": "Express",
                          "provider": "Aparca&Go",
                         "service":"express",
@@ -1764,7 +1766,7 @@ se debe crear una tabla reservations_log con información relativa a cada reserv
                     "costcenter_name":null,
                     "product":
                     {   
-                        "product_id":12,
+                        "product_id":2,
                         "product_name": "Premium",
                         "provider": "Aparca&Go",
                         "service":"premium",
@@ -1880,7 +1882,7 @@ company_id: Id de empresa
                 "client_id":23455,
                 "profile_id":null,
                 "paymethod_id":45,
-                "product_id": 12,
+                "product_id": 2,
                 "product_name": "Premium",
                 "provider": "Aparca&Go",
                 "start_date": "2017-05-05T22:35:17.02",
@@ -1935,7 +1937,7 @@ company_id: Id de empresa
                     "costcenter_name":null,
                     "product":
                     {
-                        "product_id":12,
+                        "product_id":2,
                         "service":"premium",
                         "product_price":18.90,
                         "paid":false
@@ -2053,7 +2055,7 @@ company_id: Id de empresa
                     "costcenter_name":null,
                     "product":
                     {
-                        "product_id":12,
+                        "product_id":2,
                         "product_name": "Premium",
                         "provider": "Aparca&Go",
                         "service":"premium",
@@ -2471,6 +2473,97 @@ No devuelve datos si no es una reserva premium activa.
                             {
                                 "timestamp":"2017-05-01T22:35:17.02",
                                 "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            },
+                            "agent":
+                            {
+                                "agent_id":345435,
+                                "agent_status":"check-in",
+                                "name":"Pau Seglar",
+                                "picture":"https://www.aparcandgo.com/images/43534645645",
+                                "waiting":0,
+                                "position":
+                                {
+                                    "lat":0.34456645,
+                                    "lng":0.34456645
+                                },
+                                "prediction":
+                                {
+                                    "distance":345,
+                                    "duration":34556
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+## PREMIUM: USER HAS ARRIVED [/reservation/premium_user_has_arrived/{reservation_id}]
+### NOTIFY USER HAS ARRIVED [PUT]
+
+This will perform a reservation update increasing waiting + 1, this will set reservation in client_waiting mode  and a notification will be sent to agent (with a push)
+
+Used from the app to notify when the user has arrived in these situations:
++ APP detects that the user has arrived.
++ User forces to send it (in prevision that gps is disabled or failing)
++ When user refresh the waiting page, to notify the user's angryness
+
+**BODY**
+All body parameters are optional. for tracking purposes.
+supports same body that update tracking information method (PUT /reservation/premium) 
+
+**Response**
+It will response like view tracking information.
+"waiting" parameter will be increased by one on each call to this method.
+
+
+
+    + Body
+    
+            {
+            
+                "position":
+                    {
+                        "lat":0.34456645,
+                        "lng":0.34456645
+                    },
+                ,
+            }
+
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+    Respueta OK.
+
+    + Body
+    
+            {
+            "status":"ok",
+            "reservation":
+                {
+                "reservation_id":23444,
+                "status":
+                    {
+                        "service":"reserved",
+                        "premium":
+                        {
+                            "check-in":"requested",
+                            "check-out":"unconfirmed",
+                            "client":
+                            {
+                                "timestamp":"2017-05-01T22:35:17.02",
+                                "waiting":1,
                                 "position":
                                 {
                                     "lat":0.34456645,
@@ -3257,7 +3350,7 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
                 "products":
                 [
                     {
-                        "product_id": 9,
+                        "product_id": 4,
                         "product_name": "Express",
                         "service": "express",
                         "rights":
@@ -3272,7 +3365,7 @@ BACKEND: Necesitamos guardar esta info relacionado con el agent_id (misma tabla 
                         }
                     },
                     {
-                        "product_id": 5,
+                        "product_id": 2,
                         "product_name": "Premium",
                         "service": "premium",
                         "rights":
@@ -3337,7 +3430,7 @@ This method create product admin roles. low privileged accounts must be created 
             {
                 "email": "pseglar@aparcandgo.com",
                 "password":"base64encoded",
-                "product_id": "9"
+                "product_id": "2"
             }
 + Response 200 (application/json)
 
@@ -3661,7 +3754,7 @@ Require superadmin privileges
 
 # Group SERVICE MANAGEMENT
 Service management methods for manage reservations
-## LIST NEXT  [/adminservice/nextservices/{product_id}{?page,start_date}]
+## LIST NEXT  [/adminservice/nextservices/{product_id}{?page}]
 ### LIST NEXT SERVICES [GET]
 
 Listado de servicios previstos en las próximas 24 horas.
@@ -3683,11 +3776,9 @@ Variable possible values
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Parameters
-        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
-        + page (optional,number,`1`) - Pagination index.
-        + start_date (optional,timestamp,) - start_date to show reservations. If not set, service default will be used.
-        + start_date (optional,timestamp,) - end_date to show reservations. If not set, service default will be used.
++ Parameters
+    + product_id (required,number,`5`) - Product Id. user must have product admin rights.
+    + page (optional,number,`1`) - Pagination index.
 
 + Response 200 (application/json)
 
@@ -3710,7 +3801,7 @@ Variable possible values
                     "costcenter_name":null,
                     "product":
                     {
-                        "product_id":12,
+                        "product_id":2,
                         "service":"premium",
                         "product_price":18.90,
                         "paid":false
@@ -3811,7 +3902,7 @@ Variable possible values
             ]
         }    
 
-## LIST FINISHED  [/adminservice/history/{product_id}{?page,start_date}]
+## LIST FINISHED  [/adminservice/history/{product_id}{?page}]
 ### LIST COMPLETED SERVICES [GET]
 
 Listado de servicios completados
@@ -3829,11 +3920,9 @@ variable possible values
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Parameters
-        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
-        + page (optional,number,`1`) - Pagination index.
-        + start_date (optional,timestamp,) - start_date to show reservations. If not set, service default will be used.
-        + start_date (optional,timestamp,) - end_date to show reservations. If not set, service default will be used.
++ Parameters
+    + product_id (required,number,`5`) - Product Id. user must have product admin rights.
+    + page (optional,number,`1`) - Pagination index.
 
 + Response 200 (application/json)
 
@@ -3859,7 +3948,7 @@ variable possible values
         }
         
 ## SEARCH RESERVATION [/adminservice/search/{product_id}{?page,query}]
-### LIST COMPLETED SERVICES [GET]
+### SEARCH FOR A SERVICE [GET]
 
 Search for a reservation using reservation id, user email or phone_number. incomplete strings allowed. 
 
@@ -3874,12 +3963,13 @@ variable possible values
 
 + Request
     + Headers
-
+    
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Parameters
-        + product_id (required,number,`5`) - Product Id. user must have product admin rights.
-        + page (optional,number,`1`) - Pagination index.
-        + query (required, string, `23444`) - reservation id, user email or phone_number. incomplete strings allowed. 
+            
++ Parameters
+    + product_id (required,number,`5`) - Product Id. user must have product admin rights.
+    + page (optional,number,`0`) - Pagination index.
+    + query (required, string, `23444`) - reservation id or  user email. incomplete strings allowed. 
 
 + Response 200 (application/json)
 
@@ -3925,8 +4015,8 @@ variable possible values
     + Headers
 
             Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-    + Parameters
-        + reservation_id (required,number,`23444`) - Id. user must have rights
++ Parameters
+    + reservation_id (required,number,`23444`) - Id. user must have rights
 
 + Response 200 (application/json)
 
@@ -3944,7 +4034,7 @@ variable possible values
                     "costcenter_id": null,
                     "costcenter_name": null,
                     "product": {
-                        "product_id": 12,
+                        "product_id": 4,
                         "service": "express",
                         "product_price": 18.9,
                         "paid": false
