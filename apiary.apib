@@ -1287,23 +1287,8 @@ Server will respond with **304 Not-Modified**
                                         "body": "Cada 5 minutos, las 24 horas del dia, todos los dias del año."
                                     }]
                                 }
-                            }],
-                            "extras": [{
-                                "extra_id": 23,
-                                "name": "Cubierto",
-                                "icon": "house",
-                                "description": "Aparcar en zona cubierta",
-                                "unitary_price": 1,
-                                "price_calculation": "daily"
-                            }, {
-                                "extra_id": 24,
-                                "name": "Lavado exterior",
-                                "type": "wash",
-                                "icon": "house",
-                                "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                "unitary_price": 7.55,
-                                "price_calculation": "final_price"
                             }]
+                            
                         }
                     }, {
                         "product_id": 2,
@@ -1442,21 +1427,6 @@ Server will respond with **304 Not-Modified**
                                         "body": "Cada 5 minutos, las 24 horas del dia, todos los dias del año."
                                     }]
                                 }
-                            }],
-                            "extras": [{
-                                "extra_id": 23,
-                                "name": "Cubierto",
-                                "icon": "house",
-                                "description": "Aparcar en zona cubierta",
-                                "unitary_price": 1,
-                                "price_calculation": "daily"
-                            }, {
-                                "extra_id": 24,
-                                "name": "Lavado exterior",
-                                "icon": "house",
-                                "description": "Limpieza y encerado, limpieza de llantas, de cristales y de plásticos",
-                                "unitary_price": 7.55,
-                                "price_calculation": "final_price"
                             }]
                         }
                     }]
@@ -1568,8 +1538,7 @@ Server will respond with **304 Not-Modified**
                                         "image": "http://www.aparcandgo.com/images/lot/express.jpg"
                                     }]
                                 }
-                            }],
-                            "extras": []
+                            }]
                         }
                     }]
                 }]
@@ -1782,7 +1751,19 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
             "start_date": "2017-05-01T22:35:17.02",
             "end_date": "2017-05-01T22:35:17.02",
             "product_price":18.90,
-            "extras":
+            
+            "promos":
+                [
+                    {
+                    "promo_id":23,
+                    "promo_name":"RAC",
+                    "discount":0.45
+                    }
+                ],
+            "total_price":28.00,
+            "hash":"5647858689689tjhgjf"
+            },
+        "extras":
                 [
                     {
                     "extra_id":23,
@@ -1804,17 +1785,6 @@ IDEA: añadir HASH para firmar la oferta. post reservation incluiría el hash pa
                     "price":7.55
                     }
                 ],
-            "promos":
-                [
-                    {
-                    "promo_id":23,
-                    "promo_name":"RAC",
-                    "discount":0.45
-                    }
-                ],
-            "total_price":28.00,
-            "hash":"5647858689689tjhgjf"
-            }
         }
 + Response 500 (application/json)
 
