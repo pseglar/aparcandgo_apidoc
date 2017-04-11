@@ -65,6 +65,18 @@ Log out equivalent. deletes valid token from system
 
 ## USER - VIEW/CREATE/UPDATE USER [/user]
 
+<blockquote>
+push_platform posible values
++ fmc
++ apn
+
+</blockquote>
+<blockquote>
+app_platform posible values
++ android
++ ios
+
+</blockquote>
 ### GET [GET]
 
 Retrieves and store user information.
@@ -94,6 +106,10 @@ Retrieves and store user information.
                 "default_invoice_profile": null,
                 "email_validated": true,
                 "phone_validated": true,
+                "push_platform": "fcm",
+                "push_token": "436876797645764598675987y76",
+                "app_version": 0,
+                "app_platform": "android",
                 "points":
                 {
                     "currentpoints":0.95
@@ -194,7 +210,11 @@ only update new information. profiles and vehicles are updated under custom endp
             "zip":08354
             "accept_promos": true,
             "default_invoice_profile": null,
-            "lang":"ca_ES"
+            "lang":"ca_ES",
+            "push_platform": "fcm",
+            "push_token": "436876797645764598675987y76",
+            "app_version": 0,
+            "app_platform": "android"
         }
 
 + Response 200 (application/json)
@@ -224,7 +244,11 @@ Two examples:
             "phone": "607787857",
             "zip":08354,
             "lang":"ca_ES",
-            "activation_code":"34578934756389"
+            "activation_code":"34578934756389",
+            "push_platform": "fcm",
+            "push_token": "436876797645764598675987y76",
+            "app_version": 0,
+            "app_platform": "android"
             }
 
 
@@ -2423,6 +2447,7 @@ Request reservation payment
                 "reservation_id": 2342355,
                 "profile_id":456767,
                 "paymethod_id":34567,
+                "use-points": false
 
             }
 
