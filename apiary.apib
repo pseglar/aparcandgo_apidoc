@@ -10,7 +10,7 @@ APARCA AND GO RESTFUL API DOCUMENTATION
         + Access-Control-Allow-Origin (string, `*`) ... Access-Control-Allow-Origin.
 
 # Group USER MANAGEMENT
-## USER - Authentication [/user/token{?provider,email,password,keeplogged}]
+## USER - Authentication [/user/token{?provider,auth_id_google,auth_id_facebook,email,password,keeplogged}]
 
 Login equivalent
 
@@ -39,6 +39,8 @@ Log in equivalent.
 
 + Parameters
     + provider (optional,local) -  local(default), google, facebook
+    + auth_id_google (optional)
+    + auth_id_facebook (optional)
     + email (optional,string, `pseglar@gmail.com`) - user identification
     + password (optional,number, `3489576897`) - base64 encoded password
     + keeplogged (optional, boolean, `true`) - boolean. false by default.
@@ -214,7 +216,10 @@ only update new information. profiles and vehicles are updated under custom endp
             "push_platform": "fcm",
             "push_token": "436876797645764598675987y76",
             "app_version": 0,
-            "app_platform": "android"
+            "app_platform": "android",
+            "auth_id_google":"436876797645764598675987y76",
+            "auth_id_facebook":"436876797645764598675987y76"
+            
         }
 
 + Response 200 (application/json)
@@ -248,7 +253,9 @@ Two examples:
             "push_platform": "fcm",
             "push_token": "436876797645764598675987y76",
             "app_version": 0,
-            "app_platform": "android"
+            "app_platform": "android",
+            "auth_id_google":"436876797645764598675987y76",
+            "auth_id_facebook":"436876797645764598675987y76"
             }
 
 
@@ -265,7 +272,14 @@ Two examples:
             "phone": "607787857",
             "accept_promos": true,
             "default_invoice_profile": null,
-            "lang":"ca_ES"
+            "lang":"ca_ES",
+            "push_platform": "fcm",
+            "push_token": "436876797645764598675987y76",
+            "app_version": null,
+            "app_platform": "android",
+            "error": null,
+            "auth_id_google":"436876797645764598675987y76",
+            "auth_id_facebook":"436876797645764598675987y76"
             }
         }
 
@@ -1158,14 +1172,14 @@ Server will respond with **304 Not-Modified**
             "status": "ok",
             "cities": [
                 {
-                "id": 1,
+                "city_id": 1,
                 "name": "Barcelona",
                 "location": {
                     "lat": 2.245456,
                     "lng": 40.548756
                 },
                 "places": [{
-                    "id": 12,
+                    "place_id": 12,
                     "name": "Aeropuerto de Barcelona",
                     "type": "airport",
                     "location": {
