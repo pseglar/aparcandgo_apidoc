@@ -363,19 +363,7 @@ Two examples:
         "status":"ok"
         }
 
-### REQUEST FORGOTTEN PASSWORD  [GET]
 
-
-+ Parameters
-
-    + email (optional,pseglar@gmail.com) - user email
-
-
-+ Response 200 (application/json)
-
-        {
-        "status":"ok"
-        }
 
 ## USER POINTS  [/user/points]
 ### REQUEST USER POINTS [GET]
@@ -927,7 +915,7 @@ Retrieves the list of existing vehicles for the requesting user.
         }
 
 ## USER - Reset Password [/users/password_recovery]
-### CREATE REQUEST [POST]
+### REQUEST FORGOTTEN PASSWORD [POST]
 
 email is mandatory.
 
@@ -3023,6 +3011,10 @@ Retrieves and store user information.
             "send_invoice_copy":true,
             "billing_send_invoice_copy":false,
             "billing_email":null,
+            "discounts": {
+                "discount": 5,
+                "rappel_multiplier": 1
+            },
             "costcenters":
             [
                 {
@@ -3266,13 +3258,26 @@ Retrieves company users
                     "user_id": 589,
                     "profile_id": 324235,
                     "email":"pseglar@parkingkong.es",
+                    "name": "Pau",
+                    "lastname": "Seglar Segura",
                     "costcenter_id": 2345,
                     "rights":
                     {
                         "role":"administrator"
                     }
                 }
-            ]
+            ],
+        "invitations":
+            [
+                {
+                    "email":"invitation1@parkingkong.es",
+                    "costcenter_id": 2345,
+                    "rights":
+                    {
+                        "role":"user"
+                    }
+                }
+            ],
         }
 ### UPDATE USER[PUT]
 
