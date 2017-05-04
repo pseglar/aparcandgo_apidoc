@@ -127,9 +127,15 @@ Retrieves and store user information.
                             "role":"administrator",
                             "permissions": 
                             {
-                                "manage_paymethods": true,
+                               "manage_paymethods": true,
                                 "manage_users": true,
-                                "manage_reservations": true
+                                "manage_reservations": true,
+                                "manage_invoices": true,
+                                "manage_costcenters": true,
+                                "view_promos": true,
+                                "view_history": true,
+                                "manage_settings": true,
+                                "create_reservations_for_other_user": true
                             }
                         },
                         "costcenter_id": 76645,
@@ -437,8 +443,14 @@ Retrieves the list of existing profiles for the requesting user.
                         "role":"administrator",
                         "permissions": {
                             "manage_paymethods": true,
-                            "manage_users": true,
-                            "manage_reservations": true
+                        "manage_users": true,
+                        "manage_reservations": true,
+                        "manage_invoices": true,
+                        "manage_costcenters": true,
+                        "view_promos": true,
+                        "view_history": true,
+                        "manage_settings": true,
+                        "create_reservations_for_other_user": true
                         }
                     },
                         "costcenter_id": 76645,
@@ -2062,6 +2074,7 @@ company_id: Id de empresa
                 "start_date": "2017-05-05T22:35:17.02",
                 "end_date": "2017-05-06T22:35:17.02",
                 "promocode": "RAC",
+                "use_points": false,
                 "trip":
                     {
                     "driver":null,
@@ -2174,6 +2187,7 @@ company_id: Id de empresa
                     "paid":false,
                     "paymethod_id":45678,
                     "paymethod_alias":"Acmesa",
+                    "use_points": false,
                     "log":
                     [
                         {
@@ -2332,6 +2346,7 @@ company_id: Id de empresa
                     "paid":false,
                     "paymethod_id":45678,
                     "paymethod_alias":"Acmesa",
+                    "use_points": false,
                     "log":
                     [
                         {
@@ -4704,7 +4719,13 @@ Retrieves user information
                             {
                                 "manage_paymethods": true,
                                 "manage_users": true,
-                                "manage_reservations": true
+                                "manage_reservations": true,
+                                "manage_invoices": true,
+                                "manage_costcenters": true,
+                                "view_promos": true,
+                                "view_history": true,
+                                "manage_settings": true,
+                                "create_reservations_for_other_user": true
                             }
                         },
                         "costcenter_id": 76645,
