@@ -3474,7 +3474,7 @@ Log in equivalent.
 
         {
         "access_token":"03807cb390319329bdf6c777d4dfae9c0d3b3c35",
-        "expires_in":"2017-05-01"
+        "expires_in":"2018-05-01"
         }
 ### TOKEN DELETE  [DELETE]
 
@@ -4341,11 +4341,13 @@ variable possible values
                     "paymethod_id": null,
                     "paymethod": null,
                     "paid": false,
-                    "agent_observations":"blablabla",
-                    "park_lot":
-                    {
-                        "observations":"blablabla",
-                    }
+                    "agent_observations":[
+                        "cada vez que se añade una agent observation se añade un elemento al array de observaciones. así no hay que mantener el track de las anotaciones cada vez.",
+                        "2017-05-11 11:22:40 - pseglar@aparcandgo.com(274)-: otra observacion",
+                        "2017-05-11 11:22:40 - pseglar@aparcandgo.com(274)-: otra observacion",
+                        "2017-05-11 11:22:40 - pseglar@aparcandgo.com(274)-: otra observacion"
+                        ]
+                        
                     "log": [
                         {
                             "timestamp": "2017-01-05T22:35:17.02",
@@ -4463,6 +4465,43 @@ updatable items:
 
         {
         "status":"ok"
+        }
+
+## LIST RESERVATION IMAGES [/adminservice/list_reservation_images/{reservation_id}]
+### GET LIST [GET]
+
++ Request (multipart/form-data; boundary=---BOUNDARY)
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
++ Response 200 (application/json)
+
+        {
+          "status": "ok",
+          "images": [
+            {
+              "id": "1",
+              "id_reservation": "754177",
+              "image_name": "754177_20170511044310-149451379087.jpg",
+              "creation_date": "2017-05-11 16:43:10",
+              "url": "http://erp.aparcaivola.localhost/api/images/reservation/1"
+            },
+            {
+              "id": "2",
+              "id_reservation": "754177",
+              "image_name": "754177_20170511044312-149451379217.jpg",
+              "creation_date": "2017-05-11 16:43:12",
+              "url": "http://erp.aparcaivola.localhost/api/images/reservation/2"
+            },
+            {
+              "id": "3",
+              "id_reservation": "754177",
+              "image_name": "754177_20170511044312-149451379238.jpg",
+              "creation_date": "2017-05-11 16:43:12",
+              "url": "http://erp.aparcaivola.localhost/api/images/reservation/3"
+            }
+          ]
         }
 
 ## UPLOAD SIGNATURE [/adminserice/sign/{reservation_id}]
