@@ -4360,7 +4360,9 @@ variable possible values
                             "event": "Entrada a parking"
                         }
         
-                    ]
+                    ],
+                    "id_image_in_signature":null,
+                    "id_image_out_signature":null
                 }
         }
 ### UPDATE SERVICE [PUT]
@@ -4414,10 +4416,8 @@ updatable items:
                     ],
                 
                 "agent_observations":"blablabla",
-                "park_lot":
-                {
-                    "observations":"blablabla",
-                }
+                "id_image_in_signature":null,
+                "id_image_out_signature":null
             }
 
     + Headers
@@ -4430,7 +4430,9 @@ updatable items:
         {
         "status":"ok",
         }
-## UPLOAD IMAGES [/adminservice/image/{reservation_id}]
+## UPLOAD IMAGES and SIGNATURE [/adminservice/image/{reservation_id}]
+Se utiliza el mismo endpoint que para subir imágenes. una firma es una imagen más. 
+ + PARA LAS FIRMAS DEBE REALIZARSE UN UPDATE (/adminservice/id_reserva PUT) DE LA RESERVA CON EL ID DE RESPUESTA:  "id_image_in_signature":id_respuesta
 ### SET PHOTOS [POST]
 
 + Request (multipart/form-data; boundary=---BOUNDARY)
@@ -4464,7 +4466,14 @@ updatable items:
 + Response 200 (application/json)
 
         {
-        "status":"ok"
+          "status": "ok",
+          "image": {
+            "id": 41,
+            "id_reservation": "754272",
+            "image_name": "754272_20170517070658-149504081896.jpg",
+            "creation_date": "2017-05-17 19:06:58",
+            "url": "http://erp.aparcaivola.localhost/api/images/reservation/41"
+          }
         }
 
 ## LIST RESERVATION IMAGES [/adminservice/list_reservation_images/{reservation_id}]
@@ -4504,44 +4513,9 @@ updatable items:
           ]
         }
 
-## UPLOAD SIGNATURE [/adminserice/sign/{reservation_id}]
-### UPLOAD USER SIGNATURE [POST]
 
-+ Request (multipart/form-data; boundary=---BOUNDARY)
-    + Headers
-
-            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
-
-    + Body 
-
-            -----BOUNDARY
-            Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
-            Content-Type: image/jpeg
-            Content-Transfer-Encoding: base64
-    
-            /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
-            HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
-            MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
-            AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
-            AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
-            -----BOUNDARY
-+ Response 200 (application/json)
-
-        {
-        "status":"ok"
-        }
-        
-+ Response 403 (application/json)
-
-        {
-        "status":"already-signed"
-        }
-+ Response 404 (application/json)
-
-        {
-        "status":"not-found"
-        }
 ## GATE VALIDATION [/adminservice/gatevalidation/{reservation_id}]
+!DEPRECATED!
 Usado para entrada/salida manual desde el pandel de gestion para el servicio express.
 Sirve para indicar que el usuario procede a la entrada o a la salida. 
 Para proceder a la salida, el servicio debe estar pagado. (ver /adminservice/charge)
@@ -4568,6 +4542,86 @@ Para proceder a la salida, el servicio debe estar pagado. (ver /adminservice/cha
 
         {
         "status":"not-found"
+        }
+        
+##PREMIUM - START CHECK-IN [/adminservice/start_premium_checkin/{reservation_id}]
+### NOTIFICA INICIO DEL PROCESO DE RECOGIDA [POST]
+Pensado para notificar via push al cliente indicando que espere a que el agente termine el registro.
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }
+
++ Response 400 (application/json)
+
+        {
+          "error": "invalid reservation status",
+          "code": 403,
+          "info": null,
+          "status": "error"
+        }
+
+##PREMIUM - CHECK-IN TRANSACTION COMPLETE [/adminservice/premium_checkin_transaction_completed/{reservation_id}]
+### NOTIFICA LA RECOGIDA DEL VEHÍCULO [POST]
+Pensado para notificar via push al cliente indicando que el proceso de check-in ha finalizado.
+En este momento se realiza la entrada efectiva del coche en el sistema. se actualiza la fecha de entrada a este punto.
+Al finalizar este paso, la reserva pasa a estado IN
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }    
+
++ Response 400 (application/json)
+
+        {
+          "error": "invalid reservation status",
+          "code": 403,
+          "info": null,
+          "status": "error"
+        }
+        
+
+##PREMIUM - CLOSE CHECK-IN SERVICE [/adminservice/close_premium_checkin/{reservation_id}]
+### NOTIFICA QUE EL VEHICULO HA SIDO APARCADO [POST]
+Pensado para notificar al sistema que el proceso de check-in ha finalizado. 
+Se espera que antes de este punto el agente actualize la reserva con las anotaciones pertinentes.
+En este momento se realiza la entrada efectiva del coche en el sistema. 
+Se actualiza la fecha de entrada a este punto.
+Al finalizar este paso, el estado del agente vuelve a READY
+
++ Request
+    + Headers
+
+            Authorization: 03807cb390319329bdf6c777d4dfae9c0d3b3c35
+
+    
++ Response 200 (application/json)
+
+        {
+        "status":"ok"
+        }    
+
++ Response 400 (application/json)
+
+        {
+          "error": "invalid reservation status",
+          "code": 403,
+          "info": null,
+          "status": "error"
         }
 
 ## CHARGE PAYMENT  [/adminservice/charge/{reservation_id}]
