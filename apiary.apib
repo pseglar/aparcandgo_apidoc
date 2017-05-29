@@ -2217,13 +2217,15 @@ company_id: Id de empresa
         }
 
 
-## VIEW/UPDATE/DELETE RESERVATION [/reservation/{reservation_id}]
+## VIEW/UPDATE/DELETE RESERVATION [/reservation/{reservation_id}{?user_info}]
 ### VIEW RESERVATION [GET]
     requiere reservation_id
     devuelve objeto reservation (ver /reservations)
+    Si se añade el flag  user_info=true el resultado contendrá información sobre el cliente para poder pintar una reserva de empresa.
 
 + Parameters
     + reservation_id - 5465467
+    + user_info (optional ,boolean)  - false
 
 
 + Response 200 (application/json)
@@ -2360,7 +2362,48 @@ company_id: Id de empresa
                             "event":"Entrada a parking"
                         }
                     ]
-                }
+                },
+            "user": {
+                "user_id": "119098",
+                "email": "user_email1495798235635@yopmail.com",
+                "name": "Pau",
+                "lastname": "Seglar Segura",
+                "phone": "607787857",
+                "zip": "08354",
+                "accept_promos": true,
+                "default_invoice_profile": "119047",
+                "lang": "ca_ES",
+                "vehicles": [
+                  {
+                    "vehicle_id": "166",
+                    "type": "vw golf gris",
+                    "plate": "8058PNQ"
+                  },
+                  {
+                    "vehicle_id": "168",
+                    "type": "RR Evoque",
+                    "plate": "1239JHR"
+                  },
+                  {
+                    "vehicle_id": "169",
+                    "type": "RR Evoque",
+                    "plate": "1239JHR"
+                  },
+                  {
+                    "vehicle_id": "170",
+                    "type": "DESCONOCIDO",
+                    "plate": "1239JHR"
+                  }
+                ],
+                "paymethods": null,
+                "profiles": null,
+                "push_platform": "fcm",
+                "push_token": "436876797645764598675987y76",
+                "app_version": null,
+                "app_platform": "android",
+                "error": null,
+                "email_confirmed": false
+              }
         }   
 
 + Response 404 (application/json)
